@@ -2,20 +2,23 @@ package de.host.connectionmanagerapp;
 
 import android.text.TextUtils;
 import android.util.Log;
+
 import net.schmizz.sshj.SSHClient;
-import net.schmizz.sshj.transport.verification.ConsoleKnownHostsVerifier;
-import net.schmizz.sshj.transport.verification.OpenSSHKnownHosts;
+import net.schmizz.sshj.common.LoggerFactory;
+import net.schmizz.sshj.common.StreamCopier;
+import net.schmizz.sshj.connection.ConnectionException;
+import net.schmizz.sshj.connection.channel.direct.Session;
+import net.schmizz.sshj.connection.channel.direct.Session.Shell;
+import net.schmizz.sshj.transport.TransportException;
 import net.schmizz.sshj.transport.verification.PromiscuousVerifier;
 
-import java.io.Console;
-import java.io.File;
 import java.io.IOException;
 
 // Klasse für die Einbindung der sshj-lib
 public class SSHConn {
 
     public static final String TAG = SSHConn.class.getSimpleName();
-    public static final Console con = System.console();
+    // public static final Console con = System.console();
     private final SSHConfig config;
     private final SSHClient client;
 
@@ -56,8 +59,47 @@ public class SSHConn {
         }
     }
 
+    // Shell with simple PTY
+    // https://github.com/hierynomus/sshj/blob/master/examples/src/main/java/net/schmizz/sshj/examples/RudimentaryPTY.java
     private void startShell () {
+        openConnection();
+        try {
+            Session session = client.startSession();
+            try {
+                session.allocateDefaultPTY();
+                Shell shell = session.startShell();
 
+                new StreamCopier(shell.getInputStream(), System.out, LoggerFactory.DEFAULT)
+                        .bufSize(shell.getLocalMaxPacketSize())
+                        .spawn("stdout");
+
+                new StreamCopier(shell.getErrorStream(), System.err, LoggerFactory.DEFAULT)
+                        .bufSize(shell.getLocalMaxPacketSize())
+                        .spawn("stderr");
+
+                // Now make System.in act as stdin. To exit, hit Ctrl+D (since that results in an EOF on System.in)
+                // This is kinda messy because java only allows console input after you hit return
+                // But this is just an example... a GUI app could implement a proper PTY
+                new StreamCopier(System.in, shell.getOutputStream(), LoggerFactory.DEFAULT)
+                        .bufSize(shell.getRemoteMaxPacketSize())
+                        .copy();
+
+            } catch (IOException e) {
+                Log.e(TAG, "startShell(): IO error.", e);
+            } finally {
+                    session.close();
+            }
+        } catch (ConnectionException e) {
+            Log.e(TAG, "startShell(): Connection error.", e);
+        } catch (TransportException e) {
+            Log.e(TAG, "startShell(): Transport error.", e);
+        } finally {
+            try {
+                client.disconnect();
+            } catch (IOException e) {
+                Log.e(TAG, "startShell(): IO-Disconnect error.", e);
+            }
+        }
     }
 
     private void sendCommands () {
