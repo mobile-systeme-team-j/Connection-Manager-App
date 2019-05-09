@@ -5,6 +5,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Date;
+
 @Entity(tableName = "connection")
 public class Connection {
 
@@ -15,6 +17,17 @@ public class Connection {
     @NonNull
     @ColumnInfo(name = "titel")
     private String titel;
+
+    @NonNull
+    @ColumnInfo(name = "hostip")
+    private String hostip;
+
+    @NonNull
+    @ColumnInfo(name = "port")
+    private int port;
+
+    @ColumnInfo(name="timestamp")
+    private Date timestamp;
 
 
 
