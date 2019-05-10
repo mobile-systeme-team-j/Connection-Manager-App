@@ -26,10 +26,16 @@ public class Connection {
     @ColumnInfo(name = "port")
     private int port;
 
-    @ColumnInfo(name="timestamp")
-    private Date timestamp;
+    //@ColumnInfo(name="timestamp")
+    //private Date timestamp;
 
+    public int getConnection_id() {
+        return connection_id;
+    }
 
+    public void setConnection_id(int connection_id) {
+        this.connection_id = connection_id;
+    }
 
     @NonNull
     public String getTitel() {
@@ -40,5 +46,21 @@ public class Connection {
         this.titel = titel;
     }
 
+    @NonNull
+    public String getHostip() {
+        return hostip;
+    }
+
+    public void setHostip(@NonNull String hostip) {
+        this.hostip = hostip;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
 
 }

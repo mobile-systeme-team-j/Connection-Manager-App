@@ -13,23 +13,27 @@ public class Job {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "jobId")
-    private int jobid;
+    private int job_id;
 
     @NonNull
     @ColumnInfo(name="titel")
     private String titel;
 
 
-    @NonNull
-    @ColumnInfo(name = "job_time")
-    private Time jobtime;
+    //@NonNull
+    //@ColumnInfo(name = "job_time")
+    //private Time jobtime;
 
 
-    @ColumnInfo(name = "job_date")
-    private Date job_date;
+    //@ColumnInfo(name = "job_date")
+    //private Date job_date;
 
-    public int getJobid() {
-        return jobid;
+    public int getJob_id() {
+        return job_id;
+    }
+
+    public void setJob_id(int job_id) {
+        this.job_id = job_id;
     }
 
     @NonNull
@@ -37,24 +41,24 @@ public class Job {
         return titel;
     }
 
-    public Date getJob_date() {
-        return job_date;
-    }
+   // public Date getJob_date() {
+    //    return job_date;
+    //}
 
-    @NonNull
-    public Time getJobtime() {
-        return jobtime;
-    }
+    //@NonNull
+    //public Time getJobtime() {
+       // return jobtime;
+    //}
 
     public void setTitel(@NonNull String titel) {
         this.titel = titel;
     }
 
-    public void setJobtime(@NonNull Time jobtime) {
-        this.jobtime = jobtime;
-    }
+    //public void setJobtime(@NonNull Time jobtime) {
+        //this.jobtime = jobtime;
+    //}
 
-    public void setJob_date(Date job_date) {
-        this.job_date = job_date;
-    }
+   // public void setJob_date(Date job_date) {
+       // this.job_date = job_date;
+    //}
 }

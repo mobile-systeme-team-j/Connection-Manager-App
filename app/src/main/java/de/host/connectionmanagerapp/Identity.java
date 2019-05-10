@@ -35,6 +35,10 @@ public class Identity {
         return identiy_id;
     }
 
+    public void setIdentiy_id(int identiy_id) {
+        this.identiy_id = identiy_id;
+    }
+
     @NonNull
     public String getTitel() {
         return titel;
