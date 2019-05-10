@@ -1,15 +1,19 @@
 package de.host.connectionmanagerapp;
 
 import android.os.Bundle;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import android.view.View;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
+
+    private DrawerLayout side_menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +22,14 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        side_menu = findViewById(R.id.layout_main);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, side_menu, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        side_menu.addDrawerListener(toggle);
+        toggle.syncState();
+
+      /*  FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -26,12 +37,22 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+       */
     }
 
+    // handles side-menu when Back-Button of Phone is pressed
+    @Override
+    public void onBackPressed(){
+        if(side_menu.isDrawerOpen(GravityCompat.START)){
+            side_menu.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_side, menu);
         return true;
     }
 
