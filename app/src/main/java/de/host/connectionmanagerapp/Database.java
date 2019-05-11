@@ -6,7 +6,7 @@ import android.content.Context;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.commonsware.cwac.saferoom.SafeHelperFactory;
+//import com.commonsware.cwac.saferoom.SafeHelperFactory;
 
 
 @androidx.room.Database(entities = {Connection.class,Identity.class,Snippet.class,Job.class}, version = 1, exportSchema = false)
