@@ -18,9 +18,9 @@ public class Snippet {
     @ColumnInfo(name = "titel")
     private String titel;
 
-    //@NonNull
-    //@ColumnInfo(name = "folder")
-    //private File folder;
+    @NonNull
+    @ColumnInfo(name="text")
+    private String Text;
 
 
 
@@ -37,16 +37,16 @@ public class Snippet {
         return titel;
     }
 
-    //@NonNull
-    //public File getFolder() {
-     //   return folder;
-    //}
-
     public void setTitel(@NonNull String titel) {
         this.titel = titel;
     }
 
-    //public void setFolder(@NonNull File folder) {
-     //   this.folder = folder;
-    //}
+    @NonNull
+    public String getText() {
+        return Text;
+    }
+
+    public void setText(@NonNull String text) {
+        Text = text;
+    }
 }

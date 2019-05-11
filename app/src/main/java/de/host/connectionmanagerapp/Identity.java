@@ -26,8 +26,13 @@ public class Identity {
     @ColumnInfo(name="password")
     private String password;
 
+    //@NonNull
+    @ColumnInfo(name="keypath")
+    private String keypath;
 
-
+    //@NonNull
+    @ColumnInfo(name="keypassword")
+    private String keypassword;
 
 
 
@@ -65,5 +70,21 @@ public class Identity {
 
     public void setPassword(@NonNull String password) {
         this.password = password;
+    }
+
+    public String getKeypath() {
+        return keypath;
+    }
+
+    public void setKeypath(String keypath) {
+        this.keypath = keypath;
+    }
+
+    public String getKeypassword() {
+        return keypassword;
+    }
+
+    public void setKeypassword(String keypassword) {
+        this.keypassword = keypassword;
     }
 }
