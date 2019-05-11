@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="de.host.connectionmanagerapp.MainActivity"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single"></group>
+    <item
+        android:id="@+id/menu_home"
+        android:icon="@drawable/ic_home"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/menu_wizard"
+        android:icon="@drawable/ic_wizard"
+        android:title="Wizard" />
+
+    <item
+        android:id="@+id/menu_connections"
+        android:icon="@drawable/ic_connection"
+        android:title="Connections" />
+
+    <item
+        android:id="@+id/menu_identities"
+        android:icon="@drawable/ic_identity"
+        android:title="Identities" />
+
+    <item
+        android:id="@+id/menu_snippets"
+        android:icon="@drawable/ic_folder"
+        android:title="Snippets" />
+
+    <item
+        android:id="@+id/menu_job"
+        android:icon="@drawable/ic_job"
+        android:title="Job" />
+
+    <item
+        android:id="@+id/menu_settings"
+        android:icon="@drawable/ic_settings"
+        android:title="Settings" />
+
+    <item
+        android:id="@+id/menu_about"
+        android:icon="@drawable/ic_about"
+        android:title="About" />
+
+
+</menu>
