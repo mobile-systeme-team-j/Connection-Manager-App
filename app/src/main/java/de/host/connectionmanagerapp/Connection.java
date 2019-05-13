@@ -3,15 +3,18 @@ package de.host.connectionmanagerapp;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
-
 import java.util.Date;
 
-@Entity(tableName = "connection")
+@Entity(tableName = "connection",
+        foreignKeys = @ForeignKey(entity = Identity.class,
+                parentColumns = "identity_id",
+                childColumns = "identity_Id"))
 public class Connection {
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name="coonection_id")
+    @ColumnInfo(name="connection_Id")
     private int connection_id;
 
     @NonNull
@@ -26,8 +29,11 @@ public class Connection {
     @ColumnInfo(name = "port")
     private int port;
 
-    //@ColumnInfo(name="timestamp")
-    //private Date timestamp;
+    @ColumnInfo(name="identity_Id")
+    private int identity_Id;
+
+    @ColumnInfo(name="timestamp")
+    private Date timestamp;
 
     public int getConnection_id() {
         return connection_id;
@@ -63,4 +69,19 @@ public class Connection {
         this.port = port;
     }
 
+    public int getIdentity_Id() {
+        return identity_Id;
+    }
+
+    public void setIdentity_Id(int identity_Id) {
+        this.identity_Id = identity_Id;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
+    }
 }

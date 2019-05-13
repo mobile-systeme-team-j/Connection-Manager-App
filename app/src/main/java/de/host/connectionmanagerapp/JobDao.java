@@ -6,15 +6,15 @@ import androidx.room.Insert;
 import androidx.room.Update;
 
 @Dao
-public interface SnippetDao {
+public interface JobDao {
 
     @Insert
-    void insert(Snippet snippet);
+    void insert (Job job);
 
     @Update
-    void update(Snippet... snippets);
+    void update (Job... jobs);
 
     @Delete
-    void delete(Snippet... snippets);
+    void delete (Job... jobs);
 
 }
