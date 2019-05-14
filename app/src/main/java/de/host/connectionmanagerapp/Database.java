@@ -29,6 +29,7 @@ public abstract class Database extends RoomDatabase {
                                     Database.class,
                                     "database")
                                     //.openHelperFactory(factory)
+                                    .fallbackToDestructiveMigration()
                                     .build();
                 }
             }
