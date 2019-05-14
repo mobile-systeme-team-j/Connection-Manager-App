@@ -5,12 +5,12 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "identity_table")
+@Entity(tableName = "identity")
 public class Identity {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "identity_id")
-    private int identiy_id;
+    private long identiy_id;
 
 
 
@@ -36,11 +36,11 @@ public class Identity {
 
 
 
-    public int getIdentiy_id() {
+    public long getIdentiy_id() {
         return identiy_id;
     }
 
-    public void setIdentiy_id(int identiy_id) {
+    public void setIdentiy_id(long identiy_id) {
         this.identiy_id = identiy_id;
     }
 

@@ -16,20 +16,20 @@ import androidx.room.ForeignKey;
         })
 public class Snippet_Job {
 
-    private final int snippet_Id;
-    private final int job_Id;
+    private final long snippet_Id;
+    private final long job_Id;
 
 
-    public Snippet_Job(int snippet_Id, int job_Id) {
+    public Snippet_Job(long snippet_Id, long job_Id) {
         this.snippet_Id = snippet_Id;
         this.job_Id = job_Id;
 }
 
-    public int getSnippet_Id() {
+    public long getSnippet_Id() {
         return snippet_Id;
     }
 
-    public int getJob_Id() {
+    public long getJob_Id() {
         return job_Id;
     }
 }

@@ -15,7 +15,7 @@ public class Connection {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name="connection_Id")
-    private int connection_id;
+    private long connection_id;
 
     @NonNull
     @ColumnInfo(name = "titel")
@@ -35,11 +35,11 @@ public class Connection {
     @ColumnInfo(name="timestamp")
     private Date timestamp;
 
-    public int getConnection_id() {
+    public long getConnection_id() {
         return connection_id;
     }
 
-    public void setConnection_id(int connection_id) {
+    public void setConnection_id(long connection_id) {
         this.connection_id = connection_id;
     }
 

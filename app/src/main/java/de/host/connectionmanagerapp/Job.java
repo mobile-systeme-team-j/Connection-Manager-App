@@ -11,7 +11,7 @@ public class Job {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "job_Id")
-    private int job_id;
+    private long job_id;
 
     @NonNull
     @ColumnInfo(name="titel")
@@ -26,11 +26,11 @@ public class Job {
     //@ColumnInfo(name = "job_date")
     //private Date job_date;
 
-    public int getJob_id() {
+    public long getJob_id() {
         return job_id;
     }
 
-    public void setJob_id(int job_id) {
+    public void setJob_id(long job_id) {
         this.job_id = job_id;
     }
 

@@ -13,7 +13,7 @@ public class Snippet {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name="snippet_Id")
-    private int snippet_id;
+    private long snippet_id;
 
     @NonNull
     @ColumnInfo(name = "titel")
@@ -25,11 +25,11 @@ public class Snippet {
 
 
 
-    public int getSnippet_id() {
+    public long getSnippet_id() {
         return snippet_id;
     }
 
-    public void setSnippet_id(int snippet_id) {
+    public void setSnippet_id(long snippet_id) {
         this.snippet_id = snippet_id;
     }
 

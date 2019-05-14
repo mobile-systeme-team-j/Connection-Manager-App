@@ -16,20 +16,20 @@ import androidx.room.ForeignKey;
         })
 public class Connection_Job {
 
-    private  final int job_Id;
-    private  final int connection_Id;
+    private  final long job_Id;
+    private  final long connection_Id;
 
 
-    public Connection_Job(int job_Id, int connection_Id) {
+    public Connection_Job(long job_Id, long connection_Id) {
         this.job_Id = job_Id;
         this.connection_Id = connection_Id;
     }
 
-    public int getJob_Id() {
+    public long getJob_Id() {
         return job_Id;
     }
 
-    public int getConnection_Id() {
+    public long getConnection_Id() {
         return connection_Id;
     }
 }

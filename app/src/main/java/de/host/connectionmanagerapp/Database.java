@@ -19,6 +19,8 @@ public abstract class Database extends RoomDatabase {
    public abstract IdentityDao identityDao();
    public abstract JobDao jobDao();
    public abstract SnippetDao snippetDao();
+   public abstract Connection_JobDao cjDao();
+   public abstract Snippet_JobDao sjDao();
 
     static Database getDatabase(final Context context) {
         if (INSTANCE == null) {
