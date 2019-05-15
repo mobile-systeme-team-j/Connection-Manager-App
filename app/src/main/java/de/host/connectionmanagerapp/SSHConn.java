@@ -5,6 +5,7 @@ import android.util.Log;
 
 import net.schmizz.sshj.SSHClient;
 import net.schmizz.sshj.common.LoggerFactory;
+import net.schmizz.sshj.common.SecurityUtils;
 import net.schmizz.sshj.common.StreamCopier;
 import net.schmizz.sshj.connection.ConnectionException;
 import net.schmizz.sshj.connection.channel.direct.Session;
@@ -12,7 +13,10 @@ import net.schmizz.sshj.connection.channel.direct.Session.Shell;
 import net.schmizz.sshj.transport.TransportException;
 import net.schmizz.sshj.transport.verification.PromiscuousVerifier;
 
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+
 import java.io.IOException;
+import java.security.Security;
 
 // Klasse für die Einbindung der sshj-lib
 public class SSHConn {
@@ -30,20 +34,27 @@ public class SSHConn {
 
     public void openConnection () {
         try {
+            // Bouncy Castle Security Provider registrieren (u.a. für ECDSA benötigt)
+            // Android liefert nur abgespeckte Version mit
+            Security.removeProvider("BC");
+            Security.addProvider(new BouncyCastleProvider());
+            //SecurityUtils.registerSecurityProvider("org.spongycastle.jce.provider.BouncyCastleProvider");
             // Erst evtl. vorhandene KnownHosts z.B. aus ~/.ssh/known_hosts laden
             // Autodetect-Methode verwenden und dem SSHClient hinzufügen
             //final File khFile = new File(OpenSSHKnownHosts.detectSSHDir(), "known_hosts");
             //client.addHostKeyVerifier(new ConsoleKnownHostsVerifier(khFile, con));
             // Verbinden
-            client.connect(config.getHost(), config.getPort());
+
             // Wenn KeyPath vorhanden, dann authentifiziere mit Key, sonst mit Password
             // TODO: Evtl. KeyProvider nutzen, statt Pfad
 
             if (!config.isHostKeyNeeded()) {
                 client.addHostKeyVerifier(new PromiscuousVerifier());
             }
+            client.connect(config.getHost(), config.getPort());
+
             // Authentifizierung, je nach verfügbaren Eigenschaften
-            if (!TextUtils.isEmpty(config.getKeyPath().toString())) {
+            if (config.getKeyPath() != null) {
                 // Authentifiziere mit KeyFile
                 client.authPublickey(config.getUser(), config.getKeyPath().toString());
             } else if (!TextUtils.isEmpty(config.getPassword())) {

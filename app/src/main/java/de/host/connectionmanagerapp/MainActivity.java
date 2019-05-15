@@ -1,6 +1,7 @@
 package de.host.connectionmanagerapp;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -12,6 +13,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+
+import net.schmizz.sshj.SSHClient;
 
 /**
  * @author Manuel Trapp
@@ -43,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
         }
 
+        // testSSH();
+
     }
 
 
@@ -62,7 +67,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-
+    private void testSSH () {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    SSHConfig config = new SSHConfig("54.37.204.238", "userwp");
+                    config = config.usePassword("wFf4]18&");
+                    config = config.useHostKey(false);
+                    SSHConn conn = new SSHConn(config, new SSHClient());
+                    conn.openConnection();
+                } catch (Exception e) {
+                    Log.e(SSHConn.TAG, e.getMessage());
+                }
+            }
+        });
+        thread.start();
+    }
 
 
 
