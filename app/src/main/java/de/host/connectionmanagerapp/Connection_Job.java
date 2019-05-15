@@ -3,10 +3,13 @@ package de.host.connectionmanagerapp;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 
 @Entity(tableName = "connection_job_join",
         primaryKeys = { "connection_Id", "job_Id" },
+        indices = {@Index(value={"job_Id"})},
         foreignKeys = {
+
                 @ForeignKey(entity = Connection.class,
                         parentColumns = "connection_Id",
                         childColumns = "connection_Id"),

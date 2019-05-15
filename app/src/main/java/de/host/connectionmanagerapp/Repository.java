@@ -2,6 +2,8 @@ package de.host.connectionmanagerapp;
 
 import android.app.Application;
 
+import java.util.List;
+
 public class Repository {
 
     private IdentityDao identityDao;
@@ -52,7 +54,20 @@ public class Repository {
         Connection conection = connectionDao.connectionfromid(connectionId);
         connectionDao.delete(conection);
     }
-    public void job_delete(int jobId){
+    public void job_delete(long jobId){
+        Job job = jobDao.jobfromId(jobId);
+        List<Snippet_Job> sjs = sjDao.sjsfromjob(jobId);
+        List<Connection_Job>cjs= cjDao.cjs(jobId);
+        for(Snippet_Job sj: sjs) {
+            sjDao.delete(sj);
+        }
+        for(Connection_Job cj : cjs){
+            cjDao.delete(cj);
+        }
+
+        jobDao.delete(job);
     }
+
+
 
 }

@@ -17,6 +17,7 @@ public interface JobDao {
 
     @Query("SELECT * from job where job_Id=:id")
     public abstract Job jobfromId(long id);
+
     @Delete
     void delete (Job... jobs);
 
