@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
         }
 
-        // testSSH();
+        //testSSH();
 
     }
 
@@ -72,11 +72,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void run() {
                 try {
+
                     SSHConfig config = new SSHConfig("54.37.204.238", "userwp");
                     config = config.usePassword("wFf4]18&");
                     config = config.useHostKey(false);
+                    /*
+                    SSHConfig config = new SSHConfig("sdf.org", "new");
+                    config = config.useHostKey(false);
+                    */
                     SSHConn conn = new SSHConn(config, new SSHClient());
                     conn.openConnection();
+                    //conn.startShell();
+                    //String response = conn.sendCommand("ls -a");
+                    //System.out.println(response);
+                    conn.createPTY();
                 } catch (Exception e) {
                     Log.e(SSHConn.TAG, e.getMessage());
                 }

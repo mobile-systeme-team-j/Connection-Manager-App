@@ -4,19 +4,27 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import net.schmizz.sshj.SSHClient;
+import net.schmizz.sshj.common.IOUtils;
 import net.schmizz.sshj.common.LoggerFactory;
-import net.schmizz.sshj.common.SecurityUtils;
 import net.schmizz.sshj.common.StreamCopier;
 import net.schmizz.sshj.connection.ConnectionException;
 import net.schmizz.sshj.connection.channel.direct.Session;
 import net.schmizz.sshj.connection.channel.direct.Session.Shell;
 import net.schmizz.sshj.transport.TransportException;
 import net.schmizz.sshj.transport.verification.PromiscuousVerifier;
+import net.sf.expectit.Expect;
+import net.sf.expectit.ExpectBuilder;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import java.io.IOException;
 import java.security.Security;
+import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
+
+import static net.sf.expectit.filter.Filters.removeColors;
+import static net.sf.expectit.filter.Filters.removeNonPrintable;
+import static net.sf.expectit.matcher.Matchers.contains;
 
 // Klasse für die Einbindung der sshj-lib
 public class SSHConn {
@@ -48,6 +56,7 @@ public class SSHConn {
             // Wenn KeyPath vorhanden, dann authentifiziere mit Key, sonst mit Password
             // TODO: Evtl. KeyProvider nutzen, statt Pfad
 
+            // Akzeptiere alle HostKeys mit PrmiscuousVerifier
             if (!config.isHostKeyNeeded()) {
                 client.addHostKeyVerifier(new PromiscuousVerifier());
             }
@@ -72,8 +81,7 @@ public class SSHConn {
 
     // Shell with simple PTY
     // https://github.com/hierynomus/sshj/blob/master/examples/src/main/java/net/schmizz/sshj/examples/RudimentaryPTY.java
-    private void startShell () {
-        openConnection();
+    public void startShell () {
         try {
             Session session = client.startSession();
             try {
@@ -113,8 +121,51 @@ public class SSHConn {
         }
     }
 
-    private void sendCommands () {
+    public String sendCommand (String command) {
+        String response = "";
 
+        try {
+            Session session = client.startSession();
+            Session.Command cmd = session.exec(command);
+            response = (IOUtils.readFully(cmd.getInputStream()).toString());
+            cmd.join(5, TimeUnit.SECONDS);
+        } catch (ConnectionException e) {
+            e.printStackTrace();
+        } catch (TransportException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return response;
+    }
+
+    public void createPTY () throws IOException {
+        Session session = client.startSession();
+        session.allocateDefaultPTY();
+        Shell shell  = session.startShell();
+        final Expect expect = new ExpectBuilder()
+                .withOutput(shell.getOutputStream())
+                .withInputs(shell.getInputStream(), shell.getErrorStream())
+                .withEchoInput(System.out)
+                .withEchoOutput(System.err)
+                .withInputFilters(removeColors(), removeNonPrintable())
+                .withExceptionOnFailure()
+                .build();
+        try {
+            // Terminal like Eingabe von der Console
+            final Scanner scanner = new Scanner(System.in);
+
+            while (true) {
+                expect.withTimeout(30, TimeUnit.SECONDS)
+                    .sendLine(scanner.nextLine());
+                String result = expect.expect(contains("$")).getBefore();
+            }
+
+        } finally {
+            expect.close();
+            session.close();
+            client.close();
+        }
     }
 
     public SSHConfig getConfig() {
