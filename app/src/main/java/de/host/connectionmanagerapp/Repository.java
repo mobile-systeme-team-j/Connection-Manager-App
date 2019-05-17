@@ -2,6 +2,8 @@ package de.host.connectionmanagerapp;
 
 import android.app.Application;
 
+import androidx.lifecycle.LiveData;
+
 import java.util.List;
 
 public class Repository {
@@ -22,8 +24,10 @@ public class Repository {
         snippetDao= db.snippetDao();
         cjDao = db.cjDao();
         sjDao = db.sjDao();
+
     }
 
+    //Insert Methoden
     //Fertige identity muss übergeben werden , es erfolgt keine überpfüfung mehr
     public void identity_insert(Identity identity){identityDao.insert(identity);}
 
@@ -41,7 +45,29 @@ public class Repository {
     //Fertiges snippet übergeben es erfolgt eine überprüfung mehr, auch die identity id muss gesetzt werden
     public void snippet_insert(Snippet snippet){snippetDao.insert(snippet);}
 
+    //LiveData
 
+    public LiveData<List<Connection>> getConnectionsLive() {
+        return connectionDao.getAllConnection();
+    }
+
+    public LiveData<List<Connection>> getRecentConnections(){
+        return connectionDao.getRecentConnection();
+    }
+
+    public LiveData<List<Identity>> getIdentitiesLive(){
+        return  identityDao.getAllIdentities();
+    }
+
+    public LiveData<List<Job>> getJobsLive(){
+        return jobDao.getAllJobs();
+    }
+
+    public LiveData<List<Snippet>> getSnippetsLive(){
+        return snippetDao.getAllSnippets();
+    }
+
+    //DeleteMethoden
     public void identity_delete(long identityid){
         Identity identity = identityDao.identityformid(identityid);
         identityDao.delete(identity);

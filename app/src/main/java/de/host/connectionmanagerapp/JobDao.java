@@ -1,10 +1,13 @@
 package de.host.connectionmanagerapp;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
+
+import java.util.List;
 
 @Dao
 public interface JobDao {
@@ -17,6 +20,9 @@ public interface JobDao {
 
     @Query("SELECT * from job where job_Id=:id")
     public abstract Job jobfromId(long id);
+
+    @Query("Select * from job")
+    LiveData<List<Job>> getAllJobs();
 
     @Delete
     void delete (Job... jobs);
