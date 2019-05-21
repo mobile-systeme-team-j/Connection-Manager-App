@@ -37,6 +37,7 @@ public class WizardFragment extends Fragment implements View.OnClickListener {
         tv_password = view.findViewById(R.id.password);
         tv_key = view.findViewById(R.id.key);
 
+
         return view;
 
     }

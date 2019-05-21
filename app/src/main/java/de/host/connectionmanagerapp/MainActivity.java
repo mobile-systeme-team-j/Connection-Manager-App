@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -102,32 +103,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch(menuItem.getItemId()){
             case R.id.menu_home:
-                   getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+                  changeFragment(new HomeFragment());
                 break;
             case R.id.menu_wizard:
-                   getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new WizardFragment()).commit();
+                changeFragment(new WizardFragment());
                 break;
             case R.id.menu_connections:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ConnectionsFragment()).commit();
+                changeFragment(new ConnectionsFragment());
                 break;
             case R.id.menu_identities:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new IdentitiesFragment()).commit();
+                changeFragment(new IdentitiesFragment());
                 break;
             case R.id.menu_snippets:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SnippetsFragment()).commit();
+                changeFragment(new SnippetsFragment());
                 break;
-          /*  case R.id.menu_job:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new JobsFragment()).commit();
+            case R.id.menu_job:
+                changeFragment(new JobsFragment());
                 break;
-            case R.id.menu_settings:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SnippetsFragment()).commit();
+         /*   case R.id.menu_settings:
+                changeFragment(new SettingsFragment());
                 break;
             case R.id.menu_about:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SnippetsFragment()).commit();
+                changeFragment(new AboutFragment());
                 break;
            */
         }
         side_menu.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void changeFragment(Fragment frag){
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, frag)
+                .commit();
     }
 }
