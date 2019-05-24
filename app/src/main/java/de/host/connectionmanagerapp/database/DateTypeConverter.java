@@ -1,4 +1,4 @@
-package de.host.connectionmanagerapp;
+package de.host.connectionmanagerapp.database;
 
 import androidx.room.TypeConverter;
 

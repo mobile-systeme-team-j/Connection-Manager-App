@@ -1,4 +1,4 @@
-package de.host.connectionmanagerapp;
+package de.host.connectionmanagerapp.database;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -14,6 +14,9 @@ public interface Snippet_JobDao {
 
     @Query("Select*from snippet_job_join Where job_Id = :id")
     List<Snippet_Job> sjsfromjob(long id);
+
+    @Query("Select*from snippet_job_join Where snippet_Id = :id")
+    List<Snippet_Job> sjsfromsnippet(long id);
 
     @Delete
     void delete(Snippet_Job... sjs);

@@ -1,9 +1,12 @@
-package de.host.connectionmanagerapp;
+package de.host.connectionmanagerapp.database;
 
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
+
+import de.host.connectionmanagerapp.database.Job;
+import de.host.connectionmanagerapp.database.Snippet;
 
 @Entity(tableName = "snippet_job_join",
 

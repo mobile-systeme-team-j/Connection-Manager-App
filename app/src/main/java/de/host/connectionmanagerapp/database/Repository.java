@@ -1,4 +1,4 @@
-package de.host.connectionmanagerapp;
+package de.host.connectionmanagerapp.database;
 
 import android.app.Application;
 
@@ -17,7 +17,7 @@ public class Repository {
     private long jobId;
 
     public Repository(Application application){
-        Database db = Database.getDatabase(application);
+        Roombuilder db = Roombuilder.getDatabase(application);
         identityDao = db.identityDao();
         connectionDao = db.connectionDao();
         jobDao = db.jobDao();
@@ -46,7 +46,6 @@ public class Repository {
     public void snippet_insert(Snippet snippet){snippetDao.insert(snippet);}
 
     //LiveData
-
     public LiveData<List<Connection>> getConnectionsLive() {
         return connectionDao.getAllConnection();
     }
@@ -67,6 +66,8 @@ public class Repository {
         return snippetDao.getAllSnippets();
     }
 
+    // U
+
     //DeleteMethoden
     public void identity_delete(long identityid){
         Identity identity = identityDao.identityformid(identityid);
@@ -74,16 +75,26 @@ public class Repository {
     }
     public void snippet_delete(long snippetId){
         Snippet snippet = snippetDao.snippetfromid(snippetId);
+        List<Snippet_Job> sjs = sjDao.sjsfromsnippet(snippetId);
+        for(Snippet_Job sj: sjs) {
+            sjDao.delete(sj);
+        }
         snippetDao.delete(snippet);
     }
     public void connection_delete(long connectionId){
         Connection conection = connectionDao.connectionfromid(connectionId);
+        List<Connection_Job>cjs= cjDao.cjsconnection(connectionId);
+        for(Connection_Job cj : cjs){
+            cjDao.delete(cj);
+        }
+
         connectionDao.delete(conection);
     }
     public void job_delete(long jobId){
         Job job = jobDao.jobfromId(jobId);
         List<Snippet_Job> sjs = sjDao.sjsfromjob(jobId);
-        List<Connection_Job>cjs= cjDao.cjs(jobId);
+        List<Connection_Job>cjs= cjDao.cjsjobs(jobId);
+
         for(Snippet_Job sj: sjs) {
             sjDao.delete(sj);
         }
