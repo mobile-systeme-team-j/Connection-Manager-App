@@ -1,9 +1,12 @@
+//Autor Mattis Uphoff
 package de.host.connectionmanagerapp.database;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import java.util.Date;
 
 
 @Entity(tableName = "job")
@@ -18,13 +21,12 @@ public class Job {
     private String titel;
 
 
-    //@NonNull
-    //@ColumnInfo(name = "job_time")
-    //private Time jobtime;
+    @ColumnInfo(name = "job_time")
+    private Date jobtime;
 
 
-    //@ColumnInfo(name = "job_date")
-    //private Date job_date;
+    @ColumnInfo(name = "job_date")
+    private Date job_date;
 
     public long getJob_id() {
         return job_id;
@@ -39,24 +41,24 @@ public class Job {
         return titel;
     }
 
-   // public Date getJob_date() {
-    //    return job_date;
-    //}
+    public Date getJob_date() {
+        return job_date;
+    }
 
-    //@NonNull
-    //public Time getJobtime() {
-       // return jobtime;
-    //}
+
+    public Date getJobtime() {
+       return jobtime;
+    }
 
     public void setTitel(@NonNull String titel) {
         this.titel = titel;
     }
 
-    //public void setJobtime(@NonNull Time jobtime) {
-        //this.jobtime = jobtime;
-    //}
+    public void setJobtime(Date jobtime) {
+        this.jobtime = jobtime;
+    }
 
-   // public void setJob_date(Date job_date) {
-       // this.job_date = job_date;
-    //}
+    public void setJob_date(Date job_date) {
+        this.job_date = job_date;
+    }
 }

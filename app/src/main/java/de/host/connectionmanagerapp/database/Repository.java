@@ -1,3 +1,5 @@
+//Autor Mattis Uphoff
+
 package de.host.connectionmanagerapp.database;
 
 import android.app.Application;
@@ -45,6 +47,20 @@ public class Repository {
     //Fertiges snippet übergeben es erfolgt eine überprüfung mehr, auch die identity id muss gesetzt werden
     public void snippet_insert(Snippet snippet){snippetDao.insert(snippet);}
 
+
+    //getEntity
+    public Identity getIdentity(long id){
+        return identityDao.identityformid(id);
+    }
+    public Connection getConnection(long id){
+        return connectionDao.connectionfromid(id);
+    }
+    public Snippet getSnippet(long id){
+        return snippetDao.snippetfromid(id);
+    }
+    public Job getJob(long id){
+        return jobDao.jobfromId(id);
+    }
     //LiveData
     public LiveData<List<Connection>> getConnectionsLive() {
         return connectionDao.getAllConnection();
@@ -66,7 +82,19 @@ public class Repository {
         return snippetDao.getAllSnippets();
     }
 
-    // U
+    // Updates
+    public void identity_update(Identity identity){
+        identityDao.update(identity);
+    }
+    public void connection_update(Connection connection){
+        connectionDao.update(connection);
+    }
+    public void job_update(Job job){
+        jobDao.update(job);
+    }
+    public void snippet_update(Snippet snippet){
+        snippetDao.update(snippet);
+    }
 
     //DeleteMethoden
     public void identity_delete(long identityid){

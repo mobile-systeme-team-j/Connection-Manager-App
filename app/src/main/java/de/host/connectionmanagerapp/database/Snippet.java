@@ -1,12 +1,12 @@
+//Autor Mattis Uphoff
 package de.host.connectionmanagerapp.database;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-import java.io.File;
+
 
 @Entity(tableName = "snippet")
 public class Snippet {
