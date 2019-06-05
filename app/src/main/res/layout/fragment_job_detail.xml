@@ -7,6 +7,7 @@
     android:layout_height="match_parent">
 
     <EditText
+        android:id="@+id/job_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Jobname" />
@@ -53,7 +54,7 @@
         android:layout_height="38dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton5"
+        android:id="@+id/fabDelete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
@@ -61,7 +62,7 @@
         app:srcCompat="@drawable/ic_delete" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton3"
+        android:id="@+id/fabSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="end"

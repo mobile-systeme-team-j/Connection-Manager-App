@@ -1,4 +1,4 @@
-package de.host.connectionmanagerapp;
+package de.host.connectionmanagerapp.activityFragments;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -14,6 +14,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import de.host.connectionmanagerapp.DatePickerFragment;
+import de.host.connectionmanagerapp.R;
+import de.host.connectionmanagerapp.TimePickerFragment;
+
 /**
  * @author  Jürgen Manuel Trapp
  */
@@ -26,6 +30,7 @@ public class JobDetailFragment extends Fragment
 
     EditText editTextDate;
     EditText editTextTime;
+    EditText editTextJobName;
 
 
 
@@ -37,6 +42,7 @@ public class JobDetailFragment extends Fragment
 
          editTextDate = view.findViewById(R.id.date);
          editTextTime = view.findViewById(R.id.time);
+         editTextJobName = view.findViewById(R.id.job_name);
 
         return view;
     }

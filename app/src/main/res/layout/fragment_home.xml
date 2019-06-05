@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeFragment">
+    tools:context=".activityFragments.HomeFragment">
 
     <TextView
         android:id="@+id/textView3"
@@ -24,7 +24,7 @@
         android:layout_gravity="clip_horizontal|center" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton2"
+        android:id="@+id/WizardButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"

@@ -41,7 +41,7 @@
         android:layout_height="35dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton5"
+        android:id="@+id/fabDelete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
@@ -49,7 +49,7 @@
         app:srcCompat="@drawable/ic_delete" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton3"
+        android:id="@+id/fabSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="end"

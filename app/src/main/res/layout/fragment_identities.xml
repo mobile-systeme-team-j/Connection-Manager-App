@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".IdentitiesFragment"
+    tools:context=".activityFragments.IdentitiesFragment"
     tools:openDrawer="start"   >
 
     <LinearLayout
@@ -34,7 +34,7 @@
         </ListView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton"
+            android:id="@+id/fabNewConnection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="end"

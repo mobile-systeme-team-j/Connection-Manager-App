@@ -1,4 +1,4 @@
-package de.host.connectionmanagerapp;
+package de.host.connectionmanagerapp.activityFragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.EditText;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import de.host.connectionmanagerapp.R;
 
 /**
  * @author Manuel Trapp
@@ -33,7 +35,7 @@ public class WizardFragment extends Fragment implements View.OnClickListener {
 
         tv_ip = view.findViewById(R.id.ip);
         tv_port = view.findViewById(R.id.port);
-        tv_identity = view.findViewById(R.id.identity);
+        tv_identity = view.findViewById(R.id.identity_name);
         tv_password = view.findViewById(R.id.password);
         tv_key = view.findViewById(R.id.key);
 

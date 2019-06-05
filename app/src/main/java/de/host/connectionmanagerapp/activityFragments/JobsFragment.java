@@ -1,4 +1,4 @@
-package de.host.connectionmanagerapp;
+package de.host.connectionmanagerapp.activityFragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,17 +8,15 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-/**
- * @author Manuel Trapp
- * @date 14.05.2019
- * */
+import de.host.connectionmanagerapp.R;
 
-public class HomeFragment extends Fragment {
+public class JobsFragment extends Fragment {
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_jobs, container, false);
     }
 }

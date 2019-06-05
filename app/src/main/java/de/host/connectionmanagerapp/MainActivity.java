@@ -17,6 +17,13 @@ import com.google.android.material.navigation.NavigationView;
 
 import net.schmizz.sshj.SSHClient;
 
+import de.host.connectionmanagerapp.activityFragments.ConnectionsFragment;
+import de.host.connectionmanagerapp.activityFragments.HomeFragment;
+import de.host.connectionmanagerapp.activityFragments.IdentitiesFragment;
+import de.host.connectionmanagerapp.activityFragments.JobsFragment;
+import de.host.connectionmanagerapp.activityFragments.SnippetsFragment;
+import de.host.connectionmanagerapp.activityFragments.WizardFragment;
+
 /**
  * @author Manuel Trapp
  * @date 14.05.2019

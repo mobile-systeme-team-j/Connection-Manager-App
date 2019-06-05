@@ -7,32 +7,37 @@
     android:layout_height="match_parent">
 
     <EditText
+        android:id="@+id/identity_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Identity name" />
 
     <EditText
+        android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Username" />
 
     <EditText
+        android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Password" />
 
     <EditText
+        android:id="@+id/key"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Key" />
 
     <EditText
+        android:id="@+id/key_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Key-Password" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton5"
+        android:id="@+id/fabDelete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
@@ -40,7 +45,7 @@
         app:srcCompat="@drawable/ic_delete" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton3"
+        android:id="@+id/fabSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="end"

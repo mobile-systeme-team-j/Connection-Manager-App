@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context=".SnippetsFragment"
+    tools:context=".activityFragments.SnippetsFragment"
     tools:openDrawer="start">
 
 
@@ -30,7 +30,7 @@
     </ListView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/fabNewConnection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
