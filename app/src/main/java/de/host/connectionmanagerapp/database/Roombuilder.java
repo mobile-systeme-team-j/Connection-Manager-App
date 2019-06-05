@@ -7,7 +7,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-//import com.commonsware.cwac.saferoom.SafeHelperFactory;
+import com.commonsware.cwac.saferoom.SafeHelperFactory;
 
 
 @androidx.room.Database(entities = {Connection.class, Identity.class, Snippet.class, Job.class, Connection_Job.class, Snippet_Job.class}, version = 1, exportSchema = false)
@@ -16,7 +16,7 @@ public abstract class Roombuilder extends RoomDatabase {
 
 
     private static Roombuilder INSTANCE;
-   // static SafeHelperFactory factory= SafeHelperFactory;
+    //SafeHelperFactory factory=SafeHelperFactory.fromUser();
    public abstract ConnectionDao connectionDao();
    public abstract IdentityDao identityDao();
    public abstract JobDao jobDao();

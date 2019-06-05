@@ -6,6 +6,8 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
+import com.commonsware.cwac.saferoom.SafeHelperFactory;
+
 import java.util.List;
 
 public class Repository {
@@ -16,7 +18,6 @@ public class Repository {
     private SnippetDao snippetDao;
     private Connection_JobDao cjDao;
     private Snippet_JobDao sjDao;
-    private long jobId;
 
     public Repository(Application application){
         Roombuilder db = Roombuilder.getDatabase(application);
@@ -37,7 +38,7 @@ public class Repository {
     public void connection_insert(Connection connection){connectionDao.insert(connection);}
 
     public void job_insert(Job job, long snippetId, long connectionId ){
-        jobId = jobDao.insert(job);
+        long jobId = jobDao.insert(job);
         Connection_Job cj = new Connection_Job(jobId, connectionId);
         cjDao.insert(cj);
 
