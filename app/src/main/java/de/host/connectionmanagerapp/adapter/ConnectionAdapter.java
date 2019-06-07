@@ -49,7 +49,6 @@ public class ConnectionAdapter extends  RecyclerView.Adapter<ConnectionAdapter.C
 
         public ConnectionViewHolder(View itemView) {
             super(itemView);
-            itemView.setOnClickListener(this);
             textTitel = itemView.findViewById(R.id.connection_view_titel);
 
             itemView.setOnClickListener(this);
