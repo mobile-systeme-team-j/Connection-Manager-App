@@ -1,15 +1,16 @@
 package de.host.connectionmanagerapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.fragment.app.Fragment;
 
 import de.host.connectionmanagerapp.activityFragments.HomeFragment;
 
-public class callFragments extends AppCompatActivity {
+public class callFragments {
 
     public void addFragment(Fragment frag) {
         try {
-            getSupportFragmentManager().beginTransaction()
+         new MainActivity().getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, frag)
                     .commit();
         }catch (NullPointerException e){
@@ -18,7 +19,7 @@ public class callFragments extends AppCompatActivity {
     }
 
     public void replaceFragment(Fragment frag){
-        getSupportFragmentManager().beginTransaction()
+        new MainActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container,  frag)
                 .addToBackStack(null)
                 .commit();
