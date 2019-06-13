@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
 
 public class JobsFragment extends Fragment {
@@ -18,5 +19,9 @@ public class JobsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_jobs, container, false);
+    }
+
+    public void onClick(View view){
+        ((MainActivity)getActivity()).changeFragment(new JobDetailFragment());
     }
 }

@@ -28,13 +28,13 @@
         <ListView
             android:id="@+id/ListViewAllJobs"
             android:layout_width="349dp"
-            android:layout_height="625dp"
+            android:layout_height="500dp"
             android:layout_gravity="center">
 
         </ListView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabNewConnection"
+            android:id="@+id/fabNewJob"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -42,6 +42,7 @@
             android:layout_marginRight="8dp"
             android:clickable="true"
             android:focusable="true"
+            android:onClick="onClick"
             app:backgroundTint="#00FFFFFF"
             app:srcCompat="@android:drawable/ic_input_add" />
 

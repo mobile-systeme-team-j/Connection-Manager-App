@@ -20,7 +20,7 @@
     <ListView
         android:id="@+id/ListViewLastConnections"
         android:layout_width="291dp"
-        android:layout_height="637dp"
+        android:layout_height="500dp"
         android:layout_gravity="clip_horizontal|center" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

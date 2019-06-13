@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
 
 /**
@@ -21,6 +22,14 @@ public class IdentitiesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
         return inflater.inflate(R.layout.fragment_identities, container, false);
+
+    }
+
+    public void onClick(View view){
+        if(view.getId() == R.id.fabNewIdentity){
+            ((MainActivity)getActivity()).changeFragment(new IdentityDetailFragment());
+        }
     }
 }

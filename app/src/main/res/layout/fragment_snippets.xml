@@ -24,13 +24,13 @@
     <ListView
         android:id="@+id/ListViewAllSnippets"
         android:layout_width="349dp"
-        android:layout_height="620dp"
+        android:layout_height="500dp"
         android:layout_gravity="center">
 
     </ListView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabNewConnection"
+        android:id="@+id/fabNewIdentity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
