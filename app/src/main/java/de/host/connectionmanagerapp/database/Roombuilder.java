@@ -16,7 +16,8 @@ public abstract class Roombuilder extends RoomDatabase {
 
 
     private static Roombuilder INSTANCE;
-    //SafeHelperFactory factory=SafeHelperFactory.fromUser();
+    static String pass = "test";
+    private static SafeHelperFactory factory= new SafeHelperFactory(pass.toCharArray());
    public abstract ConnectionDao connectionDao();
    public abstract IdentityDao identityDao();
    public abstract JobDao jobDao();
@@ -32,7 +33,7 @@ public abstract class Roombuilder extends RoomDatabase {
                             Room.databaseBuilder(context.getApplicationContext(),
                                     Roombuilder.class,
                                     "database")
-                                    //.openHelperFactory(factory)
+                                    .openHelperFactory(factory)
                                     .fallbackToDestructiveMigration()
                                     .build();
                 }

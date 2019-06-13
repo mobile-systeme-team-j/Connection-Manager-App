@@ -60,6 +60,7 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
             editTextPassword.setText(identity.getPassword());
             editTextKey.setText(identity.getKeypath());
             editTextKeyPassword.setText(identity.getKeypassword());
+
         }
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
