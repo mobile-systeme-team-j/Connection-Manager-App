@@ -12,6 +12,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import de.host.connectionmanagerapp.R;
 import de.host.connectionmanagerapp.database.Connection;
 import de.host.connectionmanagerapp.database.Identity;
@@ -29,12 +31,14 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
     Bundle arguments;
     private ConnectionViewModel connectionViewModel;
     long id;
+    FloatingActionButton delete;
+    FloatingActionButton save;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_job_detail, container, false);
+        View view = inflater.inflate(R.layout.fragment_identity_detail, container, false);
 
 
         connectionViewModel= ViewModelProviders.of(getActivity()).get(ConnectionViewModel.class);
@@ -43,6 +47,8 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
         editTextPassword = view.findViewById(R.id.password);
         editTextKey = view.findViewById(R.id.key);
         editTextKeyPassword = view.findViewById(R.id.key_password);
+        delete = view.findViewById(R.id.fabDelete);
+        save = view.findViewById(R.id.fabSave);
 
         arguments = getArguments();
         if(arguments !=null){
@@ -55,9 +61,55 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
             editTextKey.setText(identity.getKeypath());
             editTextKeyPassword.setText(identity.getKeypassword());
         }
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(arguments !=null) {
+                    connectionViewModel.deleteIdentity(id);
+                }
+                else{
+
+                }
+            }
+        });
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(arguments !=null) {
+                    try{
+                        identity.setTitel(String.valueOf(editTextIdentityName.getText()));
+                        identity.setUsername(String.valueOf(editTextUsername.getText()));
+                        identity.setPassword(String.valueOf(editTextPassword.getText()));
+                        identity.setKeypath(String.valueOf(editTextKey.getText()));
+                        identity.setKeypassword(String.valueOf(editTextKeyPassword.getText()));
+                        connectionViewModel.updateIdentity(identity);
+                    }
+                    catch (Exception e){
+                        Toast.makeText(getContext(),"Please fill all lines",Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else{
+                    try{
+                        identity = new Identity();
+                        identity.setTitel(String.valueOf(editTextIdentityName.getText()));
+                        identity.setUsername(String.valueOf(editTextUsername.getText()));
+                        identity.setPassword(String.valueOf(editTextPassword.getText()));
+                        identity.setKeypath(String.valueOf(editTextKey.getText()));
+                        identity.setKeypassword(String.valueOf(editTextKeyPassword.getText()));
+                        connectionViewModel.insertIdentity(identity);
+                    }
+                    catch (Exception e){
+                        Toast.makeText(getContext(),"Please fill all lines",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
 
         return view;
     }
+
+
 
     @Override
     public void onClick(View view) {

@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void addFragment(Fragment frag) {
         try {
-            new MainActivity().getSupportFragmentManager().beginTransaction()
+            getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, frag)
                     .commit();
         }catch (NullPointerException e){
@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void replaceFragment(Fragment frag){
         try {
-            new MainActivity().getSupportFragmentManager().beginTransaction()
+            getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, frag)
                     .addToBackStack(null)
                     .commit();

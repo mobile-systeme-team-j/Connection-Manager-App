@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
 
@@ -16,20 +18,20 @@ import de.host.connectionmanagerapp.R;
  * @date 14.05.2019
  * */
 
-public class IdentitiesFragment extends Fragment {
+public class IdentitiesFragment extends Fragment implements View.OnClickListener {
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_identities, container, false);
 
-        return inflater.inflate(R.layout.fragment_identities, container, false);
-
+        FloatingActionButton actionButton = view.findViewById(R.id.fabNewIdentity);
+        actionButton.setOnClickListener(this);
+        return view;
     }
 
     public void onClick(View view){
-        if(view.getId() == R.id.fabNewIdentity){
-            ((MainActivity)getActivity()).changeFragment(new IdentityDetailFragment());
-        }
+        ((MainActivity)getActivity()).replaceFragment(new IdentityDetailFragment());
     }
 }

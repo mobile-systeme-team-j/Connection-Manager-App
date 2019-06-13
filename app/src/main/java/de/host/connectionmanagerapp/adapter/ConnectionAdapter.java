@@ -48,7 +48,10 @@ public class ConnectionAdapter extends  RecyclerView.Adapter<ConnectionAdapter.C
 
     @Override
     public int getItemCount() {
-        return connections.size();
+        if (connections != null) {
+            return connections.size();
+        }
+        return 0;
     }
 
     public void setConnections(List<Connection>connections){
