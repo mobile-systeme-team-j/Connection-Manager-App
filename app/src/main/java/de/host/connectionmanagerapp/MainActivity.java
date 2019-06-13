@@ -51,7 +51,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+            //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+            //getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new HomeFragment()).commit();
+            new callFragments().addFragment(new HomeFragment());
         }
 
         //testSSH();
@@ -104,13 +106,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch(menuItem.getItemId()){
             case R.id.menu_home:
-                  changeFragment(new HomeFragment());
+                new callFragments().replaceFragment(new HomeFragment());
                 break;
             case R.id.menu_wizard:
                 changeFragment(new WizardFragment());
                 break;
             case R.id.menu_connections:
-                changeFragment(new ConnectionsFragment());
+                new callFragments().replaceFragment(new ConnectionsFragment());
                 break;
             case R.id.menu_identities:
                 changeFragment(new IdentitiesFragment());
@@ -133,9 +135,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+
     public void changeFragment(Fragment frag){
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, frag)
+                .replace(R.id.fragment_container,  frag)
+                .addToBackStack(null)
                 .commit();
+
     }
+
 }
