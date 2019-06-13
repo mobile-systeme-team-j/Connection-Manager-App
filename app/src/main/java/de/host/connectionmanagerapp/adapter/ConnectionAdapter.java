@@ -2,27 +2,34 @@
 package de.host.connectionmanagerapp.adapter;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
+import de.host.connectionmanagerapp.activityFragments.ConnectionDetailFragment;
 import de.host.connectionmanagerapp.database.Connection;
 
 public class ConnectionAdapter extends  RecyclerView.Adapter<ConnectionAdapter.ConnectionViewHolder> {
 
     private List<Connection> connections;
-    private Application application;
+    private Context application;
 
-    public ConnectionAdapter(Application application, List<Connection> connections) {
-        this.connections = connections;
+    public ConnectionAdapter(Context application) {
         this.application = application;
     }
 
@@ -44,7 +51,12 @@ public class ConnectionAdapter extends  RecyclerView.Adapter<ConnectionAdapter.C
         return connections.size();
     }
 
-    class ConnectionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public void setConnections(List<Connection>connections){
+        this.connections = connections;
+        notifyDataSetChanged();
+    }
+
+    class ConnectionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         TextView textTitel;
 
         public ConnectionViewHolder(View itemView) {
@@ -52,15 +64,43 @@ public class ConnectionAdapter extends  RecyclerView.Adapter<ConnectionAdapter.C
             textTitel = itemView.findViewById(R.id.connection_view_titel);
 
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             Connection connection = connections.get(getAdapterPosition());
+            long id = connection.getConnection_id();
+            Fragment fram = new ConnectionDetailFragment();
+            Bundle bundle = new Bundle();
+            bundle.putLong("class", id);
+            fram.setArguments(bundle);
 
-            //Intent intent = new Intent(application, .class);
-            //intent.putExtra("connection", connection);
+            AppCompatActivity activity = (AppCompatActivity) v.getContext();
+            activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, fram).addToBackStack(null).commit();
 
+
+        }
+        @Override
+        public boolean onLongClick(View v) {
+            PopupMenu popupMenu = new PopupMenu(application, v);
+            popupMenu.getMenuInflater().inflate(R.menu.menu_longclick, popupMenu.getMenu());
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    switch (item.getItemId()) {
+                        case R.id.duplicate:
+                            return true;
+                        case R.id.placeholder:
+                            return true;
+
+                        default:
+                            return true;
+                    }
+                }
+            });
+            popupMenu.show();
+            return true;
         }
     }
 }

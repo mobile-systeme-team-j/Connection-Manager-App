@@ -32,13 +32,60 @@ public class ConnectionViewModel extends AndroidViewModel {
         allSnippets = repo.getSnippetsLive();
 
     }
-    LiveData<List<Connection>> getAllConnections() { return allConnections; }
+    //Insert
+    public void insertIdentity(Identity identity){
+        repo.identity_insert(identity);
+    }
+    public  void insertConnection(Connection connection){
+        repo.connection_insert(connection);
+    }
+    public void insertSnippet(Snippet snippet){
+        repo.snippet_insert(snippet);
+    }
 
-    LiveData<List<Identity>> getAllIdenties() { return allIdenties; }
+    //getOnId
+    public Connection getConnection(long id){
+        return(repo.getConnection(id));
+    }
 
-    LiveData<List<Job>> getAllJobs(){return allJobs;}
+    public Identity getIdentity(long id){
+        return(repo.getIdentity(id));
+    }
+    public Job getJobs(long id){
+        return(repo.getJob(id));
+    }
+    public Snippet getSnippets(long id){
+        return(repo.getSnippet(id));
+    }
+    //update
+    public void updateIdentity(Identity identity){
+        repo.identity_update(identity);
+    }
+    public void updateConnection(Connection connection){
+        repo.connection_update(connection);
+    }
+    public void updateJob(Job job){
+        updateJob(job);
+    }
+    public void updateSnippets(Snippet snippet){
+        updateSnippets(snippet);
+    }
 
-    LiveData<List<Snippet>> getAllSnippets(){return allSnippets;}
+    //delete
+    public void deleteIdentity(long id){
+        repo.identity_delete(id);
+    }
+    public void deleteConnection(long id){
+        repo.connection_delete(id);
+    }
 
-    LiveData<List<Connection>> getRecentConnections() { return recentConnections; }
+    public LiveData<List<Connection>> getAllConnections() { return allConnections; }
+
+    public LiveData<List<Identity>> getAllIdenties() { return allIdenties; }
+
+    public LiveData<List<Job>> getAllJobs(){return allJobs;}
+
+    public LiveData<List<Snippet>> getAllSnippets(){return allSnippets;}
+
+    public LiveData<List<Connection>> getRecentConnections() { return recentConnections; }
 }

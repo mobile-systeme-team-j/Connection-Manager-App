@@ -3,6 +3,7 @@
 package de.host.connectionmanagerapp.database;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
