@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+            addFragment(new HomeFragment());
         }
 
         //testSSH();
@@ -104,22 +104,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch(menuItem.getItemId()){
             case R.id.menu_home:
-                  changeFragment(new HomeFragment());
+                replaceFragment(new HomeFragment());
                 break;
             case R.id.menu_wizard:
-                changeFragment(new WizardFragment());
+                replaceFragment(new WizardFragment());
                 break;
             case R.id.menu_connections:
-                changeFragment(new ConnectionsFragment());
+                replaceFragment(new ConnectionsFragment());
                 break;
             case R.id.menu_identities:
-                changeFragment(new IdentitiesFragment());
+                replaceFragment(new IdentitiesFragment());
                 break;
             case R.id.menu_snippets:
-                changeFragment(new SnippetsFragment());
+                replaceFragment(new SnippetsFragment());
                 break;
             case R.id.menu_job:
-                changeFragment(new JobsFragment());
+                replaceFragment(new JobsFragment());
                 break;
          /*   case R.id.menu_settings:
                 changeFragment(new SettingsFragment());
@@ -133,9 +133,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    public void changeFragment(Fragment frag){
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, frag)
-                .commit();
+
+    public void addFragment(Fragment frag) {
+        try {
+            new MainActivity().getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragment_container, frag)
+                    .commit();
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
     }
+
+    public void replaceFragment(Fragment frag){
+        try {
+            new MainActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, frag)
+                    .addToBackStack(null)
+                    .commit();
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
+
+    }
+
 }

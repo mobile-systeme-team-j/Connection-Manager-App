@@ -42,6 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:clickable="true"
+        android:onClick="onClick"
         app:srcCompat="@drawable/ic_delete" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -50,6 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:clickable="true"
+        android:onClick="onClick"
         app:srcCompat="@drawable/ic_folder" />
 
 </LinearLayout>

@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import de.host.connectionmanagerapp.R;
 
-public class IdentityDetailFragment extends Fragment {
+public class IdentityDetailFragment extends Fragment implements View.OnClickListener{
 
     EditText editTextIdentityName;
     EditText editTextUsername;
@@ -33,5 +33,18 @@ public class IdentityDetailFragment extends Fragment {
         editTextKeyPassword = view.findViewById(R.id.key_password);
 
         return view;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.fabDelete:
+                //Method for delete
+                break;
+            case R.id.fabSave:
+                //Method for save
+                break;
+
+        }
     }
 }

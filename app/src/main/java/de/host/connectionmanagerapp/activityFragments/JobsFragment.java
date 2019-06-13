@@ -22,6 +22,6 @@ public class JobsFragment extends Fragment {
     }
 
     public void onClick(View view){
-        ((MainActivity)getActivity()).changeFragment(new JobDetailFragment());
+        ((MainActivity)getActivity()).replaceFragment(new JobDetailFragment());
     }
 }

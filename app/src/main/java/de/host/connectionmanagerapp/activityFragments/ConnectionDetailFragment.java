@@ -22,10 +22,6 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_job_detail, container, false);
 
-     //   delete = view.findViewById(R.id.fabDelete);
-     //   save = view.findViewById(R.id.fabSave);
-
-
         return view;
     }
 

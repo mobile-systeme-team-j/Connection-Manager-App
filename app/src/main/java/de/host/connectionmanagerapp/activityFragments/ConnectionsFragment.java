@@ -1,5 +1,6 @@
 package de.host.connectionmanagerapp.activityFragments;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import java.util.Objects;
 
 import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
@@ -29,7 +32,9 @@ public class ConnectionsFragment extends Fragment {
 
     public void onClick(View v){
         if(v.getId() == R.id.fabNewConnection){
-            ((MainActivity)getActivity()).changeFragment(new ConnectionDetailFragment());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                ((MainActivity) Objects.requireNonNull(getActivity())).replaceFragment(new ConnectionDetailFragment());
+            }
         }
     }
 }
