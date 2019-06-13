@@ -68,12 +68,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_side, menu);
-        return true;
-    }
 
     private void testSSH () {
         Thread thread = new Thread(new Runnable() {

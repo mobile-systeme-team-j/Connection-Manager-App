@@ -16,6 +16,7 @@ import net.sf.expectit.Expect;
 import net.sf.expectit.ExpectBuilder;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.security.Security;
@@ -24,7 +25,13 @@ import java.util.concurrent.TimeUnit;
 
 import static net.sf.expectit.filter.Filters.removeColors;
 import static net.sf.expectit.filter.Filters.removeNonPrintable;
+import static net.sf.expectit.matcher.Matchers.anyOf;
+import static net.sf.expectit.matcher.Matchers.anyString;
 import static net.sf.expectit.matcher.Matchers.contains;
+
+/**
+ * @author Phillip Kühling
+ * */
 
 // Klasse für die Einbindung der sshj-lib
 public class SSHConn {
@@ -146,19 +153,26 @@ public class SSHConn {
         final Expect expect = new ExpectBuilder()
                 .withOutput(shell.getOutputStream())
                 .withInputs(shell.getInputStream(), shell.getErrorStream())
-                .withEchoInput(System.out)
-                .withEchoOutput(System.err)
+                //.withEchoInput(System.out)
+                //.withEchoOutput(System.err)
                 .withInputFilters(removeColors(), removeNonPrintable())
                 .withExceptionOnFailure()
                 .build();
         try {
             // Terminal like Eingabe von der Console
+            // Warte auf Eingabe --> wenn eingegeben, schicke es an server
+            // Warte auf Rückgabe, speicher result in String und gebe es aus
+            // Auf INput warten, geht ihm zu schnell
             final Scanner scanner = new Scanner(System.in);
 
             while (true) {
-                expect.withTimeout(30, TimeUnit.SECONDS)
-                    .sendLine(scanner.nextLine());
-                String result = expect.expect(contains("$")).getBefore();
+                expect.expect(contains("#"));
+                String input = scanner.nextLine();
+                if (!TextUtils.isEmpty(input)) {
+                    expect.sendLine(input);
+                }
+                String result = expect.expect(contains("#")).getBefore();
+                System.out.println(result);
             }
 
         } finally {
