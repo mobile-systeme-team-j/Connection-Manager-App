@@ -27,14 +27,14 @@
 
         <ListView
             android:id="@+id/ListViewAllIdentities"
-            android:layout_width="349dp"
-            android:layout_height="621dp"
+            android:layout_width="380dp"
+            android:layout_height="502dp"
             android:layout_gravity="center">
 
         </ListView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabNewConnection"
+            android:id="@+id/fabNewIdentity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -42,6 +42,7 @@
             android:layout_marginRight="8dp"
             android:clickable="true"
             android:focusable="true"
+            android:onClick="onClick"
             app:backgroundTint="#00FFFFFF"
             app:srcCompat="@android:drawable/ic_input_add" />
 

@@ -8,8 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
+import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
 
 
@@ -25,17 +24,13 @@ public class ConnectionsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_connections, container, false);
+        return inflater.inflate(R.layout.fragment_connections, container, false);
+    }
 
-        FloatingActionButton fab = view.findViewById(R.id.WizardButton);
-        fab.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-              //  MainActivity.changeFragment(ConnectionDetailFragment);
-            }
-        });
-
-        return view;
+    public void onClick(View v){
+        if(v.getId() == R.id.fabNewConnection){
+            ((MainActivity)getActivity()).changeFragment(new ConnectionDetailFragment());
+        }
     }
 }
 
