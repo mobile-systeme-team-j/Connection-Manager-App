@@ -26,7 +26,7 @@ public class IdentitiesFragment extends Fragment implements View.OnClickListener
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_identities, container, false);
 
-        FloatingActionButton actionButton = view.findViewById(R.id.fabNewIdentity);
+        FloatingActionButton actionButton = view.findViewById(R.id.fabNewSnippet);
         actionButton.setOnClickListener(this);
         return view;
     }

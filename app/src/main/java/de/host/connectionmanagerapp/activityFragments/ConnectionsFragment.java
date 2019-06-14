@@ -1,5 +1,5 @@
 package de.host.connectionmanagerapp.activityFragments;
-import android.os.Build;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +12,9 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.Objects;
+import java.util.List;
 
 import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
@@ -28,7 +28,7 @@ import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
  * @date 14.05.2019
  * */
 
-public class ConnectionsFragment extends Fragment {
+public class ConnectionsFragment extends Fragment implements View.OnClickListener{
 
 
     private ConnectionViewModel connectionViewModel;
@@ -39,6 +39,7 @@ public class ConnectionsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_connections, container, false);
+
         recyclerView = view.findViewById(R.id.con_recycler_view);
         final ConnectionAdapter adapter = new ConnectionAdapter(getActivity());
         recyclerView.setAdapter(adapter);
@@ -53,17 +54,16 @@ public class ConnectionsFragment extends Fragment {
             }
         });
 
+        FloatingActionButton actionButton = view.findViewById(R.id.fabNewConnection);
+        actionButton.setOnClickListener(this);
+
         return view;
 
 
     }
 
     public void onClick(View v){
-        if(v.getId() == R.id.fabNewConnection){
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                ((MainActivity) Objects.requireNonNull(getActivity())).replaceFragment(new ConnectionDetailFragment());
-            }
-        }
+        ((MainActivity)getActivity()).replaceFragment(new ConnectionDetailFragment());
     }
 }
 

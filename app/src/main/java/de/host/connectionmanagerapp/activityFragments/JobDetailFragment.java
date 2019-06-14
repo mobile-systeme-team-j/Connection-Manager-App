@@ -15,6 +15,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import de.host.connectionmanagerapp.DatePickerFragment;
+import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
 import de.host.connectionmanagerapp.TimePickerFragment;
 
@@ -27,7 +28,7 @@ public class JobDetailFragment extends Fragment
                     TimePickerDialog.OnTimeSetListener,
                     DatePickerDialog.OnDateSetListener {
 
-
+    private DatePickerFragment datePickerFragment;
     EditText editTextDate;
     EditText editTextTime;
     EditText editTextJobName;
@@ -40,9 +41,22 @@ public class JobDetailFragment extends Fragment
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_job_detail, container, false);
 
-         editTextDate = view.findViewById(R.id.date);
-         editTextTime = view.findViewById(R.id.time);
-         editTextJobName = view.findViewById(R.id.job_name);
+        view.findViewById(R.id.job_name);
+
+         View Buttons[]={
+                 view.findViewById(R.id.date),
+                 view.findViewById(R.id.time),
+                 view.findViewById(R.id.job_name),
+                 view.findViewById(R.id.btnConnection),
+                 view.findViewById(R.id.btnIdentity),
+                 view.findViewById(R.id.btnSnippet),
+                 view.findViewById(R.id.fabSave),
+                 view.findViewById(R.id.fabDelete)
+         };
+
+         for (View v : Buttons){
+             v.setOnClickListener(this);
+         }
 
         return view;
     }
@@ -53,19 +67,25 @@ public class JobDetailFragment extends Fragment
 
         switch(view.getId()){
             case R.id.btnConnection:
-                startFragment(new ConnectionsFragment());
+                ((MainActivity)getActivity()).replaceFragment(new ConnectionsFragment());
                 break;
             case R.id.btnIdentity:
-                startFragment(new IdentitiesFragment());
+                ((MainActivity)getActivity()).replaceFragment(new IdentitiesFragment());
                 break;
             case R.id.btnSnippet:
-                startFragment(new SnippetsFragment());
+                ((MainActivity)getActivity()).replaceFragment(new SnippetsFragment());
                 break;
             case R.id.date:
-                startDatePicker();
+                DatePicker();
                 break;
             case R.id.time:
-                startTimePicker();
+                TimePicker();
+                break;
+            case R.id.fabSave:
+                // Method
+                break;
+            case R.id.fabDelete:
+                // Method
                 break;
         }
 
@@ -74,17 +94,12 @@ public class JobDetailFragment extends Fragment
     }
 
 
-    public void startFragment(Fragment frag){
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, frag).commit();
-    }
-
-    public void startDatePicker(){
+    public void DatePicker(){
         DialogFragment datePicker = new DatePickerFragment();
-        datePicker.show(getFragmentManager(), "date picker");
+        datePicker.show(getFragmentManager(), "DatePickerFragment.TAG");
     }
 
-    public void startTimePicker(){
+    public void TimePicker(){
           DialogFragment timePicker = new TimePickerFragment();
           timePicker.show(getFragmentManager(), "time picker");
     }

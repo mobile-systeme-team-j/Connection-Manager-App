@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import de.host.connectionmanagerapp.R;
 
 /**
@@ -15,12 +17,23 @@ import de.host.connectionmanagerapp.R;
  * @date 14.05.2019
  * */
 
-public class SnippetsFragment extends Fragment {
+public class SnippetsFragment extends Fragment implements View.OnClickListener{
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_snippets, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_snippets, container, false);
+
+        FloatingActionButton actionButton = view.findViewById(R.id.fabNewSnippet);
+        actionButton.setOnClickListener(this);
+
+        return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+       // ((MainActivity)getActivity()).replaceFragment(new SnippetDetailFragment);
     }
 }

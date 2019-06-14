@@ -27,8 +27,8 @@
 
         <ListView
             android:id="@+id/ListViewAllJobs"
-            android:layout_width="349dp"
-            android:layout_height="500dp"
+            android:layout_width="match_parent"
+            android:layout_height="496dp"
             android:layout_gravity="center">
 
         </ListView>

@@ -27,14 +27,14 @@
 
         <ListView
             android:id="@+id/ListViewAllIdentities"
-            android:layout_width="380dp"
-            android:layout_height="502dp"
+            android:layout_width="match_parent"
+            android:layout_height="492dp"
             android:layout_gravity="center">
 
         </ListView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabNewIdentity"
+            android:id="@+id/fabNewSnippet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="end"

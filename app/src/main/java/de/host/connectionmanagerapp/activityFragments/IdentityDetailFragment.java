@@ -1,7 +1,6 @@
 package de.host.connectionmanagerapp.activityFragments;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +14,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import de.host.connectionmanagerapp.R;
-import de.host.connectionmanagerapp.database.Connection;
 import de.host.connectionmanagerapp.database.Identity;
-import de.host.connectionmanagerapp.database.Repository;
 import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
 
 public class IdentityDetailFragment extends Fragment implements View.OnClickListener{
@@ -61,6 +58,8 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
             editTextKey.setText(identity.getKeypath());
             editTextKeyPassword.setText(identity.getKeypassword());
         }
+
+        /*
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,6 +104,7 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
                 }
             }
         });
+        */
 
         return view;
     }
@@ -126,12 +126,7 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
             case R.id.fabSave:
                 if(arguments !=null) {
                     try{
-                        identity.setTitel(String.valueOf(editTextIdentityName.getText()));
-                        identity.setUsername(String.valueOf(editTextUsername.getText()));
-                        identity.setPassword(String.valueOf(editTextPassword.getText()));
-                        identity.setKeypath(String.valueOf(editTextKey.getText()));
-                        identity.setKeypassword(String.valueOf(editTextKeyPassword.getText()));
-                        connectionViewModel.updateIdentity(identity);
+                        connectionViewModel.updateIdentity(Identity());
                     }
                     catch (Exception e){
                         Toast.makeText(getContext(),"Please fill all lines",Toast.LENGTH_SHORT).show();
@@ -140,12 +135,7 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
                 else{
                     try{
                         identity = new Identity();
-                        identity.setTitel(String.valueOf(editTextIdentityName.getText()));
-                        identity.setUsername(String.valueOf(editTextUsername.getText()));
-                        identity.setPassword(String.valueOf(editTextPassword.getText()));
-                        identity.setKeypath(String.valueOf(editTextKey.getText()));
-                        identity.setKeypassword(String.valueOf(editTextKeyPassword.getText()));
-                        connectionViewModel.insertIdentity(identity);
+                        connectionViewModel.insertIdentity(Identity());
                     }
                     catch (Exception e){
                         Toast.makeText(getContext(),"Please fill all lines",Toast.LENGTH_SHORT).show();
@@ -155,5 +145,14 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
                 break;
 
         }
+    }
+
+    public Identity Identity(){
+        identity.setTitel(String.valueOf(editTextIdentityName.getText()));
+        identity.setUsername(String.valueOf(editTextUsername.getText()));
+        identity.setPassword(String.valueOf(editTextPassword.getText()));
+        identity.setKeypath(String.valueOf(editTextKey.getText()));
+        identity.setKeypassword(String.valueOf(editTextKeyPassword.getText()));
+        return identity;
     }
 }

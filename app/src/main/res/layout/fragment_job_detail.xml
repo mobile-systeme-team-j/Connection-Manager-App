@@ -16,18 +16,21 @@
         android:id="@+id/btnConnection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="onClick"
         android:text="Connection" />
 
     <Button
         android:id="@+id/btnIdentity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="onClick"
         android:text="Identity" />
 
     <Button
         android:id="@+id/btnSnippet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="onClick"
         android:text="Snippet" />
 
     <EditText
