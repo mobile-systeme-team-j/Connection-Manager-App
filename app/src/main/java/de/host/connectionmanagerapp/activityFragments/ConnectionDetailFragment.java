@@ -31,7 +31,7 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_job_detail, container, false);
+        View view = inflater.inflate(R.layout.fragment_connection_detail, container, false);
 
         editTextConnectionName = view.findViewById(R.id.editTextHostname);
         editTextHostname = view.findViewById(R.id.editTextHostname);

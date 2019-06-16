@@ -1,7 +1,6 @@
 package de.host.connectionmanagerapp.activityFragments;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +46,8 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
         editTextKeyPassword = view.findViewById(R.id.key_password);
         delete = view.findViewById(R.id.fabDelete);
         save = view.findViewById(R.id.fabSave);
+        delete.setOnClickListener(this);
+        save.setOnClickListener(this);
 
         arguments = getArguments();
         if(arguments !=null){
