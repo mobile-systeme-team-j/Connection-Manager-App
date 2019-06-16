@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
 
 /**
@@ -34,6 +35,6 @@ public class SnippetsFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-       // ((MainActivity)getActivity()).replaceFragment(new SnippetDetailFragment);
+       ((MainActivity)getActivity()).replaceFragment(new SnippetDetailFragment());
     }
 }

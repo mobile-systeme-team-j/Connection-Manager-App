@@ -6,19 +6,19 @@
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/textView4"
+        android:id="@+id/editTextConnectionName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Connectionname" />
 
     <EditText
-        android:id="@+id/textView6"
+        android:id="@+id/editTextHostname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Hostname/IP" />
 
     <EditText
-        android:id="@+id/textView8"
+        android:id="@+id/editTextPort"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Port" />
