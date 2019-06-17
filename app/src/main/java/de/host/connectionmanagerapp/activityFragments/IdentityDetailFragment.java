@@ -1,6 +1,7 @@
 package de.host.connectionmanagerapp.activityFragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +25,8 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
     EditText editTextPassword;
     EditText editTextKey;
     EditText editTextKeyPassword;
-    Identity identity;
-    Bundle arguments;
+    private Identity identity;
+    private Bundle arguments;
     private ConnectionViewModel connectionViewModel;
     long id;
     FloatingActionButton delete;
@@ -52,11 +53,11 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
         arguments = getArguments();
         if(arguments !=null){
             id = arguments.getLong("id");
+
             identity = connectionViewModel.getIdentity(id);
 
-            getIdentity();
+            getIdentity(identity);
         }
-
         return view;
     }
 
@@ -68,7 +69,7 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
         switch (view.getId()){
             case R.id.fabDelete:
                 if(arguments !=null) {
-                    connectionViewModel.deleteIdentity(id);
+                    connectionViewModel.deleteIdentity(identity);
                 }
                 else{
 
@@ -106,12 +107,11 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
         return identity;
     }
 
-    public Identity getIdentity(){
+    public void getIdentity(Identity identity){
         editTextIdentityName.setText(identity.getTitel());
         editTextUsername.setText(identity.getUsername());
         editTextPassword.setText(identity.getPassword());
         editTextKey.setText(identity.getKeypath());
         editTextKeyPassword.setText(identity.getKeypassword());
-        return identity;
     }
 }

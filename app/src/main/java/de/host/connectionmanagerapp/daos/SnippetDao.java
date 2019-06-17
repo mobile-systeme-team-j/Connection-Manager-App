@@ -1,5 +1,5 @@
 //Autor Mattis Uphoff
-package de.host.connectionmanagerapp.database;
+package de.host.connectionmanagerapp.daos;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -9,6 +9,8 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import java.util.List;
+
+import de.host.connectionmanagerapp.database.Snippet;
 
 @Dao
 public interface SnippetDao {

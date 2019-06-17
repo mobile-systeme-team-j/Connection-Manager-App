@@ -28,11 +28,11 @@ public class Identity {
     @ColumnInfo(name="password")
     private String password;
 
-    //@NonNull
+    @NonNull
     @ColumnInfo(name="keypath")
     private String keypath;
 
-    //@NonNull
+    @NonNull
     @ColumnInfo(name="keypassword")
     private String keypassword;
 

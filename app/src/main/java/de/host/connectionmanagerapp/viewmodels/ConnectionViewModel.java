@@ -72,12 +72,13 @@ public class ConnectionViewModel extends AndroidViewModel {
     }
 
     //delete
-    public void deleteIdentity(long id){
-        repo.identity_delete(id);
+    public void deleteIdentity(Identity identity){
+        repo.identity_delete(identity);
     }
     public void deleteConnection(long id){
         repo.connection_delete(id);
     }
+
 
     public LiveData<List<Connection>> getAllConnections() { return allConnections; }
 

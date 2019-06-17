@@ -1,5 +1,5 @@
 //Autor MAttis Uphoff
-package de.host.connectionmanagerapp.database;
+package de.host.connectionmanagerapp.daos;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -7,6 +7,8 @@ import androidx.room.Insert;
 import androidx.room.Query;
 
 import java.util.List;
+
+import de.host.connectionmanagerapp.database.Snippet_Job;
 
 @Dao
 public interface Snippet_JobDao {

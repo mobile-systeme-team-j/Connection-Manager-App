@@ -25,13 +25,13 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"/>
 
-        <ListView
-            android:id="@+id/ListViewAllIdentities"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/ind_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="492dp"
-            android:layout_gravity="center">
+            android:layout_height="526dp"
+            android:layout_gravity="center"
+            android:scrollbars="vertical" />
 
-        </ListView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabNewSnippet"
