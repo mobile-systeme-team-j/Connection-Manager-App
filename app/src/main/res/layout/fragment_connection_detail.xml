@@ -29,16 +29,10 @@
         android:layout_height="wrap_content"
         android:text="Identity" />
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Snippets" />
-
     <Spinner
-        android:id="@+id/spinner3"
+        android:id="@+id/spinnerIdentity"
         android:layout_width="match_parent"
-        android:layout_height="35dp" />
+        android:layout_height="38dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabDelete"

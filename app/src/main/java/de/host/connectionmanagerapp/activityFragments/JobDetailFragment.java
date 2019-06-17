@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -16,11 +19,16 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import java.util.List;
+
 import de.host.connectionmanagerapp.DatePickerFragment;
 import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
 import de.host.connectionmanagerapp.TimePickerFragment;
+import de.host.connectionmanagerapp.database.Connection;
+import de.host.connectionmanagerapp.database.Identity;
 import de.host.connectionmanagerapp.database.Job;
+import de.host.connectionmanagerapp.database.Snippet;
 import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
 
 /**
@@ -29,6 +37,7 @@ import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
 
 public class JobDetailFragment extends Fragment
         implements View.OnClickListener,
+        AdapterView.OnItemSelectedListener,
                     TimePickerDialog.OnTimeSetListener,
                     DatePickerDialog.OnDateSetListener {
 
@@ -40,6 +49,10 @@ public class JobDetailFragment extends Fragment
     Bundle arguments;
     long id;
     private ConnectionViewModel connectionViewModel;
+    Spinner spinnerConnection,spinnerIdentity, spinnerSnippet;
+    List<Connection> connectionList;
+    List<Identity> identityList;
+    List<Snippet> snippetList;
 
 
 
@@ -68,6 +81,23 @@ public class JobDetailFragment extends Fragment
          for (View v : Buttons){
              v.setOnClickListener(this);
          }
+/*
+         connectionList = connectionViewModel.getAllConnections();
+         identityList = connectionViewModel.getAllIdenties();
+         snippetList = connectionViewModel.getAllSnippets();
+
+        spinnerConnection = view.findViewById(R.id.spinnerConnection);
+        ArrayAdapter<Connection> adapterConnection = new ArrayAdapter<Connection>(this,android.R.layout.simple_spinner_dropdown_item,connectionList);
+        spinnerConnection.setAdapter(adapterConnection);
+
+        spinnerIdentity = view.findViewById(R.id.spinnerIdentity);
+        ArrayAdapter<Identity> adapterIdentity = new ArrayAdapter<Identity>(this,android.R.layout.simple_spinner_dropdown_item,identityList);
+        spinnerConnection.setAdapter(adapterIdentity);
+
+        spinnerSnippet = view.findViewById(R.id.spinnerSnippet);
+        ArrayAdapter<Snippet> adapterSnippet = new ArrayAdapter<Snippet>(this,android.R.layout.simple_spinner_dropdown_item,snippetList);
+        spinnerConnection.setAdapter(adapterSnippet);
+*/
 
         arguments = getArguments();
         if(arguments !=null){
@@ -151,5 +181,15 @@ public class JobDetailFragment extends Fragment
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         editTextDate.setText(dayOfMonth+"-"+month+"-"+year);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

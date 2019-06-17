@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -26,6 +28,7 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
     Connection connection;
     long id;
     private ConnectionViewModel connectionViewModel;
+    Spinner spinnerConnection;
 
     @Nullable
     @Override
@@ -36,6 +39,11 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
         editTextConnectionName = view.findViewById(R.id.editTextHostname);
         editTextHostname = view.findViewById(R.id.editTextHostname);
         editTextPort = view.findViewById(R.id.editTextPort);
+        spinnerConnection = view.findViewById(R.id.spinnerConnection);
+/*
+        ArrayAdapter<Connection> adapter = new ArrayAdapter<Connection>(this,android.R.layout.simple_spinner_dropdown_item,arrayList1);
+        spinnerConnection.setAdapter(adapter);
+*/
 
 
         arguments = getArguments();

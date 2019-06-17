@@ -19,6 +19,11 @@
         android:onClick="onClick"
         android:text="Connection" />
 
+    <Spinner
+        android:id="@+id/spinnerConnection"
+        android:layout_width="match_parent"
+        android:layout_height="38dp" />
+
     <Button
         android:id="@+id/btnIdentity"
         android:layout_width="match_parent"
@@ -26,12 +31,22 @@
         android:onClick="onClick"
         android:text="Identity" />
 
+    <Spinner
+        android:id="@+id/spinnerIdentity"
+        android:layout_width="match_parent"
+        android:layout_height="38dp" />
+
     <Button
         android:id="@+id/btnSnippet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onClick"
         android:text="Snippet" />
+
+    <Spinner
+        android:id="@+id/spinnerSnippet"
+        android:layout_width="match_parent"
+        android:layout_height="38dp" />
 
     <EditText
         android:id="@+id/date"
@@ -50,11 +65,6 @@
         android:clickable="true"
         android:onClick="onClick"
         android:focusable="false"/>
-
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="match_parent"
-        android:layout_height="38dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabDelete"
