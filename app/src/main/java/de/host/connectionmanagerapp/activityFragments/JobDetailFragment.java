@@ -1,8 +1,11 @@
 package de.host.connectionmanagerapp.activityFragments;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,17 +18,21 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import java.util.Calendar;
 import java.util.List;
 
 import de.host.connectionmanagerapp.DatePickerFragment;
 import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
 import de.host.connectionmanagerapp.TimePickerFragment;
+import de.host.connectionmanagerapp.alarm.AlarmReceiver;
 import de.host.connectionmanagerapp.database.Connection;
 import de.host.connectionmanagerapp.database.Identity;
 import de.host.connectionmanagerapp.database.Job;
 import de.host.connectionmanagerapp.database.Snippet;
 import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
+
+import static android.content.Context.ALARM_SERVICE;
 
 /**
  * @author  Jürgen Manuel Trapp
@@ -52,9 +59,8 @@ public class JobDetailFragment extends Fragment
     List<Connection> connectionList;
     List<Identity> identityList;
     List<Snippet> snippetList;
-
-
-
+    Calendar timeCalender;
+    Calendar dateCalendar;
 
     @Nullable
     @Override
@@ -137,6 +143,8 @@ public class JobDetailFragment extends Fragment
                 if( arguments != null){
                     try{
                         connectionViewModel.updateJob(Job());
+                        // Create AlarmManager, was als Parameter ? Job selbst ? Dann Connection ziehen ?
+                        createAlarm();
                     }catch (Exception e){
                         Toast.makeText(getContext(),"",Toast.LENGTH_SHORT);
                     }
@@ -144,6 +152,8 @@ public class JobDetailFragment extends Fragment
                     try{
                         job = new Job();
                        // connectionViewModel.insertJob(Job());
+                       // Create AlarmManager
+                        createAlarm();
                     }catch (Exception e){
                         Toast.makeText(getContext(),"",Toast.LENGTH_SHORT);
                     }
@@ -159,8 +169,29 @@ public class JobDetailFragment extends Fragment
 
     public Job Job(){
         job.setTitel(String.valueOf(editTextJobName.getText()));
-
         return job;
+    }
+
+    private void createAlarm() {
+        // Create Calendar from Time- und DateCalendar
+        Calendar c = Calendar.getInstance();
+        if (timeCalender != null && dateCalendar != null) {
+            c.set(Calendar.MINUTE, timeCalender.get(Calendar.MINUTE));
+            c.set(Calendar.HOUR_OF_DAY, timeCalender.get(Calendar.HOUR_OF_DAY));
+            c.set(Calendar.YEAR, dateCalendar.get(Calendar.HOUR_OF_DAY));
+            c.set(Calendar.MONTH, dateCalendar.get(Calendar.MONTH));
+            c.set(Calendar.DAY_OF_MONTH, dateCalendar.get(Calendar.DAY_OF_MONTH));
+        }else {
+            // Kein Datum & Zeit gesetzt --> Abbruch
+            Toast.makeText(getContext(), "Please set time and date!", Toast.LENGTH_LONG);
+            return;
+        }
+
+        AlarmManager mng = (AlarmManager) getActivity().getSystemService(ALARM_SERVICE);
+        Intent intent = new Intent(getActivity(), AlarmReceiver.class);
+        PendingIntent pendingIntent  = PendingIntent.getBroadcast(getActivity(), 0, intent, 0);
+        mng.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+
     }
 
     @Override
@@ -171,6 +202,8 @@ public class JobDetailFragment extends Fragment
             selectedDate = data.getStringExtra("selectedDate");
             // set the value of the editText
             editTextDate.setText(selectedDate);
+            // Setze DateCalender für AlarmManager
+            dateCalendar = datePickerFragment.getDateCalender();
         }
 
         if (requestCode == REQUEST_CODE_TimePicker && resultCode == Activity.RESULT_OK) {
@@ -178,6 +211,8 @@ public class JobDetailFragment extends Fragment
             selectedTime = data.getStringExtra("selectedTime");
             // set the value of the editText
             editTextTime.setText(selectedTime);
+            // Setze TimeCalender für AlarmManager
+            timeCalender = timePickerFragment.getTimeCalender();
         }
 
     }

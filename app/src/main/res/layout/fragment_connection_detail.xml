@@ -55,4 +55,13 @@
         android:onClick="onClick"
         app:srcCompat="@drawable/ic_folder" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabConnect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:clickable="true"
+        android:onClick="onClick"
+        app:srcCompat="@drawable/ic_send" />
+
 </LinearLayout>

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -53,7 +54,7 @@ public class SshSessionFragment extends Fragment {
     private long connection_ID;
     private TextView terminal;
     private EditText command;
-    private Button send;
+    private ImageButton send;
     private ByteArrayOutputStream baos;
     private PrintStream ps;
     private boolean firstConn;
@@ -103,7 +104,8 @@ public class SshSessionFragment extends Fragment {
         command = view.findViewById(R.id.et_Command);
         send = view.findViewById(R.id.btn_Send);
         connectionViewModel= ViewModelProviders.of(getActivity()).get(ConnectionViewModel.class);
-        connection = connectionViewModel.getConnection(connection_ID);
+        // Wirft Error: Cannot access database on the main thread since it may potentially lock the UI for a long period of time.
+        //connection = connectionViewModel.getConnection(connection_ID);
         
         // Soft-Keyboard automatisch anzeigen, notwendige Ui-Elemente resizen
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
@@ -155,7 +157,7 @@ public class SshSessionFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
-
+    /*
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -165,8 +167,9 @@ public class SshSessionFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
-    }
+    }*/
 
+    /*
     @Override
     public void onStop() {
         super.onStop();
@@ -181,8 +184,7 @@ public class SshSessionFragment extends Fragment {
         } catch (IOException e) {
             Log.e(TAG, e.getMessage());
         }
-
-    }
+    }*/
 
     @Override
     public void onDetach() {
@@ -261,9 +263,10 @@ public class SshSessionFragment extends Fragment {
             String command = (String) objects[1];
 
             SSHClient client = conn.getClient();
-            Session session = null;
+
             try {
-                session = client.startSession();
+                Session session = client.startSession();
+                session.allocateDefaultPTY();
                 Session.Shell shell = session.startShell();
 
                 InputStream in = shell.getInputStream();
@@ -285,9 +288,7 @@ public class SshSessionFragment extends Fragment {
 
                 // Befehl senden
                 String result = "";
-                Session.Command cmd = session.exec(command);
-                result = (IOUtils.readFully(cmd.getInputStream()).toString());
-                cmd.join(5, TimeUnit.SECONDS);
+                result = conn.sendCommand(command);
                 // Befehl an Outputstream hängen
                 baos.write((command).getBytes());
 
@@ -300,14 +301,6 @@ public class SshSessionFragment extends Fragment {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
-            } finally {
-                try {
-                    session.close();
-                } catch (TransportException e) {
-                    e.printStackTrace();
-                } catch (ConnectionException e) {
-                    e.printStackTrace();
-                }
             }
 
             /*

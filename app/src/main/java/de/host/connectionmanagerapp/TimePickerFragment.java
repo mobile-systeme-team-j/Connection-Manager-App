@@ -49,4 +49,8 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
                 new Intent().putExtra("selectedTime", selectedTime)
         );
     }
+
+    public Calendar getTimeCalender() {
+        return c;
+    }
 }

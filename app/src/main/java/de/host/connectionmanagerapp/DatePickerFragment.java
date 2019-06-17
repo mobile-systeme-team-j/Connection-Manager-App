@@ -53,4 +53,8 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
                 new Intent().putExtra("selectedDate", selectedDate)
         );
     }
+
+    public Calendar getDateCalender (){
+        return c;
+    }
 }

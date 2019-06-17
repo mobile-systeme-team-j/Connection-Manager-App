@@ -24,16 +24,18 @@
         android:layout_height="70dp"
         android:ems="10"
         android:hint="Command..."
-        android:inputType="text"
+        android:inputType="textMultiLine"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btn_Send"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="0dp"
         android:layout_height="70dp"
-        android:background="@drawable/ic_send"
+        android:scaleX="1.7"
+        android:scaleY="1.7"
+        android:src="@drawable/ic_send"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/et_Command"
