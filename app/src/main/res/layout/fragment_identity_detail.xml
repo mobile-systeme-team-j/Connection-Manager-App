@@ -10,31 +10,36 @@
         android:id="@+id/identity_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Identity name" />
+        android:hint="Name"
+        android:inputType="text" />
 
     <EditText
         android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Username" />
+        android:hint="Username"
+        android:inputType="text" />
 
     <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Password" />
+        android:hint="Password"
+        android:inputType="textPassword" />
 
     <EditText
         android:id="@+id/key"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Key" />
+        android:hint="Key-Path"
+        android:inputType="textMultiLine" />
 
     <EditText
         android:id="@+id/key_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Key-Password" />
+        android:hint="Key-Password"
+        android:inputType="textPassword" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabDelete"

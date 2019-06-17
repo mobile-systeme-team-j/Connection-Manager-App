@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -46,6 +48,8 @@ import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
 
 public class SshSessionFragment extends Fragment {
 
+    public static final String TAG = SshSessionFragment.class.getSimpleName();
+
     private long connection_ID;
     private TextView terminal;
     private EditText command;
@@ -53,6 +57,7 @@ public class SshSessionFragment extends Fragment {
     private ByteArrayOutputStream baos;
     private PrintStream ps;
     private boolean firstConn;
+    private Future future;
     private ConnectionViewModel connectionViewModel;
     Connection connection;
     private OnFragmentInteractionListener mListener;
@@ -105,7 +110,7 @@ public class SshSessionFragment extends Fragment {
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         // Baue Verbindung zu Server auf
-        Future future = connectToServer(connection_ID);
+        future = connectToServer(connection_ID);
 
         send.setOnClickListener((v) -> {
             // Wenn ET nicht empty, schicke Befehl an AsyncTask
@@ -160,6 +165,23 @@ public class SshSessionFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        // Verbindung beenden über Conn
+        try {
+            SshConn conn = (SshConn) future.get();
+            conn.getClient().disconnect();
+        } catch (ExecutionException e) {
+            Log.e(TAG, e.getMessage());
+        } catch (InterruptedException e) {
+            Log.e(TAG, e.getMessage());
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+        }
+
     }
 
     @Override
@@ -239,8 +261,9 @@ public class SshSessionFragment extends Fragment {
             String command = (String) objects[1];
 
             SSHClient client = conn.getClient();
+            Session session = null;
             try {
-                Session session = client.startSession();
+                session = client.startSession();
                 Session.Shell shell = session.startShell();
 
                 InputStream in = shell.getInputStream();
@@ -277,6 +300,14 @@ public class SshSessionFragment extends Fragment {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
+            } finally {
+                try {
+                    session.close();
+                } catch (TransportException e) {
+                    e.printStackTrace();
+                } catch (ConnectionException e) {
+                    e.printStackTrace();
+                }
             }
 
             /*

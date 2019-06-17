@@ -10,7 +10,8 @@
         android:id="@+id/editTextSnippetname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Snippetname" />
+        android:hint="Snippetname"
+        android:inputType="text" />
 
     <EditText
         android:id="@+id/editText"

@@ -31,6 +31,14 @@ public class SshConn {
         this.client = client;
     }
 
+    public void closeConnection() {
+        try {
+            client.disconnect();
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+        }
+    }
+
     public void openConnection () {
         try {
             // Bouncy Castle Security Provider registrieren (u.a. für ECDSA benötigt)

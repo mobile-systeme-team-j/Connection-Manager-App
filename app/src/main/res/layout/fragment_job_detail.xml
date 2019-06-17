@@ -10,7 +10,8 @@
         android:id="@+id/job_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Jobname" />
+        android:hint="Jobname"
+        android:inputType="text" />
 
     <Button
         android:id="@+id/btnConnection"
@@ -52,19 +53,21 @@
         android:id="@+id/date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Date"
         android:clickable="true"
+        android:focusable="false"
+        android:inputType="date|text"
         android:onClick="onClick"
-        android:focusable="false"/>
+        android:text="Date" />
 
     <EditText
         android:id="@+id/time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Time"
         android:clickable="true"
+        android:focusable="false"
+        android:inputType="text"
         android:onClick="onClick"
-        android:focusable="false"/>
+        android:text="Time" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabDelete"

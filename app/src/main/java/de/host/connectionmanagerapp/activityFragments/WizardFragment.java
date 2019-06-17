@@ -19,8 +19,8 @@ import de.host.connectionmanagerapp.R;
 
 public class WizardFragment extends Fragment implements View.OnClickListener {
 
-    String ip, port,identity,password,key;
-    EditText tv_ip,tv_port,tv_identity,tv_password,tv_key;
+    private String ip, port,identity,password,key, keyPassword;
+    private EditText tv_ip,tv_port,tv_user,tv_UserPassword,tv_key, tv_keyPassword;
 
 
     @Nullable
@@ -28,16 +28,17 @@ public class WizardFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        View view =inflater.inflate(R.layout. fragment_wizard, container, false);
+        View view = inflater.inflate(R.layout. fragment_wizard, container, false);
 
         Button button = view.findViewById(R.id.button);
         button.setOnClickListener(this);
 
-        tv_ip = view.findViewById(R.id.ip);
-        tv_port = view.findViewById(R.id.port);
-        tv_identity = view.findViewById(R.id.identity_name);
-        tv_password = view.findViewById(R.id.password);
-        tv_key = view.findViewById(R.id.key);
+        tv_ip = view.findViewById(R.id.wizard_IP);
+        tv_port = view.findViewById(R.id.wizard_Port);
+        tv_user = view.findViewById(R.id.wizard_Username);
+        tv_UserPassword = view.findViewById(R.id.password);
+        tv_key = view.findViewById(R.id.wizard_KeyPath);
+        tv_keyPassword = view.findViewById(R.id.wizard_KeyPass);
 
 
         return view;
@@ -49,8 +50,9 @@ public class WizardFragment extends Fragment implements View.OnClickListener {
     // gets Strings from EditText-Inputs
         ip = tv_ip.getText().toString();
         port = tv_port.getText().toString();
-        identity = tv_identity.getText().toString();
-        password = tv_password.getText().toString();
+        identity = tv_user.getText().toString();
+        password = tv_UserPassword.getText().toString();
         key = tv_key.getText().toString();
+        keyPassword = tv_key.getText().toString();
     }
 }
