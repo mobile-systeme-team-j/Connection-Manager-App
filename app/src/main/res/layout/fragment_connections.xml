@@ -28,10 +28,10 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/con_recycler_view"
-            android:scrollbars="vertical"
-            android:layout_gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="526dp"
+            android:layout_gravity="center"
+            android:scrollbars="vertical" />
 
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -42,6 +42,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:clickable="true"
+            android:onClick="onClick"
             android:focusable="true"
             app:backgroundTint="#00FFFFFF"
             app:srcCompat="@android:drawable/ic_input_add" />

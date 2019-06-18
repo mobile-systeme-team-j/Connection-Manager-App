@@ -1,5 +1,5 @@
 //Autor Mattis Uphoff
-package de.host.connectionmanagerapp.database;
+package de.host.connectionmanagerapp.daos;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -10,6 +10,9 @@ import androidx.room.Update;
 
 import java.util.List;
 
+import de.host.connectionmanagerapp.database.Identity;
+import io.reactivex.Flowable;
+
 @Dao
 public interface IdentityDao {
     @Insert
@@ -19,7 +22,7 @@ public interface IdentityDao {
     void update(Identity... identities);
 
     @Query("SELECT * from identity where identity_id=:id")
-    public abstract Identity identityformid(long id);
+    Flowable<Identity>identityformid(long id);
 
     @Query("Select*from identity")
     LiveData<List<Identity>> getAllIdentities();

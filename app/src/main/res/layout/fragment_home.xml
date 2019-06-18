@@ -19,17 +19,18 @@
 
     <ListView
         android:id="@+id/ListViewLastConnections"
-        android:layout_width="291dp"
-        android:layout_height="500dp"
+        android:layout_width="match_parent"
+        android:layout_height="518dp"
         android:layout_gravity="clip_horizontal|center" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/WizardButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        app:srcCompat="@android:drawable/ic_media_play"
         android:layout_gravity="end"
-        android:focusable="true" />
+        android:clickable="true"
+        android:onClick="onClick"
+        android:focusable="true"
+        app:srcCompat="@android:drawable/ic_media_play" />
 
 </LinearLayout>

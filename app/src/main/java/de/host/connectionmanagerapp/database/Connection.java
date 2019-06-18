@@ -68,7 +68,8 @@ public class Connection {
         return port;
     }
 
-    public void setPort(int port) {
+    public void
+    setPort(int port) {
         this.port = port;
     }
 

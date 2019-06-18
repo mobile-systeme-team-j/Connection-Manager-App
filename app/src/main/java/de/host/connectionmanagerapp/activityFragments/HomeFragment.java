@@ -4,10 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
+import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
 
 /**
@@ -17,12 +21,31 @@ import de.host.connectionmanagerapp.R;
 
 public class HomeFragment extends Fragment {
 
+    ListView lastConnections;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        lastConnections = view.findViewById(R.id.ListViewLastConnections);
 
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        // Verbindung aufbauen nach Click auf ListenElement
+        lastConnections.setOnItemClickListener((adapterView, listView, position, id) -> {
+            // Objekt aus ListView ziehen, SshSessionFragment mit Connection-ID aufrufen
+            /*
+            Object listItem = lastConnections.getItemAtPosition(position);
+            int connID = listItem.getConnectionID;
+            SshSessionFragment fragment = SshSessionFragment.newInstance(connID);
+            getFragmentManager().beginTransaction()
+                    .replace(view.getId(), fragment)
+                    .addToBackStack(null)
+                    .commit();
+                    */
+
+        });
+
+        return view;
     }
 
     public void onClick(View view){

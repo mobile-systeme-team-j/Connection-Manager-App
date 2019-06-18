@@ -4,29 +4,26 @@ package de.host.connectionmanagerapp;
  * @author Phillip Kühling
  */
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import androidx.fragment.app.DialogFragment;
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import java.util.Calendar;
+import android.util.Log;
+import android.widget.DatePicker;
 
-// Fragment übernommen aus Android 8: Das Praxisbuch für Java-Entwickler, ISBN: 9783836260589, S.215ff.
+import androidx.fragment.app.DialogFragment;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 // Zur Anzeige einer Datumsauswahl im Cronjob/Alarm - Activity
-public class DatePickerFragment extends DialogFragment {
+public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
     public static final String TAG =
             DatePickerFragment.class.getSimpleName();
-
-    private DatePickerDialog.OnDateSetListener l;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof DatePickerDialog.OnDateSetListener) {
-            l = (DatePickerDialog.OnDateSetListener) context;
-        }
-    }
+    final Calendar c = Calendar.getInstance();
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -37,6 +34,27 @@ public class DatePickerFragment extends DialogFragment {
         int day = c.get(Calendar.DAY_OF_MONTH);
         // einen DatePickerDialog erzeugen und zurückliefern
         return new DatePickerDialog(getActivity(),
-                l, year, month, day);
+                DatePickerFragment.this, year, month, day);
+    }
+
+    @Override
+    // called when a date has been selected
+    public void onDateSet(DatePicker view, int year, int month, int day) {
+        c.set(Calendar.YEAR, year);
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.DAY_OF_MONTH, day);
+        String selectedDate = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN).format(c.getTime());
+
+        Log.d(TAG, "onDateSet: " + selectedDate);
+        // send date back to the target fragment
+        getTargetFragment().onActivityResult(
+                getTargetRequestCode(),
+                Activity.RESULT_OK,
+                new Intent().putExtra("selectedDate", selectedDate)
+        );
+    }
+
+    public Calendar getDateCalender (){
+        return c;
     }
 }

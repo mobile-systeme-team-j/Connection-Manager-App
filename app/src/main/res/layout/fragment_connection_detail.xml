@@ -6,22 +6,25 @@
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/textView4"
+        android:id="@+id/editTextConnectionName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Connectionname" />
+        android:hint="Name"
+        android:inputType="text" />
 
     <EditText
-        android:id="@+id/textView6"
+        android:id="@+id/editTextHostname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hostname/IP" />
+        android:hint="Hostname/IP"
+        android:inputType="text" />
 
     <EditText
-        android:id="@+id/textView8"
+        android:id="@+id/editTextPort"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Port" />
+        android:hint="Port"
+        android:inputType="numberDecimal" />
 
     <Button
         android:id="@+id/button3"
@@ -29,16 +32,10 @@
         android:layout_height="wrap_content"
         android:text="Identity" />
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Snippets" />
-
     <Spinner
-        android:id="@+id/spinner3"
+        android:id="@+id/spinnerIdentity"
         android:layout_width="match_parent"
-        android:layout_height="35dp" />
+        android:layout_height="38dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabDelete"
@@ -57,5 +54,14 @@
         android:clickable="true"
         android:onClick="onClick"
         app:srcCompat="@drawable/ic_folder" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabConnect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:clickable="true"
+        android:onClick="onClick"
+        app:srcCompat="@drawable/ic_send" />
 
 </LinearLayout>

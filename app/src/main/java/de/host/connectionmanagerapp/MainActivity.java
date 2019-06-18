@@ -1,8 +1,6 @@
 package de.host.connectionmanagerapp;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -14,8 +12,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.navigation.NavigationView;
-
-import net.schmizz.sshj.SSHClient;
 
 import de.host.connectionmanagerapp.activityFragments.ConnectionsFragment;
 import de.host.connectionmanagerapp.activityFragments.HomeFragment;
@@ -53,11 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (savedInstanceState == null) {
             addFragment(new HomeFragment());
         }
-
-        //testSSH();
-
     }
-
 
     @Override
     public void onBackPressed(){
@@ -68,35 +60,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
-
-    private void testSSH () {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-
-                    SSHConfig config = new SSHConfig("54.37.204.238", "userwp");
-                    config = config.usePassword("wFf4]18&");
-                    config = config.useHostKey(false);
-                    /*
-                    SSHConfig config = new SSHConfig("sdf.org", "new");
-                    config = config.useHostKey(false);
-                    */
-                    SSHConn conn = new SSHConn(config, new SSHClient());
-                    conn.openConnection();
-                    //conn.startShell();
-                    //String response = conn.sendCommand("ls -a");
-                    //System.out.println(response);
-                    conn.createPTY();
-                } catch (Exception e) {
-                    Log.e(SSHConn.TAG, e.getMessage());
-                }
-            }
-        });
-        thread.start();
-    }
-
-
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -153,7 +116,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }catch (NullPointerException e){
             e.printStackTrace();
         }
-
     }
-
 }

@@ -3,13 +3,24 @@
 package de.host.connectionmanagerapp.database;
 
 import android.app.Application;
-import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
-import com.commonsware.cwac.saferoom.SafeHelperFactory;
 
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
+import de.host.connectionmanagerapp.daos.ConnectionDao;
+import de.host.connectionmanagerapp.daos.Connection_JobDao;
+import de.host.connectionmanagerapp.daos.IdentityDao;
+import de.host.connectionmanagerapp.daos.JobDao;
+import de.host.connectionmanagerapp.daos.SnippetDao;
+import de.host.connectionmanagerapp.daos.Snippet_JobDao;
+import io.reactivex.Flowable;
+import io.reactivex.Maybe;
+import io.reactivex.Single;
+import io.reactivex.SingleObserver;
 
 public class Repository {
 
@@ -33,7 +44,12 @@ public class Repository {
 
     //Insert Methoden
     //Fertige identity muss übergeben werden , es erfolgt keine überpfüfung mehr
-    public void identity_insert(Identity identity){identityDao.insert(identity);}
+    public void identity_insert(Identity identity){
+      Executor exe = Executors.newSingleThreadExecutor();
+      exe.execute(() -> {
+          identityDao.insert(identity);
+      });
+    }
 
     //Fertige connection übergeben es erfolgt eine überprüfung mehr, auch die identity id muss gesetzt werden
     public void connection_insert(Connection connection){connectionDao.insert(connection);}
@@ -52,7 +68,10 @@ public class Repository {
 
     //getEntity
     public Identity getIdentity(long id){
-        return identityDao.identityformid(id);
+        Flowable<Identity> identity = identityDao.identityformid(id);
+        Identity identity1 = identity.blockingFirst();
+        return  identity1;
+
     }
     public Connection getConnection(long id){
         return connectionDao.connectionfromid(id);
@@ -61,7 +80,8 @@ public class Repository {
         return snippetDao.snippetfromid(id);
     }
     public Job getJob(long id){
-        return jobDao.jobfromId(id);
+        LiveData<Job> livejobs = jobDao.jobfromId(id);
+        return livejobs.getValue();
     }
     //LiveData
     public LiveData<List<Connection>> getConnectionsLive() {
@@ -86,7 +106,10 @@ public class Repository {
 
     // Updates
     public void identity_update(Identity identity){
-        identityDao.update(identity);
+        Executor exe = Executors.newSingleThreadExecutor();
+        exe.execute(() -> {
+            identityDao.update(identity);
+        });
     }
     public void connection_update(Connection connection){
         connectionDao.update(connection);
@@ -99,9 +122,12 @@ public class Repository {
     }
 
     //DeleteMethoden
-    public void identity_delete(long identityid){
-        Identity identity = identityDao.identityformid(identityid);
-        identityDao.delete(identity);
+    public void identity_delete(Identity identity){
+
+        Executor exe = Executors.newSingleThreadExecutor();
+        exe.execute(() -> {
+            identityDao.delete(identity);
+        });
     }
     public void snippet_delete(long snippetId){
         Snippet snippet = snippetDao.snippetfromid(snippetId);
@@ -120,8 +146,9 @@ public class Repository {
 
         connectionDao.delete(conection);
     }
-    public void job_delete(long jobId){
-        Job job = jobDao.jobfromId(jobId);
+    public void job_delete(Job job){
+        long jobId = job.getJob_id();
+
         List<Snippet_Job> sjs = sjDao.sjsfromjob(jobId);
         List<Connection_Job>cjs= cjDao.cjsjobs(jobId);
 

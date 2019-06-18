@@ -10,48 +10,64 @@
         android:id="@+id/job_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Jobname" />
+        android:hint="Jobname"
+        android:inputType="text" />
 
     <Button
         android:id="@+id/btnConnection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="onClick"
         android:text="Connection" />
+
+    <Spinner
+        android:id="@+id/spinnerConnection"
+        android:layout_width="match_parent"
+        android:layout_height="38dp" />
 
     <Button
         android:id="@+id/btnIdentity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="onClick"
         android:text="Identity" />
+
+    <Spinner
+        android:id="@+id/spinnerIdentity"
+        android:layout_width="match_parent"
+        android:layout_height="38dp" />
 
     <Button
         android:id="@+id/btnSnippet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="onClick"
         android:text="Snippet" />
+
+    <Spinner
+        android:id="@+id/spinnerSnippet"
+        android:layout_width="match_parent"
+        android:layout_height="38dp" />
 
     <EditText
         android:id="@+id/date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Date"
         android:clickable="true"
+        android:focusable="false"
+        android:inputType="date|text"
         android:onClick="onClick"
-        android:focusable="false"/>
+        android:text="Date" />
 
     <EditText
         android:id="@+id/time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Time"
         android:clickable="true"
+        android:focusable="false"
+        android:inputType="text"
         android:onClick="onClick"
-        android:focusable="false"/>
-
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="match_parent"
-        android:layout_height="38dp" />
+        android:text="Time" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabDelete"
