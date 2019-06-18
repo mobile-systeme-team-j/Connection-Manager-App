@@ -12,18 +12,20 @@ import androidx.room.Update;
 import java.util.List;
 
 import de.host.connectionmanagerapp.database.Connection;
+import io.reactivex.Completable;
+import io.reactivex.Flowable;
 
 @Dao
 public interface ConnectionDao {
 
     @Insert
-    void insert(Connection connection);
+    Completable insert(Connection connection);
 
     @Update
-    void update(Connection... connections);
+    Completable update(Connection... connections);
 
     @Query("Select*from connection Where connection_Id = :id")
-    public abstract Connection connectionfromid(long id);
+    Flowable<Connection> connectionfromid(long id);
 
     @Query("Select*from connection Order by timestamp DESC Limit 5")
     LiveData<List<Connection>> getRecentConnection();
@@ -32,7 +34,7 @@ public interface ConnectionDao {
     LiveData<List<Connection>> getAllConnection();
 
     @Delete
-    void delete (Connection... connections);
+    Completable delete (Connection... connections);
 
 
 

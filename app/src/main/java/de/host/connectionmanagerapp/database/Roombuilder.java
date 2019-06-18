@@ -7,6 +7,8 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
+import com.commonsware.cwac.saferoom.SafeHelperFactory;
+
 import de.host.connectionmanagerapp.daos.ConnectionDao;
 import de.host.connectionmanagerapp.daos.Connection_JobDao;
 import de.host.connectionmanagerapp.daos.IdentityDao;

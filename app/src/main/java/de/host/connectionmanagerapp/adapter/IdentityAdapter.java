@@ -30,7 +30,7 @@ public class IdentityAdapter extends  RecyclerView.Adapter<IdentityAdapter.Ident
 
     public IdentityAdapter(Context application){
 
-        mInflater = LayoutInflater.from(application);;
+        mInflater = LayoutInflater.from(application);
     }
 
     @NonNull

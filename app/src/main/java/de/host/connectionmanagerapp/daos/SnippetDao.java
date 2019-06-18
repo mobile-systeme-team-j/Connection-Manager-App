@@ -11,6 +11,7 @@ import androidx.room.Update;
 import java.util.List;
 
 import de.host.connectionmanagerapp.database.Snippet;
+import io.reactivex.Flowable;
 
 @Dao
 public interface SnippetDao {
@@ -22,7 +23,7 @@ public interface SnippetDao {
     void update(Snippet... snippets);
 
     @Query("SELECT * from snippet where snippet_id=:id")
-    Snippet snippetfromid(long id);
+    Flowable<Snippet> snippetfromid(long id);
 
     @Query("Select * from snippet")
     LiveData<List<Snippet>> getAllSnippets();

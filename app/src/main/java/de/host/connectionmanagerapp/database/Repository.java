@@ -55,11 +55,11 @@ public class Repository {
     public void connection_insert(Connection connection){connectionDao.insert(connection);}
 
     public void job_insert(Job job, long snippetId, long connectionId ){
-        long jobId = jobDao.insert(job);
-        Connection_Job cj = new Connection_Job(jobId, connectionId);
+        Maybe<Long> jobMaybe= jobDao.insert(job);
+        Connection_Job cj = new Connection_Job(jobMaybe.blockingGet(), connectionId);
         cjDao.insert(cj);
 
-        Snippet_Job sj = new Snippet_Job(snippetId, jobId);
+        Snippet_Job sj = new Snippet_Job(snippetId, jobMaybe.blockingGet());
         sjDao.insert(sj);
     }
     //Fertiges snippet übergeben es erfolgt eine überprüfung mehr, auch die identity id muss gesetzt werden
@@ -74,14 +74,18 @@ public class Repository {
 
     }
     public Connection getConnection(long id){
-        return connectionDao.connectionfromid(id);
+
+        Flowable<Connection>connectionFlowable = connectionDao.connectionfromid(id);
+        return connectionFlowable.blockingFirst();
     }
     public Snippet getSnippet(long id){
-        return snippetDao.snippetfromid(id);
+
+        Flowable<Snippet> snippetFlowable = snippetDao.snippetfromid(id);
+        return snippetFlowable.blockingFirst();
     }
     public Job getJob(long id){
-        LiveData<Job> livejobs = jobDao.jobfromId(id);
-        return livejobs.getValue();
+        Flowable<Job> jobFlowable = jobDao.jobfromId(id);
+        return jobFlowable.blockingFirst();
     }
     //LiveData
     public LiveData<List<Connection>> getConnectionsLive() {
@@ -130,7 +134,7 @@ public class Repository {
         });
     }
     public void snippet_delete(long snippetId){
-        Snippet snippet = snippetDao.snippetfromid(snippetId);
+        Snippet snippet = snippetDao.snippetfromid(snippetId).blockingFirst();
         List<Snippet_Job> sjs = sjDao.sjsfromsnippet(snippetId);
         for(Snippet_Job sj: sjs) {
             sjDao.delete(sj);
@@ -138,7 +142,7 @@ public class Repository {
         snippetDao.delete(snippet);
     }
     public void connection_delete(long connectionId){
-        Connection conection = connectionDao.connectionfromid(connectionId);
+        Connection conection = connectionDao.connectionfromid(connectionId).blockingFirst();
         List<Connection_Job>cjs= cjDao.cjsconnection(connectionId);
         for(Connection_Job cj : cjs){
             cjDao.delete(cj);

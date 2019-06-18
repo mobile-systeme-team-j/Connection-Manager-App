@@ -12,22 +12,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import de.host.connectionmanagerapp.R;
+import de.host.connectionmanagerapp.database.Identity;
 import de.host.connectionmanagerapp.database.Job;
 
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder> {
 
     private List<Job> jobs;
     Application application;
+    private final LayoutInflater mInflater;
 
-    public JobAdapter(Application application, List<Job> jobs){
-        this.jobs =jobs;
-        this.application = application;
+    public JobAdapter(Application application){
+        mInflater = LayoutInflater.from(application);
     }
 
     @NonNull
     @Override
     public JobViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(application).inflate(R.layout.job_view, parent, false);
+        View view = mInflater.inflate(R.layout.job_view, parent, false);
         return new JobViewHolder(view);
     }
 
@@ -41,6 +42,11 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder> {
     @Override
     public int getItemCount() {
         return jobs.size();
+    }
+
+    public void setJobs(List<Job> jobs){
+        this.jobs = jobs;
+        notifyDataSetChanged();
     }
 
     public class JobViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
