@@ -1,4 +1,4 @@
-package de.host.connectionmanagerapp;
+package de.host.connectionmanagerapp.activityFragments;
 
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import java.util.List;
 
+import de.host.connectionmanagerapp.R;
 import de.host.connectionmanagerapp.database.Identity;
 import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
 

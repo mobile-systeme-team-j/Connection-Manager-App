@@ -1,4 +1,4 @@
-package de.host.connectionmanagerapp;
+package de.host.connectionmanagerapp.activityFragments;
 
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
@@ -15,17 +15,18 @@ import androidx.fragment.app.Fragment;
 
 import java.util.List;
 
-import de.host.connectionmanagerapp.database.Job;
+import de.host.connectionmanagerapp.R;
+import de.host.connectionmanagerapp.database.Connection;
 import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
 
-public class JobSelectionFragment extends Fragment {
+public class ConnectionSelectionFragment extends Fragment {
 
     Bundle arguments;
     long id;
-    Job job;
+    Connection connection;
     ConnectionViewModel connectionViewModel;
-    List<Job> jobList;
-    ListView jobListView;
+    List<Connection> connectionList;
+    ListView connectionListView;
     Button select;
 
     @Nullable
@@ -34,33 +35,33 @@ public class JobSelectionFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_connection_selection, container, false);
 
-        jobList = view.findViewById(R.id.jobList);
+        connectionList = view.findViewById(R.id.connectionList);
 
 
         arguments = getArguments();
         if(arguments != null){
             id = arguments.getLong("id");
-            jobList = connectionViewModel.getListJobs();
+                connectionList = connectionViewModel.getListConnections();
         }
 
         // android-coding.blogspot.com/2011/09/listview-with-multiple-choice.html
 
-        ArrayAdapter<Job> adapter = new ArrayAdapter<Job>(getContext(),android.R.layout.simple_list_item_single_choice, jobList);
+       ArrayAdapter<Connection> adapter = new ArrayAdapter<Connection>(getContext(),android.R.layout.simple_list_item_single_choice, connectionList);
 
-        jobListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        jobListView.setAdapter(adapter);
+        connectionListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        connectionListView.setAdapter(adapter);
 
         select.setOnClickListener(v -> {
             String selected = "";
-            int cntChoice = jobListView.getCount();
+            int cntChoice = connectionListView.getCount();
 
-            SparseBooleanArray sparseBooleanArray = jobListView.getCheckedItemPositions();
+            SparseBooleanArray sparseBooleanArray = connectionListView.getCheckedItemPositions();
 
             for(int i = 0; i < cntChoice; i++){
 
                 if(sparseBooleanArray.get(i)) {
 
-                    selected += jobListView.getItemAtPosition(i).toString() + "\n";
+                    selected += connectionListView.getItemAtPosition(i).toString() + "\n";
                 }
             }
 

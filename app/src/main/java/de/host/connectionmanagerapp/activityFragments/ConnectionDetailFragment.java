@@ -98,7 +98,8 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
                     }
                 }
                 break;
-
+            case R.id.btnIdentity:
+                ((MainActivity)getActivity()).replaceFragment(new IdentitySelectionFragment());
         }
     }
 

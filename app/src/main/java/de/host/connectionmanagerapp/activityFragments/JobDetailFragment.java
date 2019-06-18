@@ -125,13 +125,13 @@ public class JobDetailFragment extends Fragment
 
         switch(view.getId()){
             case R.id.btnConnection:
-                ((MainActivity)getActivity()).replaceFragment(new ConnectionsFragment());
+                ((MainActivity)getActivity()).replaceFragment(new ConnectionSelectionFragment());
                 break;
             case R.id.btnIdentity:
-                ((MainActivity)getActivity()).replaceFragment(new IdentitiesFragment());
+                ((MainActivity)getActivity()).replaceFragment(new IdentitySelectionFragment());
                 break;
             case R.id.btnSnippet:
-                ((MainActivity)getActivity()).replaceFragment(new SnippetsFragment());
+               // ((MainActivity)getActivity()).replaceFragment(new SnippetSelectionFragment());
                 break;
             case R.id.date:
                 DatePicker();

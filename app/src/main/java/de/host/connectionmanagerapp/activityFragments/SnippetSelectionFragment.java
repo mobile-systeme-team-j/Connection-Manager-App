@@ -1,4 +1,4 @@
-package de.host.connectionmanagerapp;
+package de.host.connectionmanagerapp.activityFragments;
 
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
@@ -15,18 +15,21 @@ import androidx.fragment.app.Fragment;
 
 import java.util.List;
 
-import de.host.connectionmanagerapp.database.Connection;
+import de.host.connectionmanagerapp.R;
+import de.host.connectionmanagerapp.database.Identity;
+import de.host.connectionmanagerapp.database.Snippet;
 import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
 
-public class ConnectionSelectionFragment extends Fragment {
+public class SnippetSelectionFragment extends Fragment {
 
     Bundle arguments;
     long id;
-    Connection connection;
+    Snippet snippet;
     ConnectionViewModel connectionViewModel;
-    List<Connection> connectionList;
-    ListView connectionListView;
+    ListView snippetListView;
     Button select;
+    List<Snippet> snippetList;
+    String[] snippetArray;
 
     @Nullable
     @Override
@@ -34,33 +37,33 @@ public class ConnectionSelectionFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_connection_selection, container, false);
 
-        connectionList = view.findViewById(R.id.connectionList);
-
+        snippetList = view.findViewById(R.id.snippetList);
 
         arguments = getArguments();
         if(arguments != null){
             id = arguments.getLong("id");
-                connectionList = connectionViewModel.getListConnections();
+            snippetList = connectionViewModel.getListSnippets();
         }
+
 
         // android-coding.blogspot.com/2011/09/listview-with-multiple-choice.html
 
-       ArrayAdapter<Connection> adapter = new ArrayAdapter<Connection>(getContext(),android.R.layout.simple_list_item_single_choice, connectionList);
+        ArrayAdapter<Snippet> adapter = new ArrayAdapter<Snippet>(getContext(),android.R.layout.simple_list_item_single_choice, snippetList);
 
-        connectionListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        connectionListView.setAdapter(adapter);
+        snippetListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        snippetListView.setAdapter(adapter);
 
         select.setOnClickListener(v -> {
             String selected = "";
-            int cntChoice = connectionListView.getCount();
+            int cntChoice = snippetListView.getCount();
 
-            SparseBooleanArray sparseBooleanArray = connectionListView.getCheckedItemPositions();
+            SparseBooleanArray sparseBooleanArray = snippetListView.getCheckedItemPositions();
 
             for(int i = 0; i < cntChoice; i++){
 
                 if(sparseBooleanArray.get(i)) {
 
-                    selected += connectionListView.getItemAtPosition(i).toString() + "\n";
+                    selected += snippetListView.getItemAtPosition(i).toString() + "\n";
                 }
             }
 
