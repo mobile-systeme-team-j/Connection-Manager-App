@@ -27,15 +27,10 @@
         android:inputType="numberDecimal" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btnIdentity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Identity" />
-
-    <Spinner
-        android:id="@+id/spinnerIdentity"
-        android:layout_width="match_parent"
-        android:layout_height="38dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabDelete"

@@ -26,11 +26,12 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/WizardButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="52dp"
         android:layout_gravity="end"
         android:clickable="true"
-        android:onClick="onClick"
         android:focusable="true"
-        app:srcCompat="@android:drawable/ic_media_play" />
+        android:onClick="onClick"
+        app:backgroundTint="@color/colorAccent"
+        app:srcCompat="@drawable/ic_flash" />
 
 </LinearLayout>

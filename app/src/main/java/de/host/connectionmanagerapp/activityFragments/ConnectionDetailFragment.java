@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -18,7 +19,7 @@ import de.host.connectionmanagerapp.R;
 import de.host.connectionmanagerapp.database.Connection;
 import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
 
-public class ConnectionDetailFragment extends Fragment implements View.OnClickListener{
+public class ConnectionDetailFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     FloatingActionButton delete;
     FloatingActionButton save;
     FloatingActionButton connect;
@@ -52,6 +53,7 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
 /*
         ArrayAdapter<Connection> adapter = new ArrayAdapter<Connection>(this,android.R.layout.simple_spinner_dropdown_item,arrayList1);
         spinnerConnection.setAdapter(adapter);
+        spinnerConnection.setOnItemClickListener(this);
 */
 
 
@@ -100,6 +102,12 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
         }
     }
 
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
     public Connection setConnection(){
         connection.setTitel(String.valueOf(editTextConnectionName.getText()));
         connection.setHostip(String.valueOf(editTextHostname.getText()));
@@ -112,5 +120,10 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
         editTextHostname.setText(connection.getHostip());
         editTextPort.setText(connection.getPort());
         return connection;
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

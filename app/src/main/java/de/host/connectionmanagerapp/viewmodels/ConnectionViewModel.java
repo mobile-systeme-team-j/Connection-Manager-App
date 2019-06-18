@@ -89,4 +89,12 @@ public class ConnectionViewModel extends AndroidViewModel {
     public LiveData<List<Snippet>> getAllSnippets(){return allSnippets;}
 
     public LiveData<List<Connection>> getRecentConnections() { return recentConnections; }
+
+
+    ///////////////////////////////
+    public List<Identity> getListIdentities(){return (List<Identity>) allIdenties;}
+    public List<Job> getListJobs(){return (List<Job>) allJobs;}
+    public List<Connection> getListConnections() { return (List<Connection>) allConnections; }
+    public List<Snippet> getListSnippets(){return (List<Snippet>) allSnippets;}
+
 }
