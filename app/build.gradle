@@ -45,5 +45,6 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
     implementation 'androidx.room:room-rxjava2:2.1.0-beta01'
+    implementation 'com.google.code.gson:gson:2.8.5'
 }
 

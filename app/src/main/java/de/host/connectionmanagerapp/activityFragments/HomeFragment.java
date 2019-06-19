@@ -38,11 +38,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             /*
             Object listItem = lastConnections.getItemAtPosition(position);
             int connID = listItem.getConnectionID;
-            SshSessionFragment fragment = SshSessionFragment.newInstance(connID);
-            getFragmentManager().beginTransaction()
-                    .replace(view.getId(), fragment)
-                    .addToBackStack(null)
-                    .commit();
+            ((MainActivity)getActivity()).replaceFragment(new SshSessionFragment());
                     */
 
         });

@@ -1,12 +1,15 @@
 package de.host.connectionmanagerapp.activityFragments;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+import android.provider.OpenableColumns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -27,12 +30,13 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
     EditText editTextIdentityName;
     EditText editTextUsername;
     EditText editTextPassword;
-    EditText editTextKey;
+    private Button btnKey;
     EditText editTextKeyPassword;
     private Identity identity;
     private Bundle arguments;
     private ConnectionViewModel connectionViewModel;
     long id;
+    private String keyPath;
     FloatingActionButton delete;
     FloatingActionButton save;
 
@@ -41,19 +45,20 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_identity_detail, container, false);
-
+        // Keyboard adjustResize, um die Veränderung der Floatingbuttons zu verhindern (= überlagert sich jetzt)
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         connectionViewModel= ViewModelProviders.of(getActivity()).get(ConnectionViewModel.class);
         editTextIdentityName = view.findViewById(R.id.identity_name);
         editTextUsername = view.findViewById(R.id.username);
         editTextPassword = view.findViewById(R.id.password);
-        editTextKey = view.findViewById(R.id.key);
+        btnKey = view.findViewById(R.id.key);
         editTextKeyPassword = view.findViewById(R.id.key_password);
         delete = view.findViewById(R.id.fabDelete);
         save = view.findViewById(R.id.fabSave);
         delete.setOnClickListener(this);
         save.setOnClickListener(this);
-        editTextKey.setOnClickListener(this);
+        btnKey.setOnClickListener(this);
 
         arguments = getArguments();
         if(arguments !=null){
@@ -70,8 +75,32 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 123 && resultCode == RESULT_OK) {
-            Uri selectedfile = data.getData(); //The uri with the location of the file
+            Uri selectedFile = data.getData(); //The uri with the location of the file
+            keyPath = getFileName(selectedFile);
+            btnKey.setText(keyPath);
         }
+    }
+    // Get FileName from Uri: https://stackoverflow.com/a/25005243
+    public String getFileName(Uri uri) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        if (result == null) {
+            result = uri.getPath();
+            int cut = result.lastIndexOf('/');
+            if (cut != -1) {
+                result = result.substring(cut + 1);
+            }
+        }
+        return result;
     }
 
     @Override
@@ -120,7 +149,7 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
         identity.setTitel(String.valueOf(editTextIdentityName.getText()));
         identity.setUsername(String.valueOf(editTextUsername.getText()));
         identity.setPassword(String.valueOf(editTextPassword.getText()));
-        identity.setKeypath(String.valueOf(editTextKey.getText()));
+        identity.setKeypath(String.valueOf(btnKey.getText()));
         identity.setKeypassword(String.valueOf(editTextKeyPassword.getText()));
         return identity;
     }
@@ -129,7 +158,7 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
         editTextIdentityName.setText(identity.getTitel());
         editTextUsername.setText(identity.getUsername());
         editTextPassword.setText(identity.getPassword());
-        editTextKey.setText(identity.getKeypath());
+        btnKey.setText(identity.getKeypath());
         editTextKeyPassword.setText(identity.getKeypassword());
     }
 }

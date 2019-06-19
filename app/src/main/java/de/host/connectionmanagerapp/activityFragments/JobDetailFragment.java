@@ -25,6 +25,7 @@ import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
 import de.host.connectionmanagerapp.TimePickerFragment;
 import de.host.connectionmanagerapp.alarm.AlarmReceiver;
+import de.host.connectionmanagerapp.alarm.AlarmRepository;
 import de.host.connectionmanagerapp.database.Connection;
 import de.host.connectionmanagerapp.database.Identity;
 import de.host.connectionmanagerapp.database.Job;
@@ -185,11 +186,8 @@ public class JobDetailFragment extends Fragment
             Toast.makeText(getContext(), "Please set time and date!", Toast.LENGTH_LONG);
             return;
         }
-
-        AlarmManager mng = (AlarmManager) getActivity().getSystemService(ALARM_SERVICE);
-        Intent intent = new Intent(getActivity(), AlarmReceiver.class);
-        PendingIntent pendingIntent  = PendingIntent.getBroadcast(getActivity(), 0, intent, 0);
-        mng.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+        // Alarm hinzufügen
+        AlarmRepository.addAlarm(c, getContext());
 
     }
 

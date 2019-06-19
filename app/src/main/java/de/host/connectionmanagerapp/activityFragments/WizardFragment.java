@@ -1,6 +1,10 @@
 package de.host.connectionmanagerapp.activityFragments;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.OpenableColumns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +20,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * @author Manuel Trapp
  * @date 15.02.2019
@@ -23,9 +29,9 @@ import de.host.connectionmanagerapp.R;
 
 public class WizardFragment extends Fragment implements View.OnClickListener {
 
-    private String ip, port,identity,password,key, keyPassword;
-    private EditText tv_ip,tv_port,tv_user,tv_UserPassword,tv_key, tv_keyPassword;
-    Button btnConnection, btnIdentity, btnSnippet;
+    private String ip, port,identity,password,key, keyPassword, keyPath;
+    private EditText tv_ip,tv_port,tv_user,tv_UserPassword, tv_keyPassword;
+    Button btnConnection, btnIdentity, btnSnippet, tv_key;
 
 
     @Nullable
@@ -39,16 +45,17 @@ public class WizardFragment extends Fragment implements View.OnClickListener {
         btnConnection = view.findViewById(R.id.btnConnection);
         btnIdentity = view.findViewById(R.id.btnIdentity);
         btnSnippet = view.findViewById(R.id.btnSnippet);
+        tv_key = view.findViewById(R.id.wizard_KeyPath);
         send.setOnClickListener(this);
         btnConnection.setOnClickListener(this);
         btnIdentity.setOnClickListener(this);
         btnSnippet.setOnClickListener(this);
+        tv_key.setOnClickListener(this);
 
         tv_ip = view.findViewById(R.id.wizard_IP);
         tv_port = view.findViewById(R.id.wizard_Port);
         tv_user = view.findViewById(R.id.wizard_Username);
         tv_UserPassword = view.findViewById(R.id.password);
-        tv_key = view.findViewById(R.id.wizard_KeyPath);
         tv_keyPassword = view.findViewById(R.id.wizard_KeyPass);
 
 
@@ -71,6 +78,13 @@ public class WizardFragment extends Fragment implements View.OnClickListener {
             case R.id.btn_Send:
                 ((MainActivity)getActivity()).replaceFragment(new SshSessionFragment());
                 break;
+            case R.id.wizard_KeyPath:
+                Intent intent = new Intent()
+                        .setType("*/*")
+                        .setAction(Intent.ACTION_GET_CONTENT);
+
+                startActivityForResult(Intent.createChooser(intent, "Select a file"), 123);
+                break;
         }
     // gets Strings from EditText-Inputs
         if(tv_ip != null && tv_port != null && tv_user != null && tv_UserPassword!=null && tv_key!=null&& tv_keyPassword != null) {
@@ -83,5 +97,37 @@ public class WizardFragment extends Fragment implements View.OnClickListener {
         }else{
             Toast.makeText(getContext(), "Fill all information!", Toast.LENGTH_SHORT);
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 123 && resultCode == RESULT_OK) {
+            Uri selectedFile = data.getData(); //The uri with the location of the file
+            keyPath = getFileName(selectedFile);
+            tv_key.setText(keyPath);
+        }
+    }
+    // Get FileName from Uri: https://stackoverflow.com/a/25005243
+    public String getFileName(Uri uri) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        if (result == null) {
+            result = uri.getPath();
+            int cut = result.lastIndexOf('/');
+            if (cut != -1) {
+                result = result.substring(cut + 1);
+            }
+        }
+        return result;
     }
 }

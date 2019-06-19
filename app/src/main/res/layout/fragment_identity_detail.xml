@@ -27,14 +27,13 @@
         android:hint="Password"
         android:inputType="textPassword" />
 
-    <EditText
+    <Button
         android:id="@+id/key"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Key-Path"
+        android:text="Key-Path"
         android:onClick="onClick"
-        android:clickable="true"
-        android:inputType="textMultiLine" />
+        android:clickable="true" />
 
     <EditText
         android:id="@+id/key_password"

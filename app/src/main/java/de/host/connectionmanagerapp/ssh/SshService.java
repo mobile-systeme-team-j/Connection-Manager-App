@@ -1,15 +1,22 @@
 package de.host.connectionmanagerapp.ssh;
 
-import android.app.Service;
+import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
-import android.os.IBinder;
 
 import androidx.annotation.Nullable;
 
-public class SshService extends Service {
-    @Nullable
+import de.host.connectionmanagerapp.alarm.AlarmRepository;
+
+
+public class SshService extends IntentService {
+
+    public SshService(Context context) {
+        super("SshService");
+    }
+
     @Override
-    public IBinder onBind(Intent intent) {
-        return null;
+    protected void onHandleIntent(@Nullable Intent intent) {
+        AlarmRepository.initSshAlarmManager(getApplicationContext());
     }
 }
