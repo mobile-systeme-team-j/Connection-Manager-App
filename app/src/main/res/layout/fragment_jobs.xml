@@ -14,7 +14,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
         <TextView
             android:id="@+id/textView"
             android:layout_width="278dp"
@@ -32,6 +31,13 @@
             android:layout_gravity="center">
 
         </ListView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/job_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="502dp"
+            android:layout_gravity="center"
+            android:scrollbars="vertical" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabNewJob"

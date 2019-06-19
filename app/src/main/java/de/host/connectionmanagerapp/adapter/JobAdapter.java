@@ -7,12 +7,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import de.host.connectionmanagerapp.R;
-import de.host.connectionmanagerapp.database.Identity;
 import de.host.connectionmanagerapp.database.Job;
 
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder> {
@@ -21,7 +21,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder> {
     Application application;
     private final LayoutInflater mInflater;
 
-    public JobAdapter(Application application){
+    public JobAdapter(FragmentActivity application){
         mInflater = LayoutInflater.from(application);
     }
 
@@ -41,7 +41,10 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder> {
 
     @Override
     public int getItemCount() {
-        return jobs.size();
+        if(jobs != null) {
+            return jobs.size();
+        }
+        return 0;
     }
 
     public void setJobs(List<Job> jobs){

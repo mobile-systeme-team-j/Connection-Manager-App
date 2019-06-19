@@ -7,19 +7,15 @@ import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.List;
-
 import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
 import de.host.connectionmanagerapp.adapter.ConnectionAdapter;
-import de.host.connectionmanagerapp.database.Connection;
 import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
 
 
@@ -46,13 +42,7 @@ public class ConnectionsFragment extends Fragment implements View.OnClickListene
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         connectionViewModel= ViewModelProviders.of(getActivity()).get(ConnectionViewModel.class);
-        connectionViewModel.getAllConnections().observe(this, new Observer<List<Connection>>()
-        {
-            @Override
-            public void onChanged(@Nullable final List<Connection> connections) {
-                adapter.setConnections(connections);
-            }
-        });
+        connectionViewModel.getAllConnections().observe(this,connections -> adapter.setConnections(connections));
 
         FloatingActionButton actionButton = view.findViewById(R.id.fabNewConnection);
         actionButton.setOnClickListener(this);
