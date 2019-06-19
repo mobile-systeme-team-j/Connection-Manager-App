@@ -9,6 +9,8 @@ import android.widget.ListView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
 
@@ -17,7 +19,7 @@ import de.host.connectionmanagerapp.R;
  * @date 14.05.2019
  * */
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements View.OnClickListener{
 
     ListView lastConnections;
 
@@ -27,6 +29,8 @@ public class HomeFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         lastConnections = view.findViewById(R.id.ListViewLastConnections);
+        FloatingActionButton wizard = view.findViewById(R.id.WizardButton);
+        wizard.setOnClickListener(this);
 
         // Verbindung aufbauen nach Click auf ListenElement
         lastConnections.setOnItemClickListener((adapterView, listView, position, id) -> {
