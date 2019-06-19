@@ -1,8 +1,6 @@
 package de.host.connectionmanagerapp.activityFragments;
 
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,15 +22,12 @@ import de.host.connectionmanagerapp.DatePickerFragment;
 import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
 import de.host.connectionmanagerapp.TimePickerFragment;
-import de.host.connectionmanagerapp.alarm.AlarmReceiver;
 import de.host.connectionmanagerapp.alarm.AlarmRepository;
 import de.host.connectionmanagerapp.database.Connection;
 import de.host.connectionmanagerapp.database.Identity;
 import de.host.connectionmanagerapp.database.Job;
 import de.host.connectionmanagerapp.database.Snippet;
 import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
-
-import static android.content.Context.ALARM_SERVICE;
 
 /**
  * @author  Jürgen Manuel Trapp
@@ -154,6 +149,7 @@ public class JobDetailFragment extends Fragment
                        // connectionViewModel.insertJob(Job());
                        // Create AlarmManager
                         createAlarm();
+                        Toast.makeText(getContext(),"Identity saved", Toast.LENGTH_SHORT).show();
                     }catch (Exception e){
                         Toast.makeText(getContext(),"",Toast.LENGTH_SHORT);
                     }

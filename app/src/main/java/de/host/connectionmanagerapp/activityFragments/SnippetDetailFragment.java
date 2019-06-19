@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProviders;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import de.host.connectionmanagerapp.R;
-import de.host.connectionmanagerapp.database.Identity;
 import de.host.connectionmanagerapp.database.Snippet;
 import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
 
@@ -85,10 +84,10 @@ public class SnippetDetailFragment extends Fragment implements View.OnClickListe
                     }
                 }
                 else{
-                        snippet = new Snippet();
-                        connectionViewModel.insertSnippet(setSnippet());
+                    snippet = new Snippet();
+                    connectionViewModel.insertSnippet(setSnippet());
 
-
+                    Toast.makeText(getContext(),"Identity saved", Toast.LENGTH_SHORT).show();
                         //Toast.makeText(getContext(),e.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
 
                 }

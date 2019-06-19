@@ -17,11 +17,12 @@
         android:textColor="#000000"
         android:layout_marginLeft="20dp" />
 
-    <ListView
-        android:id="@+id/ListViewLastConnections"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/con_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="518dp"
-        android:layout_gravity="clip_horizontal|center" />
+        android:layout_height="505dp"
+        android:layout_gravity="center"
+        android:scrollbars="vertical" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/WizardButton"

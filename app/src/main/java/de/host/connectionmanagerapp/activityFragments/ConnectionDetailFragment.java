@@ -96,6 +96,7 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
                     try{
                         connection = new Connection();
                         connectionViewModel.insertConnection(setConnection());
+                        Toast.makeText(getContext(),"Identity saved", Toast.LENGTH_SHORT).show();
                     }catch (Exception e){
                         Toast.makeText(getContext(),"",Toast.LENGTH_SHORT);
                     }

@@ -135,6 +135,7 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
                     try{
                         identity = new Identity();
                         connectionViewModel.insertIdentity(setIdentity());
+                        Toast.makeText(getContext(),"Identity saved", Toast.LENGTH_SHORT).show();
                     }
                     catch (Exception e){
                         Toast.makeText(getContext(),"Please fill all lines",Toast.LENGTH_SHORT).show();
