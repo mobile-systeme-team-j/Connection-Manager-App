@@ -5,7 +5,6 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -131,7 +130,7 @@ public class JobDetailFragment extends Fragment
                 ((MainActivity)getActivity()).replaceFragment(new IdentitySelectionFragment());
                 break;
             case R.id.btnSnippet:
-               // ((MainActivity)getActivity()).replaceFragment(new SnippetSelectionFragment());
+                ((MainActivity)getActivity()).replaceFragment(new SnippetSelectionFragment());
                 break;
             case R.id.date:
                 DatePicker();

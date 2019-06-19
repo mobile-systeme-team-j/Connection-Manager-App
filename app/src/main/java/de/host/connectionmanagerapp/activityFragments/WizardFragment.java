@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
 
 /**
@@ -30,8 +32,8 @@ public class WizardFragment extends Fragment implements View.OnClickListener {
 
         View view = inflater.inflate(R.layout. fragment_wizard, container, false);
 
-        Button button = view.findViewById(R.id.button);
-        button.setOnClickListener(this);
+        FloatingActionButton send = view.findViewById(R.id.btn_Send);
+        send.setOnClickListener(this);
 
         tv_ip = view.findViewById(R.id.wizard_IP);
         tv_port = view.findViewById(R.id.wizard_Port);
@@ -47,6 +49,20 @@ public class WizardFragment extends Fragment implements View.OnClickListener {
 
 
     public void onClick(View view){
+        switch(view.getId()){
+            case R.id.btnConnection:
+                ((MainActivity)getActivity()).replaceFragment(new ConnectionSelectionFragment());
+                break;
+            case R.id.btnIdentity:
+                ((MainActivity)getActivity()).replaceFragment(new IdentitySelectionFragment());
+                break;
+            case R.id.btnSnippet:
+                ((MainActivity)getActivity()).replaceFragment(new SnippetSelectionFragment());
+                break;
+            case R.id.btn_Send:
+
+                break;
+        }
     // gets Strings from EditText-Inputs
         ip = tv_ip.getText().toString();
         port = tv_port.getText().toString();

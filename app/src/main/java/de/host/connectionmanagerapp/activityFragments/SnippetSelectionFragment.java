@@ -16,7 +16,6 @@ import androidx.fragment.app.Fragment;
 import java.util.List;
 
 import de.host.connectionmanagerapp.R;
-import de.host.connectionmanagerapp.database.Identity;
 import de.host.connectionmanagerapp.database.Snippet;
 import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
 
@@ -47,30 +46,32 @@ public class SnippetSelectionFragment extends Fragment {
 
 
         // android-coding.blogspot.com/2011/09/listview-with-multiple-choice.html
+        if( snippetList != null) {
+            ArrayAdapter<Snippet> adapter = new ArrayAdapter<Snippet>(getContext(), android.R.layout.simple_list_item_single_choice, snippetList);
 
-        ArrayAdapter<Snippet> adapter = new ArrayAdapter<Snippet>(getContext(),android.R.layout.simple_list_item_single_choice, snippetList);
+            snippetListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+            snippetListView.setAdapter(adapter);
 
-        snippetListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        snippetListView.setAdapter(adapter);
+            select.setOnClickListener(v -> {
+                String selected = "";
+                int cntChoice = snippetListView.getCount();
 
-        select.setOnClickListener(v -> {
-            String selected = "";
-            int cntChoice = snippetListView.getCount();
+                SparseBooleanArray sparseBooleanArray = snippetListView.getCheckedItemPositions();
 
-            SparseBooleanArray sparseBooleanArray = snippetListView.getCheckedItemPositions();
+                for (int i = 0; i < cntChoice; i++) {
 
-            for(int i = 0; i < cntChoice; i++){
+                    if (sparseBooleanArray.get(i)) {
 
-                if(sparseBooleanArray.get(i)) {
-
-                    selected += snippetListView.getItemAtPosition(i).toString() + "\n";
+                        selected += snippetListView.getItemAtPosition(i).toString() + "\n";
+                    }
                 }
-            }
 
-            Toast.makeText(getContext(),selected,Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), selected, Toast.LENGTH_LONG).show();
 
-        });
-
+            });
+        }else{
+            Toast.makeText(getContext(),"No Snippets found", Toast.LENGTH_SHORT);
+        }
 
         return view;
     }

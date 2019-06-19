@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -24,6 +25,7 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
     FloatingActionButton delete;
     FloatingActionButton save;
     FloatingActionButton connect;
+    Button identity;
     EditText editTextConnectionName;
     EditText editTextHostname;
     EditText editTextPort;
@@ -43,13 +45,16 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
         editTextConnectionName = view.findViewById(R.id.editTextHostname);
         editTextHostname = view.findViewById(R.id.editTextHostname);
         editTextPort = view.findViewById(R.id.editTextPort);
-        spinnerConnection = view.findViewById(R.id.spinnerConnection);
+
         delete = view.findViewById(R.id.fabDelete);
         save = view.findViewById(R.id.fabSave);
         connect = view.findViewById(R.id.fabConnect);
         delete.setOnClickListener(this);
         save.setOnClickListener(this);
         connect.setOnClickListener(this);
+        identity = view.findViewById(R.id.btnIdentity);
+        identity.setOnClickListener(this);
+
 
 
 /*

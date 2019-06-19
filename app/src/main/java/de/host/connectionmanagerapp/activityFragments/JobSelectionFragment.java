@@ -45,30 +45,32 @@ public class JobSelectionFragment extends Fragment {
         }
 
         // android-coding.blogspot.com/2011/09/listview-with-multiple-choice.html
+        if( jobList != null) {
+            ArrayAdapter<Job> adapter = new ArrayAdapter<Job>(getContext(), android.R.layout.simple_list_item_single_choice, jobList);
 
-        ArrayAdapter<Job> adapter = new ArrayAdapter<Job>(getContext(),android.R.layout.simple_list_item_single_choice, jobList);
+            jobListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+            jobListView.setAdapter(adapter);
 
-        jobListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        jobListView.setAdapter(adapter);
+            select.setOnClickListener(v -> {
+                String selected = "";
+                int cntChoice = jobListView.getCount();
 
-        select.setOnClickListener(v -> {
-            String selected = "";
-            int cntChoice = jobListView.getCount();
+                SparseBooleanArray sparseBooleanArray = jobListView.getCheckedItemPositions();
 
-            SparseBooleanArray sparseBooleanArray = jobListView.getCheckedItemPositions();
+                for (int i = 0; i < cntChoice; i++) {
 
-            for(int i = 0; i < cntChoice; i++){
+                    if (sparseBooleanArray.get(i)) {
 
-                if(sparseBooleanArray.get(i)) {
-
-                    selected += jobListView.getItemAtPosition(i).toString() + "\n";
+                        selected += jobListView.getItemAtPosition(i).toString() + "\n";
+                    }
                 }
-            }
 
-            Toast.makeText(getContext(),selected,Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), selected, Toast.LENGTH_LONG).show();
 
-        });
-
+            });
+        }else{
+            Toast.makeText(getContext(),"No Jobs found", Toast.LENGTH_SHORT);
+        }
 
         return view;
     }

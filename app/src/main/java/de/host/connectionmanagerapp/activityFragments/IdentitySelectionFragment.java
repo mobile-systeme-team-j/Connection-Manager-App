@@ -46,11 +46,12 @@ public class IdentitySelectionFragment extends Fragment {
 
 
        // android-coding.blogspot.com/2011/09/listview-with-multiple-choice.html
+        if( identityList != null) {
+            ArrayAdapter<Identity> adapter = new ArrayAdapter<Identity>(getContext(), android.R.layout.simple_list_item_single_choice, identityList);
 
-        ArrayAdapter<Identity> adapter = new ArrayAdapter<Identity>(getContext(),android.R.layout.simple_list_item_single_choice, identityList);
+            identityListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+            identityListView.setAdapter(adapter);
 
-        identityListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        identityListView.setAdapter(adapter);
 
         select.setOnClickListener(v -> {
                 String selected = "";
@@ -69,7 +70,9 @@ public class IdentitySelectionFragment extends Fragment {
                 Toast.makeText(getContext(),selected,Toast.LENGTH_LONG).show();
 
             });
-
+        }else{
+            Toast.makeText(getContext(),"No Identities found", Toast.LENGTH_SHORT);
+        }
 
         return view;
     }

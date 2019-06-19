@@ -35,7 +35,7 @@ public class ConnectionSelectionFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_connection_selection, container, false);
 
-        connectionList = view.findViewById(R.id.connectionList);
+        connectionListView = view.findViewById(R.id.connectionList);
 
 
         arguments = getArguments();
@@ -46,29 +46,33 @@ public class ConnectionSelectionFragment extends Fragment {
 
         // android-coding.blogspot.com/2011/09/listview-with-multiple-choice.html
 
-       ArrayAdapter<Connection> adapter = new ArrayAdapter<Connection>(getContext(),android.R.layout.simple_list_item_single_choice, connectionList);
+        if ( connectionList != null) {
+            ArrayAdapter<Connection> adapter = new ArrayAdapter<Connection>(getContext(), android.R.layout.simple_list_item_single_choice, connectionList);
 
-        connectionListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        connectionListView.setAdapter(adapter);
+            connectionListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+            connectionListView.setAdapter(adapter);
 
-        select.setOnClickListener(v -> {
-            String selected = "";
-            int cntChoice = connectionListView.getCount();
 
-            SparseBooleanArray sparseBooleanArray = connectionListView.getCheckedItemPositions();
+            select.setOnClickListener(v -> {
+                String selected = "";
+                int cntChoice = connectionListView.getCount();
 
-            for(int i = 0; i < cntChoice; i++){
+                SparseBooleanArray sparseBooleanArray = connectionListView.getCheckedItemPositions();
 
-                if(sparseBooleanArray.get(i)) {
+                for(int i = 0; i < cntChoice; i++){
 
-                    selected += connectionListView.getItemAtPosition(i).toString() + "\n";
+                    if(sparseBooleanArray.get(i)) {
+
+                        selected += connectionListView.getItemAtPosition(i).toString() + "\n";
+                    }
                 }
-            }
 
             Toast.makeText(getContext(),selected,Toast.LENGTH_LONG).show();
 
-        });
-
+            });
+        }else{
+            Toast.makeText(getContext(),"No Connections found", Toast.LENGTH_SHORT);
+        }
 
         return view;
     }

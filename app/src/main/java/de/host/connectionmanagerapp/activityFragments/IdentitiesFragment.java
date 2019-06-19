@@ -18,9 +18,7 @@ import java.util.List;
 
 import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
-import de.host.connectionmanagerapp.adapter.ConnectionAdapter;
 import de.host.connectionmanagerapp.adapter.IdentityAdapter;
-import de.host.connectionmanagerapp.database.Connection;
 import de.host.connectionmanagerapp.database.Identity;
 import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
 
@@ -40,6 +38,7 @@ public class IdentitiesFragment extends Fragment implements View.OnClickListener
         View view = inflater.inflate(R.layout.fragment_identities, container, false);
 
         FloatingActionButton actionButton = view.findViewById(R.id.fabNewSnippet);
+
         recyclerView = view.findViewById(R.id.ind_recycler_view);
         final IdentityAdapter adapter = new IdentityAdapter(getActivity());
 
@@ -54,6 +53,8 @@ public class IdentitiesFragment extends Fragment implements View.OnClickListener
                 adapter.setIdentities(identities);
             }
         });
+
+
         actionButton.setOnClickListener(this);
         return view;
     }

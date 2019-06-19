@@ -4,12 +4,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
@@ -50,7 +48,7 @@ public class HomeFragment extends Fragment {
 
     public void onClick(View view){
         if(view.getId() == R.id.WizardButton){
-            //
+            ((MainActivity)getActivity()).replaceFragment(new WizardFragment());
         }
     }
 }
