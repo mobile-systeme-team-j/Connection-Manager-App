@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -38,6 +39,7 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_connection_detail, container, false);
 
+        connectionViewModel= ViewModelProviders.of(getActivity()).get(ConnectionViewModel.class);
         editTextConnectionName = view.findViewById(R.id.editTextHostname);
         editTextHostname = view.findViewById(R.id.editTextHostname);
         editTextPort = view.findViewById(R.id.editTextPort);
@@ -45,11 +47,11 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
         delete = view.findViewById(R.id.fabDelete);
         save = view.findViewById(R.id.fabSave);
         connect = view.findViewById(R.id.fabConnect);
+        delete.setOnClickListener(this);
+        save.setOnClickListener(this);
+        connect.setOnClickListener(this);
 
-        connect.setOnClickListener(view1 -> {
-            // CallSShSessionFragment
-            ((MainActivity)getActivity()).replaceFragment(new SshSessionFragment());
-        });
+
 /*
         ArrayAdapter<Connection> adapter = new ArrayAdapter<Connection>(this,android.R.layout.simple_spinner_dropdown_item,arrayList1);
         spinnerConnection.setAdapter(adapter);
@@ -76,11 +78,7 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
                 break;
             case R.id.fabConnect:
                 // CallSShSessionFragment
-                SshSessionFragment fragment = new SshSessionFragment();
-                getFragmentManager().beginTransaction()
-                        .replace(view.getId(), fragment)
-                        .addToBackStack(null)
-                        .commit();
+                ((MainActivity)getActivity()).replaceFragment(new SshSessionFragment());
             case R.id.fabSave:
                 if(arguments != null){
                     try{

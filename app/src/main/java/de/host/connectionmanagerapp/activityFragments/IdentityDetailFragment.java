@@ -1,5 +1,7 @@
 package de.host.connectionmanagerapp.activityFragments;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +19,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import de.host.connectionmanagerapp.R;
 import de.host.connectionmanagerapp.database.Identity;
 import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
+
+import static android.app.Activity.RESULT_OK;
 
 public class IdentityDetailFragment extends Fragment implements View.OnClickListener{
 
@@ -49,6 +53,7 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
         save = view.findViewById(R.id.fabSave);
         delete.setOnClickListener(this);
         save.setOnClickListener(this);
+        editTextKey.setOnClickListener(this);
 
         arguments = getArguments();
         if(arguments !=null){
@@ -61,12 +66,25 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
         return view;
     }
 
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 123 && resultCode == RESULT_OK) {
+            Uri selectedfile = data.getData(); //The uri with the location of the file
+        }
+    }
 
     @Override
     public void onClick(View view) {
 
         switch (view.getId()){
+            case R.id.key:
+                Intent intent = new Intent()
+                        .setType("*/*")
+                        .setAction(Intent.ACTION_GET_CONTENT);
+
+                startActivityForResult(Intent.createChooser(intent, "Select a file"), 123);
+                break;
             case R.id.fabDelete:
                 if(arguments !=null) {
                     connectionViewModel.deleteIdentity(identity);

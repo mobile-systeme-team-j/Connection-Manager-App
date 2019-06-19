@@ -35,7 +35,7 @@
         android:layout_height="70dp"
         android:scaleX="1.7"
         android:scaleY="1.7"
-        android:src="@drawable/ic_send"
+        app:srcCompat="@drawable/ic_send"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/et_Command"

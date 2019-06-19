@@ -16,6 +16,7 @@ import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
 public class SnippetDetailFragment extends Fragment {
 
     EditText editTextSnippetname;
+    EditText editTextSnippetText;
     Bundle arguments;
     long id;
     Snippet snippet;
@@ -28,6 +29,7 @@ public class SnippetDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_snippet_detail, container, false);
 
         editTextSnippetname = view.findViewById(R.id.editTextSnippetname);
+        editTextSnippetText = view.findViewById(R.id.editTextSnippetText);
 
         arguments  = getArguments();
         if(arguments != null){
@@ -38,6 +40,7 @@ public class SnippetDetailFragment extends Fragment {
         }
         return view;
     }
+
 
     public Snippet getSnippet(){
 

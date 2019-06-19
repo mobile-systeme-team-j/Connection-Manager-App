@@ -136,6 +136,7 @@ public class SshSessionFragment extends Fragment {
             
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Wenn return gedrückt, also new line
                 if (before == 0 && count == 1 && s.charAt(start) == '\n') {
                     // Führe Click aus
                     send.performClick();
@@ -169,22 +170,29 @@ public class SshSessionFragment extends Fragment {
         }
     }*/
 
-    /*
+
     @Override
     public void onStop() {
         super.onStop();
         // Verbindung beenden über Conn
-        try {
-            SshConn conn = (SshConn) future.get();
-            conn.getClient().disconnect();
-        } catch (ExecutionException e) {
-            Log.e(TAG, e.getMessage());
-        } catch (InterruptedException e) {
-            Log.e(TAG, e.getMessage());
-        } catch (IOException e) {
-            Log.e(TAG, e.getMessage());
-        }
-    }*/
+        // In neuem Thread, da wieder Netzwerk
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        SshConn conn = (SshConn) future.get();
+                        conn.getClient().disconnect();
+                    } catch (ExecutionException e) {
+                    Log.e(TAG, e.getMessage());
+                } catch (InterruptedException e) {
+                    Log.e(TAG, e.getMessage());
+                } catch (IOException e) {
+                    Log.e(TAG, e.getMessage());
+                }
+                }
+            });
+            thread.start();
+    }
 
     @Override
     public void onDetach() {
@@ -328,5 +336,6 @@ public class SshSessionFragment extends Fragment {
                 e.printStackTrace();
             }
         }
+
     }
 }
