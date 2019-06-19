@@ -14,7 +14,7 @@
         android:inputType="text" />
 
     <EditText
-        android:id="@+id/editTextSnippetText"
+        android:id="@+id/editTextSnippetContent"
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:ems="10"

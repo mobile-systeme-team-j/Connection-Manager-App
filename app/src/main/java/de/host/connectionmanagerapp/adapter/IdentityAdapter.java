@@ -1,6 +1,6 @@
 package de.host.connectionmanagerapp.adapter;
 
-import android.app.Application;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,12 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import de.host.connectionmanagerapp.R;
-import de.host.connectionmanagerapp.activityFragments.ConnectionDetailFragment;
+
 import de.host.connectionmanagerapp.activityFragments.IdentityDetailFragment;
-import de.host.connectionmanagerapp.database.Connection;
 import de.host.connectionmanagerapp.database.Identity;
 
-public class IdentityAdapter extends  RecyclerView.Adapter<IdentityAdapter.IdentityViewHolder> {
+public class IdentityAdapter extends RecyclerView.Adapter<IdentityAdapter.IdentityViewHolder> {
 
     private List<Identity> identities;
     private Context application;

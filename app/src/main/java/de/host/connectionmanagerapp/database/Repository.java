@@ -17,6 +17,7 @@ import de.host.connectionmanagerapp.daos.IdentityDao;
 import de.host.connectionmanagerapp.daos.JobDao;
 import de.host.connectionmanagerapp.daos.SnippetDao;
 import de.host.connectionmanagerapp.daos.Snippet_JobDao;
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
 import io.reactivex.Single;
@@ -63,7 +64,12 @@ public class Repository {
         sjDao.insert(sj);
     }
     //Fertiges snippet übergeben es erfolgt eine überprüfung mehr, auch die identity id muss gesetzt werden
-    public void snippet_insert(Snippet snippet){snippetDao.insert(snippet);}
+    public void snippet_insert(Snippet snippet) {
+        Executor exe = Executors.newSingleThreadExecutor();
+        exe.execute(() -> {
+            snippetDao.insert(snippet);
+        });
+    }
 
 
     //getEntity
@@ -134,12 +140,15 @@ public class Repository {
         });
     }
     public void snippet_delete(long snippetId){
-        Snippet snippet = snippetDao.snippetfromid(snippetId).blockingFirst();
-        List<Snippet_Job> sjs = sjDao.sjsfromsnippet(snippetId);
-        for(Snippet_Job sj: sjs) {
-            sjDao.delete(sj);
-        }
-        snippetDao.delete(snippet);
+        Executor exe = Executors.newSingleThreadExecutor();
+        exe.execute(() -> {
+            Snippet snippet = snippetDao.snippetfromid(snippetId).blockingFirst();
+            List<Snippet_Job> sjs = sjDao.sjsfromsnippet(snippetId);
+            for (Snippet_Job sj : sjs) {
+                sjDao.delete(sj);
+            }
+            snippetDao.delete(snippet);
+        });
     }
     public void connection_delete(long connectionId){
         Connection conection = connectionDao.connectionfromid(connectionId).blockingFirst();

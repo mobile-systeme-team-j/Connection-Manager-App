@@ -19,10 +19,10 @@ import io.reactivex.Flowable;
 public interface ConnectionDao {
 
     @Insert
-    Completable insert(Connection connection);
+    void insert(Connection connection);
 
     @Update
-    Completable update(Connection... connections);
+    void update(Connection... connections);
 
     @Query("Select*from connection Where connection_Id = :id")
     Flowable<Connection> connectionfromid(long id);

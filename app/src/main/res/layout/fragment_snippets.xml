@@ -21,13 +21,12 @@
         android:text="All Snippets:"
         android:textColor="#000000" />
 
-    <ListView
-        android:id="@+id/ListViewAllSnippets"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/sni_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="506dp"
-        android:layout_gravity="center">
-
-    </ListView>
+        android:layout_height="526dp"
+        android:layout_gravity="center"
+        android:scrollbars="vertical" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabNewSnippet"
