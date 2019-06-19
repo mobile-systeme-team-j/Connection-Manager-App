@@ -5,22 +5,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import de.host.connectionmanagerapp.R;
+import de.host.connectionmanagerapp.database.Identity;
 import de.host.connectionmanagerapp.database.Snippet;
 import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
 
-public class SnippetDetailFragment extends Fragment {
+public class SnippetDetailFragment extends Fragment implements View.OnClickListener{
 
-    EditText editTextSnippetname;
-    EditText editTextSnippetText;
-    Bundle arguments;
-    long id;
-    Snippet snippet;
-    ConnectionViewModel connectionViewModel;
+    private EditText editTextSnippetname;
+    private EditText editTextSnippetContent;
+    private Bundle arguments;
+    private long id;
+    private Snippet snippet;
+    private ConnectionViewModel connectionViewModel;
+    private FloatingActionButton delete;
+    private FloatingActionButton save;
+
 
     @Nullable
     @Override
@@ -28,22 +36,78 @@ public class SnippetDetailFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_snippet_detail, container, false);
 
-        editTextSnippetname = view.findViewById(R.id.editTextSnippetname);
-        editTextSnippetText = view.findViewById(R.id.editTextSnippetText);
+        connectionViewModel= ViewModelProviders.of(getActivity()).get(ConnectionViewModel.class);
+        editTextSnippetContent = view.findViewById(R.id.editTextSnippetContent);
+        editTextSnippetname = view.findViewById(R.id.editTextConnectionName);
 
-        arguments  = getArguments();
-        if(arguments != null){
+
+        delete = view.findViewById(R.id.fabDelete);
+        save = view.findViewById(R.id.fabSave);
+        delete.setOnClickListener(this);
+        save.setOnClickListener(this);
+        editTextSnippetname = view.findViewById(R.id.editTextSnippetname);
+
+
+        arguments = getArguments();
+        if (arguments != null) {
             id = arguments.getLong("id");
             snippet = connectionViewModel.getSnippets(id);
 
             getSnippet();
         }
+
+
         return view;
     }
 
 
-    public Snippet getSnippet(){
 
-        return snippet;
+
+    @Override
+    public void onClick(View view) {
+
+        switch (view.getId()) {
+            case R.id.fabDelete:
+                if(arguments !=null) {
+
+                }
+                else{
+
+                }
+                break;
+            case R.id.fabSave:
+                if(arguments !=null) {
+                    try{
+                        connectionViewModel.updateSnippets(setSnippet());
+                    }
+                    catch (Exception e){
+                        Toast.makeText(getContext(),e.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else{
+                        snippet = new Snippet();
+                        connectionViewModel.insertSnippet(setSnippet());
+
+
+                        //Toast.makeText(getContext(),e.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
+
+                }
+
+                break;
+
+        }
+
     }
+        public void getSnippet () {
+            editTextSnippetname.setText(snippet.getTitel());
+            editTextSnippetContent.setText(snippet.getText());
+
+        }
+        public Snippet setSnippet(){
+
+            snippet.setText(String.valueOf(editTextSnippetContent.getText()));
+            snippet.setTitel(String.valueOf(editTextSnippetname.getText()));
+            return snippet;
+        }
+
 }

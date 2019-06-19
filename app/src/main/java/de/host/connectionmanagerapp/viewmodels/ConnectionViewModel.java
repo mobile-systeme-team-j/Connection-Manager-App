@@ -65,10 +65,10 @@ public class ConnectionViewModel extends AndroidViewModel {
         repo.connection_update(connection);
     }
     public void updateJob(Job job){
-        updateJob(job);
+        repo.job_update(job);
     }
     public void updateSnippets(Snippet snippet){
-        updateSnippets(snippet);
+        repo.snippet_update(snippet);
     }
 
     //delete
