@@ -20,7 +20,7 @@ import io.reactivex.Single;
 public interface JobDao {
 
     @Insert
-    public Maybe<Long> insert (Job job);
+    long insert (Job job);
 
     @Update
     void update (Job... jobs);

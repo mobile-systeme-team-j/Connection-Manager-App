@@ -36,6 +36,7 @@ public class ConnectionViewModel extends AndroidViewModel {
     public void insertIdentity(Identity identity){
         repo.identity_insert(identity);
     }
+    public long insertIdentityid(Identity identity){return repo.identity_insertid(identity);}
     public  void insertConnection(Connection connection){
         repo.connection_insert(connection);
     }
@@ -78,6 +79,7 @@ public class ConnectionViewModel extends AndroidViewModel {
     public void deleteConnection(long id){
         repo.connection_delete(id);
     }
+    public void deleteSnippets(long id){repo.snippet_delete(id);}
 
 
     public LiveData<List<Connection>> getAllConnections() { return allConnections; }

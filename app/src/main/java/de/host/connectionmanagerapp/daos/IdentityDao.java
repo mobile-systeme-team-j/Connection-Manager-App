@@ -18,6 +18,9 @@ public interface IdentityDao {
     @Insert
     void insert(Identity identity);
 
+    @Insert
+    public long insertid(Identity identity);
+
     @Update
     void update(Identity... identities);
 

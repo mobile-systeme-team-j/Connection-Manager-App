@@ -10,11 +10,15 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import java.util.Date;
 
+import static androidx.room.ForeignKey.NO_ACTION;
+import static androidx.room.ForeignKey.SET_NULL;
+
 @Entity(tableName = "connection"
         ,indices = {@Index(value={"identity_Id"})},
         foreignKeys = @ForeignKey(entity = Identity.class,
                 parentColumns = "identity_id",
-                childColumns = "identity_Id"))
+                childColumns = "identity_Id",
+                onDelete = NO_ACTION))
 public class Connection {
 
     @PrimaryKey(autoGenerate = true)
