@@ -5,10 +5,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -41,6 +41,7 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_connection_detail, container, false);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         connectionViewModel= ViewModelProviders.of(getActivity()).get(ConnectionViewModel.class);
         editTextConnectionName = view.findViewById(R.id.editTextConnectionName);
@@ -49,7 +50,7 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
 
         delete = view.findViewById(R.id.fabDelete);
         save = view.findViewById(R.id.fabSave);
-        connect = view.findViewById(R.id.fabConnect);
+        connect = view.findViewById(R.id.fabConnectRemoteSSH);
         delete.setOnClickListener(this);
         save.setOnClickListener(this);
         connect.setOnClickListener(this);
@@ -90,9 +91,13 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
                 }
 
                 break;
-            case R.id.fabConnect:
+            case R.id.fabConnectRemoteSSH:
                 // CallSShSessionFragment
-                ((MainActivity)getActivity()).replaceFragment(new SshSessionFragment());
+                if (id != 0) {
+                    ((MainActivity)getActivity()).replaceFragment(SshSessionFragment.newInstance(id));
+                }
+                break;
+
             case R.id.fabSave:
                 if(arguments != null){
                     try{

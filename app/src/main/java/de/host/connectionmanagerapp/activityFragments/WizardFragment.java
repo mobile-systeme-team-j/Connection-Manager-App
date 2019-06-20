@@ -1,16 +1,10 @@
 package de.host.connectionmanagerapp.activityFragments;
 
-import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.OpenableColumns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -19,10 +13,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
-import de.host.connectionmanagerapp.helper.FileUtils;
-import de.host.connectionmanagerapp.helper.UriHelper;
-
-import static android.app.Activity.RESULT_OK;
 
 /**
  * @author Manuel Trapp
@@ -41,7 +31,7 @@ public class WizardFragment extends Fragment implements View.OnClickListener {
 
         View view = inflater.inflate(R.layout. fragment_wizard, container, false);
 
-        FloatingActionButton send = view.findViewById(R.id.fabConnect);
+        FloatingActionButton send = view.findViewById(R.id.fabConnectRemoteSSH);
         btnConnection = view.findViewById(R.id.btnConnection);
         btnIdentity = view.findViewById(R.id.btnIdentity);
         btnSnippet = view.findViewById(R.id.btnSnippet);

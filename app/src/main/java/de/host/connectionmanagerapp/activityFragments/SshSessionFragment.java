@@ -1,6 +1,5 @@
 package de.host.connectionmanagerapp.activityFragments;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -22,7 +20,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import net.schmizz.sshj.SSHClient;
-import net.schmizz.sshj.common.IOUtils;
 import net.schmizz.sshj.common.LoggerFactory;
 import net.schmizz.sshj.common.StreamCopier;
 import net.schmizz.sshj.connection.ConnectionException;
@@ -38,10 +35,10 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 
 import de.host.connectionmanagerapp.R;
 import de.host.connectionmanagerapp.database.Connection;
+import de.host.connectionmanagerapp.database.Identity;
 import de.host.connectionmanagerapp.ssh.SshConfig;
 import de.host.connectionmanagerapp.ssh.SshConn;
 import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
@@ -105,7 +102,7 @@ public class SshSessionFragment extends Fragment {
         send = view.findViewById(R.id.btn_Send);
         connectionViewModel= ViewModelProviders.of(getActivity()).get(ConnectionViewModel.class);
         // Wirft Error: Cannot access database on the main thread since it may potentially lock the UI for a long period of time.
-        //connection = connectionViewModel.getConnection(connection_ID);
+        connection = connectionViewModel.getConnection(connection_ID);
         
         // Soft-Keyboard automatisch anzeigen, notwendige Ui-Elemente resizen
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
@@ -220,9 +217,9 @@ public class SshSessionFragment extends Fragment {
         Future<SshConn> future = executorService.submit(new Callable<SshConn>() {
             @Override
             public SshConn call() throws Exception {
-                /* SO RICHTIG MATTIS ?
+                // SO RICHTIG MATTIS ?
                 // Get sshConn details from DB
-                int identityID = connection.getIdentity_Id();
+                long identityID = connection.getIdentity_Id();
                 Identity identity = connectionViewModel.getIdentity(identityID);
                 String host = connection.getHostip();
                 String password = identity.getPassword();
@@ -230,20 +227,32 @@ public class SshSessionFragment extends Fragment {
                 String keyPass = identity.getKeypassword();
                 //TODO DB: Pfad für HostKey String hostKey = connection.getHostKey();
                 int port = connection.getPort();
-                String keyPath = identity.getKeypath();
+                String keyPath = "";
+                if (identity.getKeypath() != null) {
+                    if (!identity.getKeypath().equals("Key-Path") && !TextUtils.isEmpty(keyPath)) {
+                        keyPath = identity.getKeypath();
+                    }
+                }
 
                 // Setup Connection
-                SshConfig config = new SshConfig(host, username);
+                SshConfig config;
+                if (port != 0) {
+                    config = new SshConfig(host, port, username);
+                } else {
+                    config = new SshConfig(host, username);
+                }
+
                 if (!TextUtils.isEmpty(keyPath)) {
                     config = config.useKey(keyPath);
                 }
                 if (!TextUtils.isEmpty(keyPass)) {
                     config = config.useKeyPass(keyPass);
                 }
+
                 config = config.usePassword(password);
                 config = config.useHostKey(false);
-                */
-                
+
+                /*
                 // Setup Connection
                 SshConfig config = new SshConfig("54.37.204.238", "userwp");
                 config = config.usePassword("wFf4]18&");
@@ -252,7 +261,6 @@ public class SshSessionFragment extends Fragment {
                     SSHConfig config = new SSHConfig("sdf.org", "new");
                     config = config.useHostKey(false);
                     */
-
                 SshConn conn = new SshConn(config, new SSHClient(), getContext());
                 conn.openConnection();
                 return conn;

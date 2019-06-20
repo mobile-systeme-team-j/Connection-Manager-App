@@ -56,7 +56,7 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_identity_detail, container, false);
         // Keyboard adjustResize, um die Veränderung der Floatingbuttons zu verhindern (= überlagert sich jetzt)
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         connectionViewModel= ViewModelProviders.of(getActivity()).get(ConnectionViewModel.class);
         editTextIdentityName = view.findViewById(R.id.identity_name);
@@ -91,6 +91,7 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
             //keyFilename = getFileName(selectedFile);
             keyFilename = UriHelper.getFileName(selectedFile, getContext());
             btnKey.setText(keyFilename);
+
         }
     }
 
@@ -140,11 +141,11 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
     }
 
     public Identity setIdentity(){
-        identity.setTitel(String.valueOf(editTextIdentityName.getText()));
-        identity.setUsername(String.valueOf(editTextUsername.getText()));
-        identity.setPassword(String.valueOf(editTextPassword.getText()));
-        identity.setKeypath(String.valueOf(btnKey.getText()));
-        identity.setKeypassword(String.valueOf(editTextKeyPassword.getText()));
+        identity.setTitel(editTextIdentityName.getText().toString());
+        identity.setUsername(editTextUsername.getText().toString());
+        identity.setPassword(editTextPassword.getText().toString());
+        identity.setKeypath(btnKey.getText().toString());
+        identity.setKeypassword(editTextKeyPassword.getText().toString());
         return identity;
     }
 

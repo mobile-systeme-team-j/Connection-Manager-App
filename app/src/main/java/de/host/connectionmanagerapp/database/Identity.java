@@ -28,11 +28,9 @@ public class Identity {
     @ColumnInfo(name="password")
     private String password;
 
-    @NonNull
     @ColumnInfo(name="keypath")
     private String keypath;
 
-    @NonNull
     @ColumnInfo(name="keypassword")
     private String keypassword;
 

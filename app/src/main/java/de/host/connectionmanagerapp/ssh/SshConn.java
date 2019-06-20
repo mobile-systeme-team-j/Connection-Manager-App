@@ -40,7 +40,7 @@ public class SshConn {
             client.disconnect();
         } catch (IOException e) {
             Log.e(TAG, e.getMessage());
-            Toast.makeText(context, "Disconnect error!", Toast.LENGTH_LONG);
+            Toast.makeText(context, "Disconnect error!", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -84,7 +84,7 @@ public class SshConn {
 
         } catch (IOException e) {
             Log.e(TAG, e.getMessage());
-            Toast.makeText(context, "SshConn: Error openConnection().", Toast.LENGTH_LONG);
+            Toast.makeText(context, "SshConn: Error openConnection().", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -98,7 +98,7 @@ public class SshConn {
             cmd.join(5, TimeUnit.SECONDS);
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());
-            Toast.makeText(context, "Error sending command.", Toast.LENGTH_LONG);
+            Toast.makeText(context, "Error sending command.", Toast.LENGTH_LONG).show();
         }
         return response;
     }
