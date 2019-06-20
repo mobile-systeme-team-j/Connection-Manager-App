@@ -1,4 +1,4 @@
-package de.host.connectionmanagerapp;
+package de.host.connectionmanagerapp.helper;
 
 /**
  * @author Phillip Kühling

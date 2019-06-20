@@ -78,16 +78,19 @@ public class SnippetDetailFragment extends Fragment implements View.OnClickListe
                 if(arguments !=null) {
                     try{
                         connectionViewModel.updateSnippets(setSnippet());
+                        Toast.makeText(getContext(),"Snippet saved", Toast.LENGTH_SHORT).show();
                     }
                     catch (Exception e){
                         Toast.makeText(getContext(),e.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
                     }
                 }
                 else{
+
+
                     snippet = new Snippet();
                     connectionViewModel.insertSnippet(setSnippet());
 
-                    Toast.makeText(getContext(),"Identity saved", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),"Snippet saved", Toast.LENGTH_SHORT).show();
                         //Toast.makeText(getContext(),e.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
 
                 }

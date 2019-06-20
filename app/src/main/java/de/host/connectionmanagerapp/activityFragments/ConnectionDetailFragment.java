@@ -1,6 +1,7 @@
 package de.host.connectionmanagerapp.activityFragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
 import de.host.connectionmanagerapp.database.Connection;
+import de.host.connectionmanagerapp.helper.Identity_id_holder;
 import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
 
 public class ConnectionDetailFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
@@ -30,7 +32,8 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
     EditText editTextHostname;
     EditText editTextPort;
     Bundle arguments;
-    Connection connection;
+    private Connection connection;
+
     long id;
     private ConnectionViewModel connectionViewModel;
     Spinner spinnerConnection;
@@ -71,10 +74,21 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
 
             getConnection();
         }
+        else{
+            connection = new Connection();
+        }
 
         return view;
     }
-
+    @Override
+    public void onResume() {
+        Identity_id_holder holder = new Identity_id_holder();
+        Log.e("DEBUG", "" + holder.id);
+        if(holder.id != 0){
+            connection.setIdentity_Id(holder.id);
+        }
+            super.onResume();
+    }
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -87,15 +101,15 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
             case R.id.fabSave:
                 if(arguments != null){
                     try{
-                        connectionViewModel.updateConnection(setConnection());
+                        connectionViewModel.updateConnection(connection);
                     }catch (Exception e){
                         Toast.makeText(getContext(),"",Toast.LENGTH_SHORT);
                     }
                 }
                 else{
                     try{
-                        connection = new Connection();
-                        connectionViewModel.insertConnection(setConnection());
+                        setConnection();
+                        connectionViewModel.insertConnection(connection);
                         Toast.makeText(getContext(),"Identity saved", Toast.LENGTH_SHORT).show();
                     }catch (Exception e){
                         Toast.makeText(getContext(),"",Toast.LENGTH_SHORT);
@@ -108,23 +122,22 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
     }
 
 
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
     }
 
-    public Connection setConnection(){
+    public void setConnection(){
         connection.setTitel(String.valueOf(editTextConnectionName.getText()));
         connection.setHostip(String.valueOf(editTextHostname.getText()));
         connection.setPort((Integer.parseInt(String.valueOf(editTextPort.getText()))));
-        return connection;
     }
 
-    public Connection getConnection(){
+    public void getConnection(){
         editTextConnectionName.setText(connection.getTitel());
         editTextHostname.setText(connection.getHostip());
         editTextPort.setText(connection.getPort());
-        return connection;
     }
 
     @Override

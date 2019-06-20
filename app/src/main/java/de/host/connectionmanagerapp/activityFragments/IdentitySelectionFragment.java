@@ -1,6 +1,7 @@
 package de.host.connectionmanagerapp.activityFragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,69 +13,51 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import de.host.connectionmanagerapp.R;
+import de.host.connectionmanagerapp.adapter.IdentityAdapter;
+import de.host.connectionmanagerapp.adapter.IdentityAdapterSelection;
 import de.host.connectionmanagerapp.database.Identity;
+import de.host.connectionmanagerapp.helper.Identity_id_holder;
 import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
 
 public class IdentitySelectionFragment extends Fragment {
 
-    Bundle arguments;
-    long id;
-    Identity identity;
     ConnectionViewModel connectionViewModel;
-    ListView identityListView;
-    Button select;
-    List<Identity> identityList;
-    String[] identityArray;
+    RecyclerView recyclerView;
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_connection_selection, container, false);
-
-        identityList = view.findViewById(R.id.identityList);
-
-        arguments = getArguments();
-        if(arguments != null){
-            id = arguments.getLong("id");
-            identityList = connectionViewModel.getListIdentities();
-        }
+        View view = inflater.inflate(R.layout.fragment_identity_selection, container, false);
+        recyclerView = view.findViewById(R.id.ide_sel_recycler_view);
 
 
-       // android-coding.blogspot.com/2011/09/listview-with-multiple-choice.html
-        if( identityList != null) {
-            ArrayAdapter<Identity> adapter = new ArrayAdapter<Identity>(getContext(), android.R.layout.simple_list_item_single_choice, identityList);
+        final IdentityAdapterSelection adapter = new IdentityAdapterSelection(getActivity());
 
-            identityListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-            identityListView.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        connectionViewModel= ViewModelProviders.of(getActivity()).get(ConnectionViewModel.class);
+        connectionViewModel.getAllIdenties().observe(this, new Observer<List<Identity>>()
+        {
+            @Override
+            public void onChanged(@Nullable final List<Identity> identities) {
+                adapter.setIdentities(identities);
+            }
+        });
 
-        select.setOnClickListener(v -> {
-                String selected = "";
-                int cntChoice = identityListView.getCount();
-
-                SparseBooleanArray sparseBooleanArray = identityListView.getCheckedItemPositions();
-
-                for(int i = 0; i < cntChoice; i++){
-
-                    if(sparseBooleanArray.get(i)) {
-
-                        selected += identityListView.getItemAtPosition(i).toString() + "\n";
-                    }
-                }
-
-                Toast.makeText(getContext(),selected,Toast.LENGTH_LONG).show();
-
-            });
-        }else{
-            Toast.makeText(getContext(),"No Identities found", Toast.LENGTH_SHORT);
-        }
 
         return view;
     }
+
 
 }

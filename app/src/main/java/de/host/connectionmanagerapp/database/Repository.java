@@ -53,7 +53,12 @@ public class Repository {
     }
 
     //Fertige connection übergeben es erfolgt eine überprüfung mehr, auch die identity id muss gesetzt werden
-    public void connection_insert(Connection connection){connectionDao.insert(connection);}
+    public void connection_insert(Connection connection) {
+        Executor exe = Executors.newSingleThreadExecutor();
+        exe.execute(() -> {
+            connectionDao.insert(connection);
+        });
+    }
 
     public void job_insert(Job job, long snippetId, long connectionId ){
         Maybe<Long> jobMaybe= jobDao.insert(job);
@@ -128,7 +133,9 @@ public class Repository {
         jobDao.update(job);
     }
     public void snippet_update(Snippet snippet){
-        snippetDao.update(snippet);
+        Executor exe = Executors.newSingleThreadExecutor();
+        exe.execute(() -> {
+        snippetDao.update(snippet);});
     }
 
     //DeleteMethoden

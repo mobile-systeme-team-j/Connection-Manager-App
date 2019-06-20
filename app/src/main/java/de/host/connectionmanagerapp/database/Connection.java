@@ -33,7 +33,7 @@ public class Connection {
     private int port;
 
     @ColumnInfo(name="identity_Id")
-    private int identity_Id;
+    private long identity_Id;
 
     @ColumnInfo(name="timestamp")
     private Date timestamp;
@@ -73,11 +73,11 @@ public class Connection {
         this.port = port;
     }
 
-    public int getIdentity_Id() {
+    public long getIdentity_Id() {
         return identity_Id;
     }
 
-    public void setIdentity_Id(int identity_Id) {
+    public void setIdentity_Id(long identity_Id) {
         this.identity_Id = identity_Id;
     }
 

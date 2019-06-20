@@ -18,10 +18,10 @@ import androidx.lifecycle.ViewModelProviders;
 import java.util.Calendar;
 import java.util.List;
 
-import de.host.connectionmanagerapp.DatePickerFragment;
+import de.host.connectionmanagerapp.helper.DatePickerFragment;
 import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
-import de.host.connectionmanagerapp.TimePickerFragment;
+import de.host.connectionmanagerapp.helper.TimePickerFragment;
 import de.host.connectionmanagerapp.alarm.AlarmRepository;
 import de.host.connectionmanagerapp.database.Connection;
 import de.host.connectionmanagerapp.database.Identity;
