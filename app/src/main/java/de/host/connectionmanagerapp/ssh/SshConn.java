@@ -1,7 +1,9 @@
 package de.host.connectionmanagerapp.ssh;
 
+import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import net.schmizz.sshj.SSHClient;
 import net.schmizz.sshj.common.IOUtils;
@@ -24,11 +26,13 @@ public class SshConn {
     // public static final Console con = System.console();
     private final SshConfig config;
     private final SSHClient client;
+    private Context context;
 
     // Konstruktor
-    public SshConn(SshConfig config, SSHClient client) {
+    public SshConn(SshConfig config, SSHClient client, Context context) {
         this.config = config;
         this.client = client;
+        this.context = context;
     }
 
     public void closeConnection() {
@@ -36,6 +40,7 @@ public class SshConn {
             client.disconnect();
         } catch (IOException e) {
             Log.e(TAG, e.getMessage());
+            Toast.makeText(context, "Disconnect error!", Toast.LENGTH_LONG);
         }
     }
 
@@ -78,7 +83,8 @@ public class SshConn {
             }
 
         } catch (IOException e) {
-            Log.e(TAG, "SshConn: Error openConnection().", e);
+            Log.e(TAG, e.getMessage());
+            Toast.makeText(context, "SshConn: Error openConnection().", Toast.LENGTH_LONG);
         }
     }
 
@@ -90,12 +96,9 @@ public class SshConn {
             Session.Command cmd = session.exec(command);
             response = (IOUtils.readFully(cmd.getInputStream()).toString());
             cmd.join(5, TimeUnit.SECONDS);
-        } catch (ConnectionException e) {
-            e.printStackTrace();
-        } catch (TransportException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+            Toast.makeText(context, "Error sending command.", Toast.LENGTH_LONG);
         }
         return response;
     }

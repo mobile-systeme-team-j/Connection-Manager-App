@@ -23,30 +23,56 @@ import static android.content.Context.MODE_PRIVATE;
 // Die Map sollte gespeichert werden um nach Reboot die Alarme wiederherzustellen
 
 public class AlarmRepository {
-    private static AlarmManager manager;
+    public static AlarmManager manager;
     private static HashMap alarmJobs = new HashMap<Integer, Long>();
 
      // Methode zur Initialisierung des Alarms für den SSH-Service
     public static void initSshAlarmManager(Context context) {
+        // HashMap aktualisieren
+        alarmJobs = getHashMap(context);
         manager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         Intent intent = new Intent(context, AlarmReceiver.class);
         // In While-Schleife Map durchgehen
+        // Alarme löschen und gleichzeitig neu erstellen
         Iterator it = alarmJobs.entrySet().iterator();
         while (it.hasNext()) {
             HashMap.Entry pair = (HashMap.Entry) it.next();
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int)pair.getKey(), intent, 0);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int)pair.getKey(),
+                    intent.putExtra("REQUESTCODE", (int)pair.getKey()), 0);
+            manager.cancel(pendingIntent);
             manager.setExact(AlarmManager.RTC_WAKEUP, (long)pair.getValue(), pendingIntent);
         }
     }
 
     public static void addAlarm (Calendar c, Context context){
+        // HashMap aktualisieren
+        alarmJobs = getHashMap(context);
         manager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         Intent intent = new Intent(context, AlarmReceiver.class);
         int _id = getUniqueBroadcastID();
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, _id, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, _id,
+                intent.putExtra("REQUESTCODE", _id), 0);
         manager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
         // Alarm in HashMap und SharedPreferences abspeichern
         alarmJobs.put(_id, c.getTimeInMillis());
+    }
+
+    public static void deleteAlarm(long calTime, Context context) {
+        // HashMap aktualisieren
+        alarmJobs = getHashMap(context);
+        manager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+        Intent intent = new Intent(context, AlarmReceiver.class);
+        Iterator it = alarmJobs.entrySet().iterator();
+        while (it.hasNext()) {
+            HashMap.Entry pair = (HashMap.Entry) it.next();
+            if ((long) pair.getValue() == calTime) {
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int)pair.getKey(), intent, 0);
+                manager.cancel(pendingIntent);
+                alarmJobs.remove(pair.getKey());
+            }
+        }
+        saveHashMap(context);
+
     }
 
     private static int getUniqueBroadcastID(){
@@ -70,6 +96,18 @@ public class AlarmRepository {
         SharedPreferences.Editor prefsEditor = mPrefs.edit();
         String json = mPrefs.getString("alarmJobs", "");
         return gson.fromJson(json, HashMap.class);
+    }
+
+    public static long getCalendarTime(int broadcastID){
+        long calTime = -1;
+        Iterator it = alarmJobs.entrySet().iterator();
+        while (it.hasNext()) {
+            HashMap.Entry pair = (HashMap.Entry) it.next();
+            if ((int)pair.getKey() == broadcastID) {
+                calTime = (long) pair.getValue();
+            }
+        }
+        return calTime;
     }
 
 }

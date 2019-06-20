@@ -28,7 +28,6 @@ public class SnippetDetailFragment extends Fragment implements View.OnClickListe
     private FloatingActionButton delete;
     private FloatingActionButton save;
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,

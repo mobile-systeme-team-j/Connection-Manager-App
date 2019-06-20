@@ -1,10 +1,8 @@
 package de.host.connectionmanagerapp.activityFragments;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.OpenableColumns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +17,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
+import de.host.connectionmanagerapp.helper.FileUtils;
+import de.host.connectionmanagerapp.helper.UriHelper;
 
 import static android.app.Activity.RESULT_OK;
 
 public class RemoteFragment extends Fragment implements View.OnClickListener{
-    private String ip, port,identity,password,key, keyPassword, keyPath;
+    private String ip, port,identity,password,key, keyPassword, keyPath, keyFileName;
     private EditText tv_ip,tv_port,tv_user,tv_UserPassword, tv_keyPassword;
     Button tv_key;
 
@@ -84,30 +84,9 @@ public class RemoteFragment extends Fragment implements View.OnClickListener{
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 123 && resultCode == RESULT_OK) {
             Uri selectedFile = data.getData(); //The uri with the location of the file
-            keyPath = getFileName(selectedFile);
-            tv_key.setText(keyPath);
+            keyFileName = UriHelper.getFileName(selectedFile, getContext());
+            keyPath = FileUtils.getPath(getContext(), selectedFile);
+            tv_key.setText(keyFileName);
         }
-    }
-    // Get FileName from Uri: https://stackoverflow.com/a/25005243
-    public String getFileName(Uri uri) {
-        String result = null;
-        if (uri.getScheme().equals("content")) {
-            Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
-            try {
-                if (cursor != null && cursor.moveToFirst()) {
-                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                }
-            } finally {
-                cursor.close();
-            }
-        }
-        if (result == null) {
-            result = uri.getPath();
-            int cut = result.lastIndexOf('/');
-            if (cut != -1) {
-                result = result.substring(cut + 1);
-            }
-        }
-        return result;
     }
 }

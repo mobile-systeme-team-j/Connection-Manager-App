@@ -1,10 +1,14 @@
 package de.host.connectionmanagerapp.activityFragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.provider.OpenableColumns;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +18,18 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.documentfile.provider.DocumentFile;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.File;
+
 import de.host.connectionmanagerapp.R;
 import de.host.connectionmanagerapp.database.Identity;
+import de.host.connectionmanagerapp.helper.FileUtils;
+import de.host.connectionmanagerapp.helper.UriHelper;
 import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
 
 import static android.app.Activity.RESULT_OK;
@@ -37,6 +46,7 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
     private ConnectionViewModel connectionViewModel;
     long id;
     private String keyPath;
+    private String keyFilename;
     FloatingActionButton delete;
     FloatingActionButton save;
 
@@ -76,31 +86,12 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 123 && resultCode == RESULT_OK) {
             Uri selectedFile = data.getData(); //The uri with the location of the file
-            keyPath = getFileName(selectedFile);
-            btnKey.setText(keyPath);
+            keyPath = FileUtils.getPath(getContext(), selectedFile);
+            Toast.makeText(getActivity().getApplicationContext(), keyPath, Toast.LENGTH_LONG);
+            //keyFilename = getFileName(selectedFile);
+            keyFilename = UriHelper.getFileName(selectedFile, getContext());
+            btnKey.setText(keyFilename);
         }
-    }
-    // Get FileName from Uri: https://stackoverflow.com/a/25005243
-    public String getFileName(Uri uri) {
-        String result = null;
-        if (uri.getScheme().equals("content")) {
-            Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
-            try {
-                if (cursor != null && cursor.moveToFirst()) {
-                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                }
-            } finally {
-                cursor.close();
-            }
-        }
-        if (result == null) {
-            result = uri.getPath();
-            int cut = result.lastIndexOf('/');
-            if (cut != -1) {
-                result = result.substring(cut + 1);
-            }
-        }
-        return result;
     }
 
     @Override

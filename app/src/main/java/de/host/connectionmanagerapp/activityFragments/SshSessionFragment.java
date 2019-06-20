@@ -253,7 +253,7 @@ public class SshSessionFragment extends Fragment {
                     config = config.useHostKey(false);
                     */
 
-                SshConn conn = new SshConn(config, new SSHClient());
+                SshConn conn = new SshConn(config, new SSHClient(), getContext());
                 conn.openConnection();
                 return conn;
             }
