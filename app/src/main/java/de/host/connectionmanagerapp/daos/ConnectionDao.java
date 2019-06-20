@@ -20,6 +20,8 @@ public interface ConnectionDao {
 
     @Insert
     void insert(Connection connection);
+    @Insert
+    long insertid(Connection connection);
 
     @Update
     void update(Connection... connections);

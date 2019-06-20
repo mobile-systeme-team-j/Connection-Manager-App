@@ -40,6 +40,9 @@ public class ConnectionViewModel extends AndroidViewModel {
     public  void insertConnection(Connection connection){
         repo.connection_insert(connection);
     }
+    public long insertConnectionId(Connection connection){
+        return repo.connection_insertId(connection);
+    }
     public void insertSnippet(Snippet snippet){
         repo.snippet_insert(snippet);
     }

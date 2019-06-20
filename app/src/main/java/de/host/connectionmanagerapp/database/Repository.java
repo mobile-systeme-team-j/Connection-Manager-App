@@ -55,6 +55,25 @@ public class Repository {
           identityDao.insert(identity);
       });
     }
+    public long connection_insertId(Connection connection){
+        ExecutorService exe = Executors.newSingleThreadExecutor();
+        Future<Long> future = exe.submit(new Callable<Long>() {
+            @Override
+            public Long call() throws Exception {
+                long id = connectionDao.insertid(connection);
+                return id;
+            }
+        });
+
+        try {
+            return future.get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
     public long identity_insertid(Identity identity) {
         ExecutorService exe = Executors.newSingleThreadExecutor();
         Future<Long> future = exe.submit(new Callable<Long>() {
