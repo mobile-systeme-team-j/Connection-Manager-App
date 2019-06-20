@@ -33,10 +33,8 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
     EditText editTextPort;
     Bundle arguments;
     private Connection connection;
-
     long id;
     private ConnectionViewModel connectionViewModel;
-    Spinner spinnerConnection;
 
     @Nullable
     @Override
@@ -57,14 +55,6 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
         connect.setOnClickListener(this);
         identity = view.findViewById(R.id.btnIdentity);
         identity.setOnClickListener(this);
-
-
-
-/*
-        ArrayAdapter<Connection> adapter = new ArrayAdapter<Connection>(this,android.R.layout.simple_spinner_dropdown_item,arrayList1);
-        spinnerConnection.setAdapter(adapter);
-        spinnerConnection.setOnItemClickListener(this);
-*/
 
 
         arguments = getArguments();
@@ -93,8 +83,11 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.fabDelete:
-                connectionViewModel.deleteConnection(id);
-                Toast.makeText(getContext(),"Connection deleted",Toast.LENGTH_SHORT).show();
+                try {
+                    connectionViewModel.deleteConnection(id);
+                }catch (Exception e){
+                    Toast.makeText(getContext(),"Connection deleted",Toast.LENGTH_SHORT).show();
+                }
 
                 break;
             case R.id.fabConnect:
@@ -105,16 +98,16 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
                     try{
                         connectionViewModel.updateConnection(connection);
                     }catch (Exception e){
-                        Toast.makeText(getContext(),"",Toast.LENGTH_SHORT);
+                        Toast.makeText(getContext(),"Connection updated",Toast.LENGTH_SHORT).show();
                     }
                 }
                 else{
                     try{
                         setConnection();
                         connectionViewModel.insertConnection(connection);
-                        Toast.makeText(getContext(),"Identity saved", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),"Connection saved", Toast.LENGTH_SHORT).show();
                     }catch (Exception e){
-                        Toast.makeText(getContext(),"",Toast.LENGTH_SHORT);
+                        Toast.makeText(getContext(),"",Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;

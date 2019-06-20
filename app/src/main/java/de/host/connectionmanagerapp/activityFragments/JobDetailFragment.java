@@ -83,23 +83,7 @@ public class JobDetailFragment extends Fragment
          for (View v : Buttons){
              v.setOnClickListener(this);
          }
-/*
-         connectionList = connectionViewModel.getAllConnections();
-         identityList = connectionViewModel.getAllIdenties();
-         snippetList = connectionViewModel.getAllSnippets();
 
-        spinnerConnection = view.findViewById(R.id.spinnerConnection);
-        ArrayAdapter<Connection> adapterConnection = new ArrayAdapter<Connection>(this,android.R.layout.simple_spinner_dropdown_item,connectionList);
-        spinnerConnection.setAdapter(adapterConnection);
-
-        spinnerIdentity = view.findViewById(R.id.spinnerIdentity);
-        ArrayAdapter<Identity> adapterIdentity = new ArrayAdapter<Identity>(this,android.R.layout.simple_spinner_dropdown_item,identityList);
-        spinnerConnection.setAdapter(adapterIdentity);
-
-        spinnerSnippet = view.findViewById(R.id.spinnerSnippet);
-        ArrayAdapter<Snippet> adapterSnippet = new ArrayAdapter<Snippet>(this,android.R.layout.simple_spinner_dropdown_item,snippetList);
-        spinnerConnection.setAdapter(adapterSnippet);
-*/
 
         arguments = getArguments();
         if(arguments !=null){

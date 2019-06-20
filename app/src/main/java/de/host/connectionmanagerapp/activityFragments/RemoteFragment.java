@@ -67,15 +67,19 @@ public class RemoteFragment extends Fragment implements View.OnClickListener{
 
         }
         // gets Strings from EditText-Inputs
-        if(tv_ip != null && tv_port != null && tv_user != null && tv_UserPassword!=null && tv_key!=null&& tv_keyPassword != null) {
-            ip = tv_ip.getText().toString();
-            port = tv_port.getText().toString();
-            identity = tv_user.getText().toString();
-            password = tv_UserPassword.getText().toString();
-            key = tv_key.getText().toString();
-            keyPassword = tv_key.getText().toString();
-        }else{
-            Toast.makeText(getContext(), "Fill all information!", Toast.LENGTH_SHORT);
+        try {
+            if (tv_ip != null || tv_port != null || tv_user != null || tv_UserPassword != null || tv_key != null || tv_keyPassword != null) {
+                ip = tv_ip.getText().toString();
+                port = tv_port.getText().toString();
+                identity = tv_user.getText().toString();
+                password = tv_UserPassword.getText().toString();
+                key = tv_key.getText().toString();
+                keyPassword = tv_key.getText().toString();
+            } else {
+
+            }
+        }catch (Exception e){
+            Toast.makeText(getContext(), "Fill all information!", Toast.LENGTH_SHORT).show();
         }
     }
 

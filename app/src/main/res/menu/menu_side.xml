@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="de.host.connectionmanagerapp.MainActivity"
     tools:showIn="navigation_view">
 
@@ -8,42 +9,50 @@
     <item
         android:id="@+id/menu_home"
         android:icon="@drawable/ic_home"
-        android:title="Home" />
+        android:title="Home"
+        android:checkable="true"/>
 
     <item
         android:id="@+id/menu_wizard"
         android:icon="@drawable/ic_flash"
-        android:title="Wizard" />
+        android:title="Wizard"
+        android:checkable="true"/>
 
     <item
         android:id="@+id/menu_remote"
         android:icon="@drawable/ic_wizard"
-        android:title="Remote"/>
+        android:title="Remote"
+        android:checkable="true"/>
 
     <item
         android:id="@+id/menu_connections"
         android:icon="@drawable/ic_connection"
-        android:title="Connections" />
+        android:title="Connections"
+        android:checkable="true"/>
 
     <item
         android:id="@+id/menu_identities"
         android:icon="@drawable/ic_identity"
-        android:title="Identities" />
+        android:title="Identities"
+        android:checkable="true"/>
 
     <item
         android:id="@+id/menu_snippets"
         android:icon="@drawable/ic_folder"
-        android:title="Snippets" />
+        android:title="Snippets"
+        android:checkable="true"/>
 
     <item
         android:id="@+id/menu_job"
         android:icon="@drawable/ic_job"
-        android:title="Job" />
+        android:title="Job"
+        android:checkable="true"/>
 
     <item
         android:id="@+id/menu_about"
         android:icon="@drawable/ic_about"
-        android:title="About" />
+        android:title="About"
+        android:checkable="true"/>
 
 
 </menu>

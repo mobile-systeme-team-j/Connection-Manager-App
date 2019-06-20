@@ -26,13 +26,11 @@ import static android.app.Activity.RESULT_OK;
 
 /**
  * @author Manuel Trapp
- * @date 15.02.2019
+ *
  * */
 
 public class WizardFragment extends Fragment implements View.OnClickListener {
 
-    private String ip, port,identity,password,key, keyPassword;
-    private EditText tv_ip,tv_port,tv_user,tv_UserPassword, tv_keyPassword;
     Button btnConnection, btnIdentity, btnSnippet, tv_key;
 
 
@@ -71,16 +69,7 @@ public class WizardFragment extends Fragment implements View.OnClickListener {
                 ((MainActivity)getActivity()).replaceFragment(new SshSessionFragment());
                 break;
         }
-    // gets Strings from EditText-Inputs
-        if(tv_ip != null && tv_port != null && tv_user != null && tv_UserPassword!=null && tv_key!=null&& tv_keyPassword != null) {
-            ip = tv_ip.getText().toString();
-            port = tv_port.getText().toString();
-            identity = tv_user.getText().toString();
-            password = tv_UserPassword.getText().toString();
-            key = tv_key.getText().toString();
-            keyPassword = tv_key.getText().toString();
-        }else{
-            Toast.makeText(getContext(), "Fill all information!", Toast.LENGTH_SHORT);
-        }
+
+
     }
 }

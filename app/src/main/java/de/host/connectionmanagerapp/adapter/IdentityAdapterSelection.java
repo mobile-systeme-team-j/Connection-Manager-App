@@ -1,12 +1,13 @@
 package de.host.connectionmanagerapp.adapter;
 
 
-
+import android.app.FragmentManager;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -75,6 +76,8 @@ public class IdentityAdapterSelection extends RecyclerView.Adapter<IdentityAdapt
 
                 Identity_id_holder holder = new Identity_id_holder();
                 holder.id = id;
+
+                Toast.makeText(itemView.getContext(),"Selected: " + identity.getTitel(),Toast.LENGTH_SHORT).show();
 
                 AppCompatActivity activity = (AppCompatActivity) v.getContext();
                 activity.getSupportFragmentManager().popBackStack();
