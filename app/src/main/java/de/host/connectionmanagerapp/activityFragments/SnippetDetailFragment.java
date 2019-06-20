@@ -68,6 +68,7 @@ public class SnippetDetailFragment extends Fragment implements View.OnClickListe
         switch (view.getId()) {
             case R.id.fabDelete:
                 if(arguments !=null) {
+                    Toast.makeText(getContext(),"Snippet deleted",Toast.LENGTH_SHORT).show();
 
                 }
                 else{

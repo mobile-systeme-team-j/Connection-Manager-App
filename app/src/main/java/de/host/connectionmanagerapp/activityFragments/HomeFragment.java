@@ -36,8 +36,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         recyclerView = view.findViewById(R.id.con_recycler_view);
+
         FloatingActionButton wizard = view.findViewById(R.id.WizardButton);
         wizard.setOnClickListener(this);
+        FloatingActionButton remote = view.findViewById(R.id.RemoteButton);
+        remote.setOnClickListener(this);
 
         recyclerView = view.findViewById(R.id.con_recycler_view);
         final ConnectionAdapter adapter = new ConnectionAdapter(getActivity());
@@ -65,6 +68,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     public void onClick(View view){
         if(view.getId() == R.id.WizardButton){
             ((MainActivity)getActivity()).replaceFragment(new WizardFragment());
+        }
+        if(view.getId() == R.id.RemoteButton){
+            ((MainActivity)getActivity()).replaceFragment(new RemoteFragment());
         }
     }
 }

@@ -22,16 +22,10 @@ import de.host.connectionmanagerapp.R;
 
 import static android.app.Activity.RESULT_OK;
 
-/**
- * @author Manuel Trapp
- * @date 15.02.2019
- * */
-
-public class WizardFragment extends Fragment implements View.OnClickListener {
-
+public class RemoteFragment extends Fragment implements View.OnClickListener{
     private String ip, port,identity,password,key, keyPassword, keyPath;
     private EditText tv_ip,tv_port,tv_user,tv_UserPassword, tv_keyPassword;
-    Button btnConnection, btnIdentity, btnSnippet, tv_key;
+    Button tv_key;
 
 
     @Nullable
@@ -39,13 +33,11 @@ public class WizardFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout. fragment_wizard, container, false);
+        View view = inflater.inflate(R.layout.fragment_remote, container, false);
 
         FloatingActionButton send = view.findViewById(R.id.fabConnect);
-        btnConnection = view.findViewById(R.id.btnConnection);
-        btnIdentity = view.findViewById(R.id.btnIdentity);
-        btnSnippet = view.findViewById(R.id.btnSnippet);
-       /* tv_key = view.findViewById(R.id.wizard_KeyPath);
+
+        tv_key = view.findViewById(R.id.wizard_KeyPath);
         tv_key.setOnClickListener(this);
         tv_ip = view.findViewById(R.id.wizard_IP);
         tv_port = view.findViewById(R.id.wizard_Port);
@@ -53,11 +45,8 @@ public class WizardFragment extends Fragment implements View.OnClickListener {
         tv_UserPassword = view.findViewById(R.id.password);
         tv_keyPassword = view.findViewById(R.id.wizard_KeyPass);
 
-*/
         send.setOnClickListener(this);
-        btnConnection.setOnClickListener(this);
-        btnIdentity.setOnClickListener(this);
-        btnSnippet.setOnClickListener(this);
+
         return view;
 
     }
@@ -65,28 +54,19 @@ public class WizardFragment extends Fragment implements View.OnClickListener {
 
     public void onClick(View view){
         switch(view.getId()){
-            case R.id.btnConnection:
-                ((MainActivity)getActivity()).replaceFragment(new ConnectionSelectionFragment());
-                break;
-            case R.id.btnIdentity:
-                ((MainActivity)getActivity()).replaceFragment(new IdentitySelectionFragment());
-                break;
-            case R.id.btnSnippet:
-                ((MainActivity)getActivity()).replaceFragment(new SnippetSelectionFragment());
-                break;
             case R.id.btn_Send:
                 ((MainActivity)getActivity()).replaceFragment(new SshSessionFragment());
                 break;
-           /* case R.id.wizard_KeyPath:
+            case R.id.wizard_KeyPath:
                 Intent intent = new Intent()
-                        .setType("*//*")    <- ein "/" löschen
-              /*          .setAction(Intent.ACTION_GET_CONTENT);
+                        .setType("*/*")
+                        .setAction(Intent.ACTION_GET_CONTENT);
 
                 startActivityForResult(Intent.createChooser(intent, "Select a file"), 123);
                 break;
-                */
+
         }
-    // gets Strings from EditText-Inputs
+        // gets Strings from EditText-Inputs
         if(tv_ip != null && tv_port != null && tv_user != null && tv_UserPassword!=null && tv_key!=null&& tv_keyPassword != null) {
             ip = tv_ip.getText().toString();
             port = tv_port.getText().toString();

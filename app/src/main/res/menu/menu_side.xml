@@ -12,8 +12,13 @@
 
     <item
         android:id="@+id/menu_wizard"
-        android:icon="@drawable/ic_wizard"
+        android:icon="@drawable/ic_flash"
         android:title="Wizard" />
+
+    <item
+        android:id="@+id/menu_remote"
+        android:icon="@drawable/ic_wizard"
+        android:title="Remote"/>
 
     <item
         android:id="@+id/menu_connections"

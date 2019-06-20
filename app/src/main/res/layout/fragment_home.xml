@@ -20,9 +20,20 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/con_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="505dp"
+        android:layout_height="434dp"
         android:layout_gravity="center"
         android:scrollbars="vertical" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/RemoteButton"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_gravity="end"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="onClick"
+        app:backgroundTint="@color/colorAccent"
+        app:srcCompat="@drawable/ic_wizard" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/WizardButton"

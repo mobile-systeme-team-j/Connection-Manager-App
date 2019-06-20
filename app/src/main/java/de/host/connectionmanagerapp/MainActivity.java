@@ -17,7 +17,9 @@ import de.host.connectionmanagerapp.activityFragments.ConnectionsFragment;
 import de.host.connectionmanagerapp.activityFragments.HomeFragment;
 import de.host.connectionmanagerapp.activityFragments.IdentitiesFragment;
 import de.host.connectionmanagerapp.activityFragments.JobsFragment;
+import de.host.connectionmanagerapp.activityFragments.RemoteFragment;
 import de.host.connectionmanagerapp.activityFragments.SnippetsFragment;
+import de.host.connectionmanagerapp.activityFragments.SshSessionFragment;
 import de.host.connectionmanagerapp.activityFragments.WizardFragment;
 
 /**
@@ -71,6 +73,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.menu_wizard:
                 replaceFragment(new WizardFragment());
+                break;
+            case R.id.menu_remote:
+                replaceFragment(new RemoteFragment());
                 break;
             case R.id.menu_connections:
                 replaceFragment(new ConnectionsFragment());

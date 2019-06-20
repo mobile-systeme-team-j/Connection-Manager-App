@@ -94,6 +94,8 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
         switch (view.getId()){
             case R.id.fabDelete:
                 connectionViewModel.deleteConnection(id);
+                Toast.makeText(getContext(),"Connection deleted",Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.fabConnect:
                 // CallSShSessionFragment

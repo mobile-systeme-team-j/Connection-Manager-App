@@ -158,6 +158,8 @@ public class JobDetailFragment extends Fragment
             case R.id.fabDelete:
                 if( arguments != null){
                     connectionViewModel.updateJob(Job());
+                    Toast.makeText(getContext(),"Job deleted",Toast.LENGTH_SHORT).show();
+
                 }
                 break;
         }

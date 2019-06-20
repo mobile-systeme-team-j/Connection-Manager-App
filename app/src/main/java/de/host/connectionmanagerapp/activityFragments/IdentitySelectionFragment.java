@@ -59,5 +59,4 @@ public class IdentitySelectionFragment extends Fragment {
         return view;
     }
 
-
 }
