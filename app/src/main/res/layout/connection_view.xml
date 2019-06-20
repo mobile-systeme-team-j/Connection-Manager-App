@@ -3,12 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content">
+
     <androidx.cardview.widget.CardView
+        android:id="@+id/conCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        card_view:cardBackgroundColor="@color/cardview_light_background"
+        card_view:cardCornerRadius="5dp"
         card_view:cardElevation="4dp"
-        card_view:cardUseCompatPadding="true"
-        card_view:cardCornerRadius="5dp">
+        card_view:cardUseCompatPadding="true">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -18,7 +22,7 @@
             <TextView
                 android:id="@+id/connection_view_titel"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </FrameLayout>

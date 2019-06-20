@@ -37,21 +37,7 @@ public class ConnectionSelectionFragment extends Fragment {
 
         connectionListView = view.findViewById(R.id.connectionList);
 
-
-        arguments = getArguments();
-        if(arguments != null){
-            id = arguments.getLong("id");
-                connectionList = connectionViewModel.getListConnections();
-        }
-
-        // android-coding.blogspot.com/2011/09/listview-with-multiple-choice.html
-
-        if ( connectionList != null) {
-            ArrayAdapter<Connection> adapter = new ArrayAdapter<Connection>(getContext(), android.R.layout.simple_list_item_single_choice, connectionList);
-
-            connectionListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-            connectionListView.setAdapter(adapter);
-
+        
 
             select.setOnClickListener(v -> {
                 String selected = "";
@@ -70,10 +56,8 @@ public class ConnectionSelectionFragment extends Fragment {
             Toast.makeText(getContext(),selected,Toast.LENGTH_LONG).show();
 
             });
-        }else{
-            Toast.makeText(getContext(),"No Connections found", Toast.LENGTH_SHORT);
+            return view;
         }
 
-        return view;
     }
-}
+

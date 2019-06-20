@@ -45,7 +45,7 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
         View view = inflater.inflate(R.layout.fragment_connection_detail, container, false);
 
         connectionViewModel= ViewModelProviders.of(getActivity()).get(ConnectionViewModel.class);
-        editTextConnectionName = view.findViewById(R.id.editTextHostname);
+        editTextConnectionName = view.findViewById(R.id.editTextConnectionName);
         editTextHostname = view.findViewById(R.id.editTextHostname);
         editTextPort = view.findViewById(R.id.editTextPort);
 
@@ -69,7 +69,7 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
 
         arguments = getArguments();
         if(arguments != null){
-            id = arguments.getLong("id");
+            id = arguments.getLong("con_id");
             connection = connectionViewModel.getConnection(id);
 
             getConnection();
@@ -139,7 +139,7 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
     public void getConnection(){
         editTextConnectionName.setText(connection.getTitel());
         editTextHostname.setText(connection.getHostip());
-        editTextPort.setText(connection.getPort());
+        editTextPort.setText(connection.getPort()+"");
     }
 
     @Override

@@ -67,7 +67,7 @@ public class ConnectionAdapter extends  RecyclerView.Adapter<ConnectionAdapter.C
             textTitel = itemView.findViewById(R.id.connection_view_titel);
 
             itemView.setOnClickListener(this);
-            itemView.setOnLongClickListener(this);
+            //itemView.setOnLongClickListener(this);
         }
 
         @Override
@@ -76,11 +76,11 @@ public class ConnectionAdapter extends  RecyclerView.Adapter<ConnectionAdapter.C
             long id = connection.getConnection_id();
             Fragment fram = new ConnectionDetailFragment();
             Bundle bundle = new Bundle();
-            bundle.putLong("class", id);
+            bundle.putLong("con_id", id);
             fram.setArguments(bundle);
 
             AppCompatActivity activity = (AppCompatActivity) v.getContext();
-            activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, fram).addToBackStack(null).commit();
+            activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fram).addToBackStack(null).commit();
 
 
         }

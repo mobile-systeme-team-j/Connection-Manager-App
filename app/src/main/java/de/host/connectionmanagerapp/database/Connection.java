@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import java.util.Date;
@@ -37,6 +38,9 @@ public class Connection {
 
     @ColumnInfo(name="timestamp")
     private Date timestamp;
+
+    @Ignore
+    private boolean checked = false;
 
     public long getConnection_id() {
         return connection_id;
@@ -87,5 +91,13 @@ public class Connection {
 
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        checked = checked;
     }
 }
