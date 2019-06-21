@@ -21,7 +21,7 @@ import de.host.connectionmanagerapp.R;
 
 public class WizardFragment extends Fragment implements View.OnClickListener {
 
-    Button btnConnection, btnSnippet, tv_key;
+    Button btnConnection, btnSnippet;
 
 
     @Nullable

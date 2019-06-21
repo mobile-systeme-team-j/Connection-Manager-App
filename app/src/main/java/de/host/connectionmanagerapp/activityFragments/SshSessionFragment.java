@@ -129,6 +129,8 @@ public class SshSessionFragment extends Fragment {
                     objects[0] = conn;
                     objects[1] = command.getText().toString();
                     new SshAsyncTask().execute(objects);
+                    // Clear command when executed
+                    command.getText().clear();
                 } catch (Exception e) {
                     e.printStackTrace();
                     createToast(e.getMessage());
@@ -147,8 +149,6 @@ public class SshSessionFragment extends Fragment {
                 if (before == 0 && count == 1 && s.charAt(start) == '\n') {
                     // Führe Click aus
                     send.performClick();
-                    //remove the <enter>
-                    command.getText().replace(start, start + 1, "");
                 }
             }
             

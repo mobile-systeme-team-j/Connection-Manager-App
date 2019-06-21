@@ -154,6 +154,7 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
         identity.setUsername(editTextUsername.getText().toString());
         identity.setPassword(editTextPassword.getText().toString());
         identity.setKeypath(keyPath);
+        identity.setFilename(keyFilename);
         identity.setKeypassword(editTextKeyPassword.getText().toString());
         return identity;
     }
@@ -162,7 +163,9 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
         editTextIdentityName.setText(identity.getTitel());
         editTextUsername.setText(identity.getUsername());
         editTextPassword.setText(identity.getPassword());
-        btnKey.setText(keyFilename);
+        if (!TextUtils.isEmpty(identity.getFilename())) {
+            btnKey.setText(identity.getFilename());
+        }
         editTextKeyPassword.setText(identity.getKeypassword());
     }
 }

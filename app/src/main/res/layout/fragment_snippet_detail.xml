@@ -19,6 +19,7 @@
         android:layout_height="400dp"
         android:ems="10"
         android:gravity="start|top"
+        android:hint="Befehl"
         android:inputType="textMultiLine" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
