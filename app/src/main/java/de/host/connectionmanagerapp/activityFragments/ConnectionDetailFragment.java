@@ -112,7 +112,7 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
                         getActivity().getSupportFragmentManager().popBackStack();
                         HideKeyboard.hideKeyboard(getContext());
                     }catch (Exception e){
-
+                        Toast.makeText(getContext(),"Error updating connection.",Toast.LENGTH_SHORT).show();
                     }
                 }
                 else{
@@ -122,7 +122,7 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
                         Toast.makeText(getContext(),"Connection saved", Toast.LENGTH_SHORT).show();
                         getActivity().getSupportFragmentManager().popBackStack();
                     }catch (Exception e){
-                        Toast.makeText(getContext(),"",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),"Error inserting connection",Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;
@@ -139,9 +139,9 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
     }
 
     public void setConnection(){
-        connection.setTitel(String.valueOf(editTextConnectionName.getText()));
-        connection.setHostip(String.valueOf(editTextHostname.getText()));
-        connection.setPort((Integer.parseInt(String.valueOf(editTextPort.getText()))));
+        connection.setTitel(editTextConnectionName.getText().toString());
+        connection.setHostip(editTextHostname.getText().toString());
+        connection.setPort((Integer.parseInt(editTextPort.getText().toString())));
     }
 
     public void getConnection(){

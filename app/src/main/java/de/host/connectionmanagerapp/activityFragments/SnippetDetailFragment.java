@@ -117,8 +117,8 @@ public class SnippetDetailFragment extends Fragment implements View.OnClickListe
         }
         public Snippet setSnippet(){
 
-            snippet.setText(String.valueOf(editTextSnippetContent.getText()));
-            snippet.setTitel(String.valueOf(editTextSnippetname.getText()));
+            snippet.setText(editTextSnippetContent.getText().toString());
+            snippet.setTitel(editTextSnippetname.getText().toString());
             return snippet;
         }
 

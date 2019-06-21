@@ -18,6 +18,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -130,6 +131,7 @@ public class SshSessionFragment extends Fragment {
                     new SshAsyncTask().execute(objects);
                 } catch (Exception e) {
                     e.printStackTrace();
+                    createToast(e.getMessage());
                 }
             }
         });
@@ -181,24 +183,21 @@ public class SshSessionFragment extends Fragment {
         super.onStop();
         // Verbindung beenden über Conn
         // In neuem Thread, da wieder Netzwerk
-            Thread thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        SshConn conn = (SshConn) future.get();
-                        conn.getClient().disconnect();
-                    } catch (ExecutionException e) {
-                    Log.e(TAG, e.getMessage());
-                } catch (InterruptedException e) {
-                    Log.e(TAG, e.getMessage());
-                } catch (IOException e) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    SshConn conn = (SshConn) future.get();
+                    conn.getClient().disconnect();
+                } catch (Exception e) {
                     Log.e(TAG, e.getMessage());
                 }
-                }
-            });
-            thread.start();
+            }
 
-            // Wenn toBeDeleted gesetzt, dann Connection und Identity aus DB löschen
+        });
+        thread.start();
+
+        // Wenn toBeDeleted gesetzt, dann Connection und Identity aus DB löschen
         if (toBeDeleted) {
             connectionViewModel.deleteConnection(connection_ID);
             connectionViewModel.deleteIdentity(identityID);
@@ -230,7 +229,7 @@ public class SshSessionFragment extends Fragment {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         Future<SshConn> future = executorService.submit(new Callable<SshConn>() {
             @Override
-            public SshConn call() throws Exception {
+            public SshConn call() {
                 Identity identity = connectionViewModel.getIdentityFromTitel(connection.getIdentity_Id());
                 identityID = identity.getIdentiy_id();
                 String host = connection.getHostip();
@@ -274,7 +273,12 @@ public class SshSessionFragment extends Fragment {
                 config = config.useHostKey(false);
 
                 SshConn conn = new SshConn(config, new SSHClient());
-                conn.openConnection();
+                try {
+                    conn.openConnection();
+                } catch (Exception e) {
+                    Log.e(TAG, e.getMessage());
+                    createToast(e.getMessage());
+                }
                 return conn;
             }
         });
@@ -321,14 +325,9 @@ public class SshSessionFragment extends Fragment {
                 baos.write((command).getBytes());
 
                 return result;
-            } catch (ConnectionException e) {
-                e.printStackTrace();
-            } catch (TransportException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                Log.e(TAG, e.getMessage());
+                createToast(e.getMessage());
             }
 
             /*
@@ -353,9 +352,13 @@ public class SshSessionFragment extends Fragment {
                 // Append notwendig, da sonst Autoscroll nicht funktioniert
                 terminal.append(" ");
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e(TAG, e.getMessage());
+                createToast(e.getMessage());
             }
         }
-
+    }
+    private void createToast(String message) {
+        getActivity().runOnUiThread(() ->
+                Toast.makeText(getContext(),message,Toast.LENGTH_LONG).show());
     }
 }
