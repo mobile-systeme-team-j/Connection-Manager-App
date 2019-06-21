@@ -24,6 +24,9 @@ public interface IdentityDao {
     @Update
     void update(Identity... identities);
 
+    @Query("SELECT * from identity where titel=:titel")
+    Flowable<Identity>identityformtitel(String titel);
+
     @Query("SELECT * from identity where identity_id=:id")
     Flowable<Identity>identityformid(long id);
 

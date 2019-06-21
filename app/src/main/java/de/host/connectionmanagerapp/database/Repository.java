@@ -130,6 +130,9 @@ public class Repository {
         return  identity1;
 
     }
+    public Identity getIdentityFromTitel(String titel){
+        return identityDao.identityformtitel(titel).blockingFirst();
+    }
     public Connection getConnection(long id){
 
         Flowable<Connection>connectionFlowable = connectionDao.connectionfromid(id);

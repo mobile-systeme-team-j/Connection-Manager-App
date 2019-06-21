@@ -53,6 +53,9 @@ public class SnippetDetailFragment extends Fragment implements View.OnClickListe
 
             getSnippet();
         }
+        else{
+            delete.hide();
+        }
 
 
         return view;
@@ -67,18 +70,22 @@ public class SnippetDetailFragment extends Fragment implements View.OnClickListe
         switch (view.getId()) {
             case R.id.fabDelete:
                 if(arguments !=null) {
+
+                    connectionViewModel.deleteSnippets(snippet.getSnippet_id());
                     Toast.makeText(getContext(),"Snippet deleted",Toast.LENGTH_SHORT).show();
+                    getActivity().getSupportFragmentManager().popBackStack();
 
                 }
                 else{
-
+                    Toast.makeText(getContext(),"Somthing go wrong",Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.fabSave:
                 if(arguments !=null) {
                     try{
                         connectionViewModel.updateSnippets(setSnippet());
-                        Toast.makeText(getContext(),"Snippet saved", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),"Snippet updated", Toast.LENGTH_SHORT).show();
+                        getActivity().getSupportFragmentManager().popBackStack();
                     }
                     catch (Exception e){
                         Toast.makeText(getContext(),e.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
@@ -92,6 +99,7 @@ public class SnippetDetailFragment extends Fragment implements View.OnClickListe
 
                     Toast.makeText(getContext(),"Snippet saved", Toast.LENGTH_SHORT).show();
                         //Toast.makeText(getContext(),e.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
+                    getActivity().getSupportFragmentManager().popBackStack();
 
                 }
 

@@ -40,9 +40,7 @@ public class ConnectionViewModel extends AndroidViewModel {
     public  void insertConnection(Connection connection){
         repo.connection_insert(connection);
     }
-    public long insertConnectionId(Connection connection){
-        return repo.connection_insertId(connection);
-    }
+    public long insertConnectionId(Connection connection){ return repo.connection_insertId(connection); }
     public void insertSnippet(Snippet snippet){
         repo.snippet_insert(snippet);
     }
@@ -51,10 +49,10 @@ public class ConnectionViewModel extends AndroidViewModel {
     public Connection getConnection(long id){
         return(repo.getConnection(id));
     }
-
     public Identity getIdentity(long id){
         return(repo.getIdentity(id));
     }
+    public  Identity getIdentityFromTitel(String titel){return(repo.getIdentityFromTitel(titel));}
     public Job getJobs(long id){
         return(repo.getJob(id));
     }
