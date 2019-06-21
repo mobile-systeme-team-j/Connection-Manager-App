@@ -1,15 +1,19 @@
 package de.host.connectionmanagerapp;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -55,12 +59,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed(){
+        if(getSupportFragmentManager().getBackStackEntryCount() == 1){
+            new AlertDialog.Builder(this)
+                    .setMessage("A")
+
+                    // Specifying a listener allows you to take an action before dismissing the dialog.
+                    // The dialog is automatically dismissed when a dialog button is clicked.
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Continue with delete operation
+                        }
+                    })
+
+                    // A null listener allows the button to dismiss the dialog and take no further action.
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();        }
+
         // handles side-menu when Back-Button of Phone is pressed
         if(side_menu.isDrawerOpen(GravityCompat.START)){
             side_menu.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
+
     }
 
     @Override
@@ -106,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         try {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, frag)
+                    .addToBackStack(null)
                     .commit();
         }catch (NullPointerException e){
             e.printStackTrace();
