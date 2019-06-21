@@ -19,19 +19,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import de.host.connectionmanagerapp.R;
+import de.host.connectionmanagerapp.adapter.JobAdapterSelection;
 import de.host.connectionmanagerapp.adapter.MultiAdapterConnection;
 import de.host.connectionmanagerapp.database.Job;
 import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
 
 public class JobSelectionFragment extends Fragment {
 
-    Bundle arguments;
     long id;
-    Job job;
     ConnectionViewModel connectionViewModel;
-    List<Job> jobList;
-    ListView jobListView;
-    Button select;
     RecyclerView recyclerView;
 
     @Nullable
@@ -40,7 +36,7 @@ public class JobSelectionFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_connection_selection, container, false);
         recyclerView = view.findViewById(R.id.job_sel_recycler_view);
-/*
+
         final JobAdapterSelection adapter = new JobAdapterSelection(getActivity());
 
         recyclerView.setAdapter(adapter);
@@ -49,7 +45,7 @@ public class JobSelectionFragment extends Fragment {
         connectionViewModel = ViewModelProviders.of(getActivity()).get(ConnectionViewModel.class);
         connectionViewModel.getAllJobs().observe(this, jobs ->
                 adapter.setJobs(jobs));
-    */
+
         return view;
     }
 }
