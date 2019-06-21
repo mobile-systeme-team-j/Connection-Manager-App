@@ -21,11 +21,7 @@ import de.host.connectionmanagerapp.daos.IdentityDao;
 import de.host.connectionmanagerapp.daos.JobDao;
 import de.host.connectionmanagerapp.daos.SnippetDao;
 import de.host.connectionmanagerapp.daos.Snippet_JobDao;
-import io.reactivex.Completable;
 import io.reactivex.Flowable;
-import io.reactivex.Maybe;
-import io.reactivex.Single;
-import io.reactivex.SingleObserver;
 
 public class Repository {
 

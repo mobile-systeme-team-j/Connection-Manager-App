@@ -14,11 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.List;
-
 import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
-import de.host.connectionmanagerapp.adapter.IdentityAdapter;
 import de.host.connectionmanagerapp.adapter.SnippetAdapter;
 import de.host.connectionmanagerapp.database.Snippet;
 import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;

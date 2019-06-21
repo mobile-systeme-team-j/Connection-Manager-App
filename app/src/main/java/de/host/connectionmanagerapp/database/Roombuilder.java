@@ -23,8 +23,8 @@ public abstract class Roombuilder extends RoomDatabase {
 
 
     private static Roombuilder INSTANCE;
-    //static String pass = "test";
-    //private static SafeHelperFactory factory= new SafeHelperFactory(pass.toCharArray());
+    static String pass = "test";
+    private static SafeHelperFactory factory= new SafeHelperFactory(pass.toCharArray());
    public abstract ConnectionDao connectionDao();
    public abstract IdentityDao identityDao();
    public abstract JobDao jobDao();
@@ -40,7 +40,7 @@ public abstract class Roombuilder extends RoomDatabase {
                             Room.databaseBuilder(context.getApplicationContext(),
                                     Roombuilder.class,
                                     "database")
-                                    //.openHelperFactory(new SafeHelperFactory("passphrase".toCharArray()))
+                                    .openHelperFactory(factory)
                                     .fallbackToDestructiveMigration()
                                     .build();
                 }

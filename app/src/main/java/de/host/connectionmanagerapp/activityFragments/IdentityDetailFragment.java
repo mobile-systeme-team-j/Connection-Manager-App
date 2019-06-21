@@ -73,11 +73,13 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
         arguments = getArguments();
         if(arguments !=null){
             id = arguments.getLong("id");
-
             identity = connectionViewModel.getIdentity(id);
-
             getIdentity(identity);
         }
+        else{
+            delete.hide();
+        }
+
         return view;
     }
 
@@ -110,7 +112,7 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
                 if(arguments !=null) {
                     connectionViewModel.deleteIdentity(identity.getIdentiy_id());
                     Toast.makeText(getContext(),"Identity deleted",Toast.LENGTH_SHORT).show();
-
+                    getActivity().getSupportFragmentManager().popBackStack();
                 }
                 else{
 
@@ -120,6 +122,8 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
                 if(arguments !=null) {
                     try{
                         connectionViewModel.updateIdentity(setIdentity());
+                        Toast.makeText(getContext(),"Identity updated", Toast.LENGTH_SHORT).show();
+                        getActivity().getSupportFragmentManager().popBackStack();
                     }
                     catch (Exception e){
                         Toast.makeText(getContext(),"Please fill all lines",Toast.LENGTH_SHORT).show();
@@ -130,6 +134,7 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
                         identity = new Identity();
                         connectionViewModel.insertIdentity(setIdentity());
                         Toast.makeText(getContext(),"Identity saved", Toast.LENGTH_SHORT).show();
+                        getActivity().getSupportFragmentManager().popBackStack();
                     }
                     catch (Exception e){
                         Toast.makeText(getContext(),"Please fill all lines",Toast.LENGTH_SHORT).show();

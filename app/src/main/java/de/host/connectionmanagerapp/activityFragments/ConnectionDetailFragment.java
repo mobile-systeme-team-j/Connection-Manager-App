@@ -87,8 +87,11 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
             case R.id.fabDelete:
                 try {
                     connectionViewModel.deleteConnection(id);
-                }catch (Exception e){
                     Toast.makeText(getContext(),"Connection deleted",Toast.LENGTH_SHORT).show();
+                    getActivity().getSupportFragmentManager().popBackStack();
+
+                }catch (Exception e){
+
                 }
 
                 break;
@@ -103,8 +106,10 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
                 if(arguments != null){
                     try{
                         connectionViewModel.updateConnection(connection);
-                    }catch (Exception e){
                         Toast.makeText(getContext(),"Connection updated",Toast.LENGTH_SHORT).show();
+                        getActivity().getSupportFragmentManager().popBackStack();
+                    }catch (Exception e){
+
                     }
                 }
                 else{
@@ -112,6 +117,7 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
                         setConnection();
                         connectionViewModel.insertConnection(connection);
                         Toast.makeText(getContext(),"Connection saved", Toast.LENGTH_SHORT).show();
+                        getActivity().getSupportFragmentManager().popBackStack();
                     }catch (Exception e){
                         Toast.makeText(getContext(),"",Toast.LENGTH_SHORT).show();
                     }
