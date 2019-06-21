@@ -71,7 +71,7 @@ public class IdentityAdapterSelection extends RecyclerView.Adapter<IdentityAdapt
             @Override
             public void onClick (View v){
                 Identity identity = identities.get(getAdapterPosition());
-                long id = identity.getIdentiy_id();
+                String id = identity.getTitel();
 
                 Identity_id_holder holder = new Identity_id_holder();
                 holder.id = id;

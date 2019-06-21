@@ -75,8 +75,9 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
     public void onResume() {
         Identity_id_holder holder = new Identity_id_holder();
         Log.e("DEBUG", "" + holder.id);
-        if(holder.id != 0){
+        if(holder.id != null){
             connection.setIdentity_Id(holder.id);
+            holder.id = null;
         }
             super.onResume();
     }

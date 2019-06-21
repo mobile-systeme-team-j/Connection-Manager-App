@@ -114,7 +114,8 @@ public class RemoteFragment extends Fragment implements View.OnClickListener{
             identity.setKeypassword(keyPassword);
             identity.setKeypath(keyPath);
             long id = connectionViewModel.insertIdentityid(identity);
-            connection.setIdentity_Id(id);
+
+            //connection.setIdentity_Id(id);
             connID = connectionViewModel.insertConnectionId(connection);
 
             return true;

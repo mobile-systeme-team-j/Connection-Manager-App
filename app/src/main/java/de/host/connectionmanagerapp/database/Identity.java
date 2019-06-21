@@ -5,9 +5,11 @@ package de.host.connectionmanagerapp.database;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "identity")
+@Entity(tableName = "identity",
+indices = {@Index(value = {"titel"}, unique = true)})
 public class Identity {
 
     @PrimaryKey(autoGenerate = true)

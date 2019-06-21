@@ -219,8 +219,9 @@ public class SshSessionFragment extends Fragment {
             public SshConn call() throws Exception {
                 // SO RICHTIG MATTIS ?
                 // Get sshConn details from DB
-                long identityID = connection.getIdentity_Id();
-                Identity identity = connectionViewModel.getIdentity(identityID);
+                //String identityID = connection.getIdentity_Id();
+                long id = 0;
+                Identity identity = connectionViewModel.getIdentity(id);
                 String host = connection.getHostip();
                 String password = identity.getPassword();
                 String username = identity.getUsername();

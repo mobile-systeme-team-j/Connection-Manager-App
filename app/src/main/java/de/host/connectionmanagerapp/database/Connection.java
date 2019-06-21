@@ -11,14 +11,15 @@ import androidx.room.PrimaryKey;
 import java.util.Date;
 
 import static androidx.room.ForeignKey.NO_ACTION;
+import static androidx.room.ForeignKey.SET_DEFAULT;
 import static androidx.room.ForeignKey.SET_NULL;
 
 @Entity(tableName = "connection"
-        ,indices = {@Index(value={"identity_Id"})},
+        ,indices = {@Index(value={"identity_titel"})},
         foreignKeys = @ForeignKey(entity = Identity.class,
-                parentColumns = "identity_id",
-                childColumns = "identity_Id",
-                onDelete = NO_ACTION))
+                parentColumns = "titel",
+                childColumns = "identity_titel",
+                onDelete = SET_DEFAULT))
 public class Connection {
 
     @PrimaryKey(autoGenerate = true)
@@ -37,8 +38,8 @@ public class Connection {
     @ColumnInfo(name = "port")
     private int port;
 
-    @ColumnInfo(name="identity_Id")
-    private long identity_Id;
+    @ColumnInfo(name="identity_titel")
+    private String identity_Id;
 
     @ColumnInfo(name="timestamp")
     private Date timestamp;
@@ -81,11 +82,11 @@ public class Connection {
         this.port = port;
     }
 
-    public long getIdentity_Id() {
+    public String getIdentity_Id() {
         return identity_Id;
     }
 
-    public void setIdentity_Id(long identity_Id) {
+    public void setIdentity_Id(String identity_Id) {
         this.identity_Id = identity_Id;
     }
 

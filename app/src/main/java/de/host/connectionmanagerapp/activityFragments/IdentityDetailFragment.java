@@ -108,7 +108,7 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
                 break;
             case R.id.fabDelete:
                 if(arguments !=null) {
-                    connectionViewModel.deleteIdentity(identity);
+                    connectionViewModel.deleteIdentity(identity.getIdentiy_id());
                     Toast.makeText(getContext(),"Identity deleted",Toast.LENGTH_SHORT).show();
 
                 }

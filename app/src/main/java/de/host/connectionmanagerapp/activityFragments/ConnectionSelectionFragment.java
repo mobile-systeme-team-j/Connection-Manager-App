@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class ConnectionSelectionFragment extends Fragment {
     Connection connection;
     ConnectionViewModel connectionViewModel;
     List<Connection> connectionList;
-    ListView connectionListView;
+    RecyclerView connectionListView;
     Button select;
 
     @Nullable
@@ -35,7 +36,7 @@ public class ConnectionSelectionFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_connection_selection, container, false);
 
-        connectionListView = view.findViewById(R.id.connectionList);
+        connectionListView = view.findViewById(R.id.recycler_con_sel);
 
 
 
