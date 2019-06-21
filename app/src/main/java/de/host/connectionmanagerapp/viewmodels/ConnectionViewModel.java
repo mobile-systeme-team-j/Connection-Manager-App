@@ -33,7 +33,7 @@ public class ConnectionViewModel extends AndroidViewModel {
 
     }
     //Insert
-    public void insertIdentity(Identity identity){
+    public void insertIdentity(Identity identity) throws Exception{
         repo.identity_insert(identity);
     }
     public long insertIdentityid(Identity identity){return repo.identity_insertid(identity);}

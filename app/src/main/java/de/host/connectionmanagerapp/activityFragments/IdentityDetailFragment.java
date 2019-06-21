@@ -24,6 +24,8 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import net.sqlcipher.database.SQLiteConstraintException;
+
 import java.io.File;
 
 import de.host.connectionmanagerapp.R;
@@ -139,7 +141,7 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
                         HideKeyboard.hideKeyboard(getContext());
                     }
                     catch (Exception e){
-                        Toast.makeText(getContext(),"Please fill all lines",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),"Titel must be unique",Toast.LENGTH_SHORT).show();
                     }
                 }
 

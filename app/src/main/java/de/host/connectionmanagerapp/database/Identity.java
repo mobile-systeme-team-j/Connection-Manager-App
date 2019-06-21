@@ -18,6 +18,7 @@ public class Identity {
 
 
 
+
     @NonNull
     @ColumnInfo(name = "titel")
     private String titel;
@@ -35,7 +36,8 @@ public class Identity {
     @ColumnInfo(name="keypassword")
     private String keypassword;
 
-
+    @ColumnInfo(name = "filename")
+    private String filename;
 
     public long getIdentiy_id() {
         return identiy_id;
@@ -87,5 +89,12 @@ public class Identity {
 
     public void setKeypassword(String keypassword) {
         this.keypassword = keypassword;
+    }
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 }

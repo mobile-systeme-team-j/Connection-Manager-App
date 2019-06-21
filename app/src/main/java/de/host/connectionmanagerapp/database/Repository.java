@@ -3,6 +3,7 @@
 package de.host.connectionmanagerapp.database;
 
 import android.app.Application;
+import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 
@@ -31,8 +32,10 @@ public class Repository {
     private SnippetDao snippetDao;
     private Connection_JobDao cjDao;
     private Snippet_JobDao sjDao;
+    private Application application;
 
     public Repository(Application application){
+        this.application = application;
         Roombuilder db = Roombuilder.getDatabase(application);
         identityDao = db.identityDao();
         connectionDao = db.connectionDao();
@@ -45,11 +48,17 @@ public class Repository {
 
     //Insert Methoden
     //Fertige identity muss übergeben werden , es erfolgt keine überpfüfung mehr
-    public void identity_insert(Identity identity){
-      Executor exe = Executors.newSingleThreadExecutor();
-      exe.execute(() -> {
-          identityDao.insert(identity);
+    public void identity_insert(Identity identity) throws Exception{
+        ExecutorService exe = Executors.newSingleThreadExecutor();
+        Future future = exe.submit(new Callable<Void>() {
+            @Override
+            public Void call() throws Exception {
+                identityDao.insert(identity);
+                return null;
+            }
+
       });
+            future.get();
     }
     public long connection_insertId(Connection connection){
         ExecutorService exe = Executors.newSingleThreadExecutor();
