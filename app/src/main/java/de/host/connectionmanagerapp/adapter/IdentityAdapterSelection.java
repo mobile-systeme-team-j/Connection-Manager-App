@@ -1,7 +1,6 @@
 package de.host.connectionmanagerapp.adapter;
 
 
-import android.app.FragmentManager;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

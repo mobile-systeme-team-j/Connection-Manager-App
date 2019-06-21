@@ -191,10 +191,11 @@ public class Repository {
     }
 
     //DeleteMethoden
-    public void identity_delete(Identity identity){
+    public void identity_delete(long id){
 
         Executor exe = Executors.newSingleThreadExecutor();
         exe.execute(() -> {
+            Identity identity=identityDao.identityformid(id).blockingFirst();
             identityDao.delete(identity);
         });
     }

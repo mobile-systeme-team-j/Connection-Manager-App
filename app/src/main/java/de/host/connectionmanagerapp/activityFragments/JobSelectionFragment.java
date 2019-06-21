@@ -41,7 +41,7 @@ public class JobSelectionFragment extends Fragment {
         arguments = getArguments();
         if(arguments != null){
             id = arguments.getLong("id");
-            jobList = connectionViewModel.getListJobs();
+            //jobList = connectionViewModel.getListJobs();
         }
 
         // android-coding.blogspot.com/2011/09/listview-with-multiple-choice.html

@@ -76,8 +76,8 @@ public class ConnectionViewModel extends AndroidViewModel {
     }
 
     //delete
-    public void deleteIdentity(Identity identity){
-        repo.identity_delete(identity);
+    public void deleteIdentity(long id){
+        repo.identity_delete(id);
     }
     public void deleteConnection(long id){
         repo.connection_delete(id);
@@ -96,10 +96,5 @@ public class ConnectionViewModel extends AndroidViewModel {
     public LiveData<List<Connection>> getRecentConnections() { return recentConnections; }
 
 
-    ///////////////////////////////
-    public List<Identity> getListIdentities(){return (List<Identity>) allIdenties;}
-    public List<Job> getListJobs(){return (List<Job>) allJobs;}
-    public List<Connection> getListConnections() { return (List<Connection>) allConnections; }
-    public List<Snippet> getListSnippets(){return (List<Snippet>) allSnippets;}
 
 }

@@ -37,25 +37,8 @@ public class ConnectionSelectionFragment extends Fragment {
 
         connectionListView = view.findViewById(R.id.connectionList);
 
-        
 
-            select.setOnClickListener(v -> {
-                String selected = "";
-                int cntChoice = connectionListView.getCount();
 
-                SparseBooleanArray sparseBooleanArray = connectionListView.getCheckedItemPositions();
-
-                for(int i = 0; i < cntChoice; i++){
-
-                    if(sparseBooleanArray.get(i)) {
-
-                        selected += connectionListView.getItemAtPosition(i).toString() + "\n";
-                    }
-                }
-
-            Toast.makeText(getContext(),selected,Toast.LENGTH_LONG).show();
-
-            });
             return view;
         }
 

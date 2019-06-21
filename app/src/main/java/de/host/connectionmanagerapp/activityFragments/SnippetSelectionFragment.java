@@ -41,7 +41,7 @@ public class SnippetSelectionFragment extends Fragment {
         arguments = getArguments();
         if(arguments != null){
             id = arguments.getLong("id");
-            snippetList = connectionViewModel.getListSnippets();
+
         }
 
 

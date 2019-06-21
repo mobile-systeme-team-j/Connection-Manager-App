@@ -9,7 +9,7 @@
         android:layout_height="584dp" />
 
     <Button
-        android:id="@+id/select"
+        android:id="@+id/selectCon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@android:string/ok" />
