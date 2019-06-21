@@ -20,7 +20,7 @@ public class SshService extends IntentService {
         if (AlarmRepository.manager == null) {
             AlarmRepository.initSshAlarmManager(getApplicationContext());
         }
-        // get PendingIntent-ID from Alarm
+        // get PendingIntent-ID (unique Broadcast-ID) from Alarm
         int id = intent.getIntExtra("REQUESTCODE",-1);
         // Starte SSH-Connection
         // Get Connection via Snippet and calTime from Snippet

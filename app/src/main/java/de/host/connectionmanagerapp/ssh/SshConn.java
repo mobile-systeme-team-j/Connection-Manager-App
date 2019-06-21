@@ -31,71 +31,57 @@ public class SshConn {
         this.client = client;
     }
 
-    public void closeConnection() {
-        try {
-            client.disconnect();
-        } catch (IOException e) {
-            Log.e(TAG, e.getMessage());
-            //Toast.makeText(context, "Disconnect error!", Toast.LENGTH_LONG).show();
-        }
+    public void closeConnection() throws Exception {
+        client.disconnect();
     }
 
-    public void openConnection () {
-        try {
-            // Bouncy Castle Security Provider registrieren (u.a. für ECDSA benötigt)
-            // Android liefert nur abgespeckte Version mit
-            Security.removeProvider("BC");
-            Security.addProvider(new BouncyCastleProvider());
-            //SecurityUtils.registerSecurityProvider("org.spongycastle.jce.provider.BouncyCastleProvider");
-            // Erst evtl. vorhandene KnownHosts z.B. aus ~/.ssh/known_hosts laden
-            // Autodetect-Methode verwenden und dem SSHClient hinzufügen
-            //final File khFile = new File(OpenSSHKnownHosts.detectSSHDir(), "known_hosts");
-            //client.addHostKeyVerifier(new ConsoleKnownHostsVerifier(khFile, con));
-            // Verbinden
+    public void openConnection () throws Exception {
 
-            // Akzeptiere alle HostKeys mit PromiscuousVerifier
-            if (!config.isHostKeyNeeded()) {
-                client.addHostKeyVerifier(new PromiscuousVerifier());
-            }
+        // Bouncy Castle Security Provider registrieren (u.a. für ECDSA benötigt)
+        // Android liefert nur abgespeckte Version mit
+        Security.removeProvider("BC");
+        Security.addProvider(new BouncyCastleProvider());
+        //SecurityUtils.registerSecurityProvider("org.spongycastle.jce.provider.BouncyCastleProvider");
+        // Erst evtl. vorhandene KnownHosts z.B. aus ~/.ssh/known_hosts laden
+        // Autodetect-Methode verwenden und dem SSHClient hinzufügen
+        //final File khFile = new File(OpenSSHKnownHosts.detectSSHDir(), "known_hosts");
+        //client.addHostKeyVerifier(new ConsoleKnownHostsVerifier(khFile, con));
+        // Verbinden
 
-            client.connect(config.getHost(), config.getPort());
+        // Akzeptiere alle HostKeys mit PromiscuousVerifier
+        if (!config.isHostKeyNeeded()) {
+            client.addHostKeyVerifier(new PromiscuousVerifier());
+        }
 
-            // Authentifizierung, je nach verfügbaren Eigenschaften
-            if (config.getKeyPath() != null) {
-                if (config.getKeyPass() != null) {
-                    KeyProvider keys = client.loadKeys(config.getKeyPath(), config.getKeyPass());
-                    client.authPublickey(config.getUser(), keys);
-                } else {
-                    // Authentifiziere mit KeyFile
-                    client.authPublickey(config.getUser(), config.getKeyPath());
-                }
-            } else if (!TextUtils.isEmpty(config.getPassword())) {
-                // Authentifiziere mit Passwort
-                client.authPassword(config.getUser(), config.getPassword());
+        client.connect(config.getHost(), config.getPort());
 
+        // Authentifizierung, je nach verfügbaren Eigenschaften
+        if (config.getKeyPath() != null) {
+            if (config.getKeyPass() != null) {
+                KeyProvider keys = client.loadKeys(config.getKeyPath(), config.getKeyPass());
+                client.authPublickey(config.getUser(), keys);
             } else {
-                // Authentifiziere mit leerem Passwort
-                client.authPassword(config.getUser(), "");
+                // Authentifiziere mit KeyFile
+                client.authPublickey(config.getUser(), config.getKeyPath());
             }
+        } else if (!TextUtils.isEmpty(config.getPassword())) {
+            // Authentifiziere mit Passwort
+            client.authPassword(config.getUser(), config.getPassword());
 
-        } catch (IOException e) {
-            Log.e(TAG, e.getMessage());
-            //Toast.makeText(context, "SshConn: Error openConnection().", Toast.LENGTH_LONG).show();
+        } else {
+            // Authentifiziere mit leerem Passwort
+            client.authPassword(config.getUser(), "");
         }
     }
 
-    public String sendCommand (String command) {
+    public String sendCommand (String command) throws Exception {
         String response = "";
 
-        try {
-            Session session = client.startSession();
-            Session.Command cmd = session.exec(command);
-            response = (IOUtils.readFully(cmd.getInputStream()).toString());
-            cmd.join(5, TimeUnit.SECONDS);
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
-            //Toast.makeText(context, "Error sending command.", Toast.LENGTH_LONG).show();
-        }
+        Session session = client.startSession();
+        Session.Command cmd = session.exec(command);
+        response = (IOUtils.readFully(cmd.getInputStream()).toString());
+        cmd.join(5, TimeUnit.SECONDS);
+
         return response;
     }
 

@@ -21,7 +21,7 @@ import de.host.connectionmanagerapp.R;
 
 public class WizardFragment extends Fragment implements View.OnClickListener {
 
-    Button btnConnection, btnIdentity, btnSnippet, tv_key;
+    Button btnConnection, btnSnippet, tv_key;
 
 
     @Nullable
@@ -33,12 +33,10 @@ public class WizardFragment extends Fragment implements View.OnClickListener {
 
         FloatingActionButton send = view.findViewById(R.id.fabConnectRemoteSSH);
         btnConnection = view.findViewById(R.id.btnConnection);
-        btnIdentity = view.findViewById(R.id.btnIdentity);
         btnSnippet = view.findViewById(R.id.btnSnippet);
 
         send.setOnClickListener(this);
         btnConnection.setOnClickListener(this);
-        btnIdentity.setOnClickListener(this);
         btnSnippet.setOnClickListener(this);
         return view;
 
@@ -48,9 +46,6 @@ public class WizardFragment extends Fragment implements View.OnClickListener {
         switch(view.getId()){
             case R.id.btnConnection:
                 ((MainActivity)getActivity()).replaceFragment(new ConnectionSelectionFragment());
-                break;
-            case R.id.btnIdentity:
-                ((MainActivity)getActivity()).replaceFragment(new IdentitySelectionFragment());
                 break;
             case R.id.btnSnippet:
                 ((MainActivity)getActivity()).replaceFragment(new SnippetSelectionFragment());

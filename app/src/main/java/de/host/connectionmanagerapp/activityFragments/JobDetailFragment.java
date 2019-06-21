@@ -135,7 +135,7 @@ public class JobDetailFragment extends Fragment
                         createAlarm();
                         Toast.makeText(getContext(),"Identity saved", Toast.LENGTH_SHORT).show();
                     }catch (Exception e){
-                        Toast.makeText(getContext(),"",Toast.LENGTH_SHORT);
+                        Toast.makeText(getContext(),"",Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;
@@ -150,7 +150,7 @@ public class JobDetailFragment extends Fragment
     }
 
     public Job Job(){
-        job.setTitel(String.valueOf(editTextJobName.getText()));
+        job.setTitel(editTextJobName.getText().toString());
         return job;
     }
 
