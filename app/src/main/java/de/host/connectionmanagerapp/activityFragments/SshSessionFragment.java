@@ -1,5 +1,8 @@
 package de.host.connectionmanagerapp.activityFragments;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,6 +19,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -49,12 +54,13 @@ public class SshSessionFragment extends Fragment {
     public static final String TAG = SshSessionFragment.class.getSimpleName();
 
     private long connection_ID;
+    private long identityID;
     private TextView terminal;
     private EditText command;
     private ImageButton send;
     private ByteArrayOutputStream baos;
     private PrintStream ps;
-    private boolean firstConn;
+    private boolean firstConn, toBeDeleted;
     private Future future;
     private ConnectionViewModel connectionViewModel;
     Connection connection;
@@ -66,10 +72,11 @@ public class SshSessionFragment extends Fragment {
 
 
     // Konstruktor mit connection_ID Parameter für Verbindungsaufbau
-    public static SshSessionFragment newInstance(long connection_ID) {
+    public static SshSessionFragment newInstance(long connection_ID, boolean toBeDeleted) {
         SshSessionFragment fragment = new SshSessionFragment();
         Bundle args = new Bundle();
         args.putLong("connection_ID", connection_ID);
+        args.putBoolean("toBeDeleted", toBeDeleted);
         fragment.setArguments(args);
         return fragment;
     }
@@ -79,6 +86,7 @@ public class SshSessionFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             connection_ID = getArguments().getLong("connection_ID");
+            toBeDeleted = getArguments().getBoolean("toBeDeleted");
         }
 
         // Non-Ui Variablen initialisieren
@@ -189,6 +197,12 @@ public class SshSessionFragment extends Fragment {
                 }
             });
             thread.start();
+
+            // Wenn toBeDeleted gesetzt, dann Connection und Identity aus DB löschen
+        if (toBeDeleted) {
+            connectionViewModel.deleteConnection(connection_ID);
+            connectionViewModel.deleteIdentity(identityID);
+        }
     }
 
     @Override
@@ -217,11 +231,8 @@ public class SshSessionFragment extends Fragment {
         Future<SshConn> future = executorService.submit(new Callable<SshConn>() {
             @Override
             public SshConn call() throws Exception {
-                // SO RICHTIG MATTIS ?
-                // Get sshConn details from DB
-                //String identityID = connection.getIdentity_Id();
-                long id = 0;
-                Identity identity = connectionViewModel.getIdentity(id);
+                Identity identity = connectionViewModel.getIdentityFromTitel(connection.getIdentity_Id());
+                identityID = identity.getIdentiy_id();
                 String host = connection.getHostip();
                 String password = identity.getPassword();
                 String username = identity.getUsername();
@@ -229,10 +240,9 @@ public class SshSessionFragment extends Fragment {
                 //TODO DB: Pfad für HostKey String hostKey = connection.getHostKey();
                 int port = connection.getPort();
                 String keyPath = "";
-                if (identity.getKeypath() != null) {
-                    if (!identity.getKeypath().equals("Key-Path") && !TextUtils.isEmpty(keyPath)) {
+                if (!TextUtils.isEmpty(identity.getKeypath())) {
                         keyPath = identity.getKeypath();
-                    }
+
                 }
 
                 // Setup Connection
@@ -244,25 +254,26 @@ public class SshSessionFragment extends Fragment {
                 }
 
                 if (!TextUtils.isEmpty(keyPath)) {
+                    // Request READ_EXTERNAL_STORAGE Permission if not already set
+                    int permissionCheck = ActivityCompat.checkSelfPermission(getContext(),
+                            Manifest.permission.READ_EXTERNAL_STORAGE);
+                    if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+                        // Permission granted
+                    } else {
+                        requestPermissions(new String []{Manifest.permission.READ_EXTERNAL_STORAGE},99);
+                    }
                     config = config.useKey(keyPath);
                 }
                 if (!TextUtils.isEmpty(keyPass)) {
                     config = config.useKeyPass(keyPass);
                 }
+                if (!TextUtils.isEmpty(password)) {
+                    config = config.usePassword(password);
+                }
 
-                config = config.usePassword(password);
                 config = config.useHostKey(false);
 
-                /*
-                // Setup Connection
-                SshConfig config = new SshConfig("54.37.204.238", "userwp");
-                config = config.usePassword("wFf4]18&");
-                config = config.useHostKey(false);
-                    /*
-                    SSHConfig config = new SSHConfig("sdf.org", "new");
-                    config = config.useHostKey(false);
-                    */
-                SshConn conn = new SshConn(config, new SSHClient(), getContext());
+                SshConn conn = new SshConn(config, new SSHClient());
                 conn.openConnection();
                 return conn;
             }

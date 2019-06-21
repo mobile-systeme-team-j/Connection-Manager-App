@@ -89,11 +89,9 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
         if(requestCode == 123 && resultCode == RESULT_OK) {
             Uri selectedFile = data.getData(); //The uri with the location of the file
             keyPath = FileUtils.getPath(getContext(), selectedFile);
-            Toast.makeText(getActivity().getApplicationContext(), keyPath, Toast.LENGTH_LONG);
             //keyFilename = getFileName(selectedFile);
             keyFilename = UriHelper.getFileName(selectedFile, getContext());
             btnKey.setText(keyFilename);
-
         }
     }
 
@@ -149,7 +147,7 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
         identity.setTitel(editTextIdentityName.getText().toString());
         identity.setUsername(editTextUsername.getText().toString());
         identity.setPassword(editTextPassword.getText().toString());
-        identity.setKeypath(btnKey.getText().toString());
+        identity.setKeypath(keyPath);
         identity.setKeypassword(editTextKeyPassword.getText().toString());
         return identity;
     }
@@ -158,7 +156,7 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
         editTextIdentityName.setText(identity.getTitel());
         editTextUsername.setText(identity.getUsername());
         editTextPassword.setText(identity.getPassword());
-        btnKey.setText(identity.getKeypath());
+        btnKey.setText(keyFilename);
         editTextKeyPassword.setText(identity.getKeypassword());
     }
 }

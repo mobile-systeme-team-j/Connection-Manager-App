@@ -26,7 +26,6 @@ public class Identity {
     @ColumnInfo(name = "username")
     private String username;
 
-    @NonNull
     @ColumnInfo(name="password")
     private String password;
 

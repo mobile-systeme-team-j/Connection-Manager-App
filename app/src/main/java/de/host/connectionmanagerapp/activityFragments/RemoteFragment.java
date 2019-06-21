@@ -63,7 +63,7 @@ public class RemoteFragment extends Fragment implements View.OnClickListener{
         switch(view.getId()){
             case R.id.fabConnectRemoteSSH:
                 if (setConnection()){
-                    ((MainActivity)getActivity()).replaceFragment(SshSessionFragment.newInstance(connID));
+                    ((MainActivity)getActivity()).replaceFragment(SshSessionFragment.newInstance(connID, true));
                 }
                 break;
             case R.id.wizard_KeyPath:

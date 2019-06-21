@@ -98,7 +98,7 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
             case R.id.fabConnectRemoteSSH:
                 // CallSShSessionFragment
                 if (id != 0) {
-                    ((MainActivity)getActivity()).replaceFragment(SshSessionFragment.newInstance(id));
+                    ((MainActivity)getActivity()).replaceFragment(SshSessionFragment.newInstance(id, false));
                 }
                 break;
 

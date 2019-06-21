@@ -67,6 +67,7 @@ public class SshConfig {
         temp.password = password;
         temp.keyPath = keyPath;
         temp.hostKeyNeeded = hostKeyNeeded;
+        temp.keyPass = keyPass;
         return temp;
     }
 

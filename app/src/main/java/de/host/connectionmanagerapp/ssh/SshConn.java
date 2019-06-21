@@ -3,13 +3,10 @@ package de.host.connectionmanagerapp.ssh;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 
 import net.schmizz.sshj.SSHClient;
 import net.schmizz.sshj.common.IOUtils;
-import net.schmizz.sshj.connection.ConnectionException;
 import net.schmizz.sshj.connection.channel.direct.Session;
-import net.schmizz.sshj.transport.TransportException;
 import net.schmizz.sshj.transport.verification.PromiscuousVerifier;
 import net.schmizz.sshj.userauth.keyprovider.KeyProvider;
 
@@ -29,10 +26,9 @@ public class SshConn {
     private Context context;
 
     // Konstruktor
-    public SshConn(SshConfig config, SSHClient client, Context context) {
+    public SshConn(SshConfig config, SSHClient client) {
         this.config = config;
         this.client = client;
-        this.context = context;
     }
 
     public void closeConnection() {
@@ -40,7 +36,7 @@ public class SshConn {
             client.disconnect();
         } catch (IOException e) {
             Log.e(TAG, e.getMessage());
-            Toast.makeText(context, "Disconnect error!", Toast.LENGTH_LONG).show();
+            //Toast.makeText(context, "Disconnect error!", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -84,7 +80,7 @@ public class SshConn {
 
         } catch (IOException e) {
             Log.e(TAG, e.getMessage());
-            Toast.makeText(context, "SshConn: Error openConnection().", Toast.LENGTH_LONG).show();
+            //Toast.makeText(context, "SshConn: Error openConnection().", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -98,7 +94,7 @@ public class SshConn {
             cmd.join(5, TimeUnit.SECONDS);
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());
-            Toast.makeText(context, "Error sending command.", Toast.LENGTH_LONG).show();
+            //Toast.makeText(context, "Error sending command.", Toast.LENGTH_LONG).show();
         }
         return response;
     }

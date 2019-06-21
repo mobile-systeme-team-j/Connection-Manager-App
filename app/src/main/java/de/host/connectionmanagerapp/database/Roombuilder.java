@@ -17,7 +17,7 @@ import de.host.connectionmanagerapp.daos.SnippetDao;
 import de.host.connectionmanagerapp.daos.Snippet_JobDao;
 
 
-@androidx.room.Database(entities = {Connection.class, Identity.class, Snippet.class, Job.class, Connection_Job.class, Snippet_Job.class}, version = 1, exportSchema = false)
+@androidx.room.Database(entities = {Connection.class, Identity.class, Snippet.class, Job.class, Connection_Job.class, Snippet_Job.class}, version = 5, exportSchema = false)
 @TypeConverters({DateTypeConverter.class})
 public abstract class Roombuilder extends RoomDatabase {
 
