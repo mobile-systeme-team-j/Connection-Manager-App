@@ -29,6 +29,7 @@ import java.io.File;
 import de.host.connectionmanagerapp.R;
 import de.host.connectionmanagerapp.database.Identity;
 import de.host.connectionmanagerapp.helper.FileUtils;
+import de.host.connectionmanagerapp.helper.HideKeyboard;
 import de.host.connectionmanagerapp.helper.UriHelper;
 import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
 
@@ -111,6 +112,7 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
                     connectionViewModel.deleteIdentity(identity.getIdentiy_id());
                     Toast.makeText(getContext(),"Identity deleted",Toast.LENGTH_SHORT).show();
                     getActivity().getSupportFragmentManager().popBackStack();
+                    HideKeyboard.hideKeyboard(getContext());
                 }
                 else{
 
@@ -122,6 +124,7 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
                         connectionViewModel.updateIdentity(setIdentity());
                         Toast.makeText(getContext(),"Identity updated", Toast.LENGTH_SHORT).show();
                         getActivity().getSupportFragmentManager().popBackStack();
+                        HideKeyboard.hideKeyboard(getContext());
                     }
                     catch (Exception e){
                         Toast.makeText(getContext(),"Please fill all lines",Toast.LENGTH_SHORT).show();
@@ -133,6 +136,7 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
                         connectionViewModel.insertIdentity(setIdentity());
                         Toast.makeText(getContext(),"Identity saved", Toast.LENGTH_SHORT).show();
                         getActivity().getSupportFragmentManager().popBackStack();
+                        HideKeyboard.hideKeyboard(getContext());
                     }
                     catch (Exception e){
                         Toast.makeText(getContext(),"Please fill all lines",Toast.LENGTH_SHORT).show();

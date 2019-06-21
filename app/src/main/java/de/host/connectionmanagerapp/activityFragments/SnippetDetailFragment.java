@@ -15,6 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import de.host.connectionmanagerapp.R;
 import de.host.connectionmanagerapp.database.Snippet;
+import de.host.connectionmanagerapp.helper.HideKeyboard;
 import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
 
 public class SnippetDetailFragment extends Fragment implements View.OnClickListener{
@@ -74,7 +75,7 @@ public class SnippetDetailFragment extends Fragment implements View.OnClickListe
                     connectionViewModel.deleteSnippets(snippet.getSnippet_id());
                     Toast.makeText(getContext(),"Snippet deleted",Toast.LENGTH_SHORT).show();
                     getActivity().getSupportFragmentManager().popBackStack();
-
+                    HideKeyboard.hideKeyboard(getContext());
                 }
                 else{
                     Toast.makeText(getContext(),"Somthing go wrong",Toast.LENGTH_SHORT).show();
@@ -86,6 +87,7 @@ public class SnippetDetailFragment extends Fragment implements View.OnClickListe
                         connectionViewModel.updateSnippets(setSnippet());
                         Toast.makeText(getContext(),"Snippet updated", Toast.LENGTH_SHORT).show();
                         getActivity().getSupportFragmentManager().popBackStack();
+                        HideKeyboard.hideKeyboard(getContext());
                     }
                     catch (Exception e){
                         Toast.makeText(getContext(),e.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
@@ -100,7 +102,7 @@ public class SnippetDetailFragment extends Fragment implements View.OnClickListe
                     Toast.makeText(getContext(),"Snippet saved", Toast.LENGTH_SHORT).show();
                         //Toast.makeText(getContext(),e.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
                     getActivity().getSupportFragmentManager().popBackStack();
-
+                    HideKeyboard.hideKeyboard(getContext());
                 }
 
                 break;

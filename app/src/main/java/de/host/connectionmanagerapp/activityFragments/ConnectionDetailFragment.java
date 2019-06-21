@@ -20,6 +20,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
 import de.host.connectionmanagerapp.database.Connection;
+import de.host.connectionmanagerapp.helper.HideKeyboard;
 import de.host.connectionmanagerapp.helper.Identity_id_holder;
 import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
 
@@ -89,6 +90,7 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
                     connectionViewModel.deleteConnection(id);
                     Toast.makeText(getContext(),"Connection deleted",Toast.LENGTH_SHORT).show();
                     getActivity().getSupportFragmentManager().popBackStack();
+                    HideKeyboard.hideKeyboard(getContext());
 
                 }catch (Exception e){
 
@@ -108,6 +110,7 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
                         connectionViewModel.updateConnection(connection);
                         Toast.makeText(getContext(),"Connection updated",Toast.LENGTH_SHORT).show();
                         getActivity().getSupportFragmentManager().popBackStack();
+                        HideKeyboard.hideKeyboard(getContext());
                     }catch (Exception e){
 
                     }
