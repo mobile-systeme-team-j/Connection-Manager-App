@@ -74,7 +74,6 @@ public class JobDetailFragment extends Fragment
                  editTextTime = view.findViewById(R.id.time),
                  editTextJobName = view.findViewById(R.id.job_name),
                  view.findViewById(R.id.btnConnection),
-                 view.findViewById(R.id.btnIdentity),
                  view.findViewById(R.id.btnSnippet),
                  view.findViewById(R.id.fabSave),
                  view.findViewById(R.id.fabDelete)
@@ -105,9 +104,6 @@ public class JobDetailFragment extends Fragment
         switch(view.getId()){
             case R.id.btnConnection:
                 ((MainActivity)getActivity()).replaceFragment(new ConnectionSelectionFragment());
-                break;
-            case R.id.btnIdentity:
-                ((MainActivity)getActivity()).replaceFragment(new IdentitySelectionFragment());
                 break;
             case R.id.btnSnippet:
                 ((MainActivity)getActivity()).replaceFragment(new SnippetSelectionFragment());

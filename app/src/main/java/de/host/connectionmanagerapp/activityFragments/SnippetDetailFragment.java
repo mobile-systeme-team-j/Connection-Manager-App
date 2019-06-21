@@ -96,7 +96,7 @@ public class SnippetDetailFragment extends Fragment implements View.OnClickListe
                 else{
 
 
-                    snippet = new Snippet();
+                    snippet = new Snippet(String.valueOf(editTextSnippetContent.getText()));
                     connectionViewModel.insertSnippet(setSnippet());
 
                     Toast.makeText(getContext(),"Snippet saved", Toast.LENGTH_SHORT).show();

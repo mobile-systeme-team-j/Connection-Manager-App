@@ -215,10 +215,10 @@ public class Repository {
         });
     }
     public void connection_delete(long connectionId){
-        Connection conection = connectionDao.connectionfromid(connectionId).blockingFirst();
         Executor exe = Executors.newSingleThreadExecutor();
         exe.execute(() -> {
-        connectionDao.delete(conection);
+            Connection conection = connectionDao.connectionfromid(connectionId).blockingFirst();
+            connectionDao.delete(conection);
         });
     }
     public void job_delete(Job job){

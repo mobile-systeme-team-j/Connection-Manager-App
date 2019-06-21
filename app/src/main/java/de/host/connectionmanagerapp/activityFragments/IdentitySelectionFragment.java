@@ -21,10 +21,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import de.host.connectionmanagerapp.R;
-import de.host.connectionmanagerapp.adapter.IdentityAdapter;
 import de.host.connectionmanagerapp.adapter.IdentityAdapterSelection;
-import de.host.connectionmanagerapp.database.Identity;
-import de.host.connectionmanagerapp.helper.Identity_id_holder;
+
 import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
 
 public class IdentitySelectionFragment extends Fragment {

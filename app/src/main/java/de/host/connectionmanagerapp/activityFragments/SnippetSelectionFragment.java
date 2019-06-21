@@ -9,11 +9,18 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.snackbar.Snackbar;
+
+import java.util.List;
+
 import de.host.connectionmanagerapp.R;
 import de.host.connectionmanagerapp.adapter.MultiAdapterSnippet;
+import de.host.connectionmanagerapp.database.Snippet;
 import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
+import de.host.connectionmanagerapp.viewmodels.SelectableSnippets;
 
-public class SnippetSelectionFragment extends Fragment {
+public class SnippetSelectionFragment extends Fragment{
 
     long id;
     ConnectionViewModel connectionViewModel;
@@ -26,7 +33,7 @@ public class SnippetSelectionFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_snippet_selection, container, false);
         recyclerView = view.findViewById(R.id.sni_sel_recycler_view);
 
-        final MultiAdapterSnippet adapter  = new MultiAdapterSnippet(getActivity());
+        MultiAdapterSnippet adapter  = new MultiAdapterSnippet(getActivity());
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -37,4 +44,5 @@ public class SnippetSelectionFragment extends Fragment {
 
         return view;
     }
+
 }

@@ -36,7 +36,7 @@ public interface ConnectionDao {
     LiveData<List<Connection>> getAllConnection();
 
     @Delete
-    Completable delete (Connection... connections);
+    void delete (Connection... connections);
 
 
 

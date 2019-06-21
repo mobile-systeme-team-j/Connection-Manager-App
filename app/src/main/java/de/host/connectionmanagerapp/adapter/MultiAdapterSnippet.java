@@ -2,9 +2,11 @@ package de.host.connectionmanagerapp.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckedTextView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,28 +18,39 @@ import java.util.List;
 
 import de.host.connectionmanagerapp.R;
 import de.host.connectionmanagerapp.database.Snippet;
+import de.host.connectionmanagerapp.viewmodels.SelectableSnippets;
 
-public class MultiAdapterSnippet extends RecyclerView.Adapter<MultiAdapterSnippet.MultiViewHolder> {
+public class MultiAdapterSnippet extends RecyclerView.Adapter<MultiViewHolderSnippet> {
 
+    private List<SelectableSnippets> mValues;
     private List<Snippet> snippets;
     private Context application;
 
     public MultiAdapterSnippet(Context application) {
             this.application = application;
+
             }
 
     @NonNull
     @Override
-    public MultiViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(application).inflate(R.layout.snippet_view, parent, false);
-            return new MultiAdapterSnippet.MultiViewHolder(view);
+    public MultiViewHolderSnippet onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(application).inflate(R.layout.snippet_multible_view, parent, false);
+            return new MultiViewHolderSnippet(view);
             }
 
 
         @Override
-    public void onBindViewHolder(MultiAdapterSnippet.MultiViewHolder holder, int position) {
+    public void onBindViewHolder(MultiViewHolderSnippet holder, int position) {
             Snippet snippet = snippets.get(position);
-            holder.textTitel.setText(snippet.getTitel());
+            holder.textView.setText(snippet.getTitel());
+            SelectableSnippets selectableItem = mValues.get(position);
+
+            TypedValue value = new TypedValue();
+            holder.textView.getContext().getTheme().resolveAttribute(android.R.attr.listChoiceIndicatorMultiple, value, true);
+            int checkMarkDrawableResId = value.resourceId;
+            holder.textView.setCheckMarkDrawable(checkMarkDrawableResId);
+            holder.mItem = selectableItem;
+            holder.setChecked(holder.mItem.isSelected());
             }
 
     @Override
@@ -50,40 +63,20 @@ public class MultiAdapterSnippet extends RecyclerView.Adapter<MultiAdapterSnippe
 
     public void setSnippets(List<Snippet> snippets) {
             this.snippets = snippets;
+        mValues = new ArrayList<>();
+        for (Snippet snippet: snippets) {
+            mValues.add(new SelectableSnippets(snippet, false));
+        }
             notifyDataSetChanged();
             }
+    public List<Snippet> getSelectedItems() {
 
-class MultiViewHolder extends RecyclerView.ViewHolder {
-    TextView textTitel;
-    CardView cardView;
-
-    MultiViewHolder(View itemView) {
-        super(itemView);
-        textTitel = itemView.findViewById(R.id.snippet_view_titel);
-        cardView = itemView.findViewById(R.id.conCard);
-    }
-
-    void bind(final Snippet snippet) {
-
-
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                snippet.setChecked(!snippet.isChecked());
-                cardView.setBackgroundColor(snippet.isChecked() ? Color.WHITE : Color.BLUE);
-            }
-        });
-    }
-}
-    public List<Snippet> Selected(){
-        List<Snippet> selected =new ArrayList<Snippet>();
-
-        for(Snippet snippet : snippets){
-            if(snippet.isChecked()){
-                selected.add(snippet);
+        List<Snippet> selectedItems = new ArrayList<>();
+        for (SelectableSnippets selectableSnippet : mValues) {
+            if (selectableSnippet.isSelected()) {
+                selectedItems.add(selectableSnippet);
             }
         }
-
-        return selected;
+        return selectedItems;
     }
 }

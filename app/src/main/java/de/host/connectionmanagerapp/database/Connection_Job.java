@@ -2,6 +2,7 @@
 package de.host.connectionmanagerapp.database;
 
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
@@ -24,7 +25,10 @@ import static androidx.room.ForeignKey.CASCADE;
         })
 public class Connection_Job {
 
+    @ColumnInfo(name="job_Id")
     private  final long job_Id;
+
+    @ColumnInfo(name="connection_Id")
     private  final long connection_Id;
 
 

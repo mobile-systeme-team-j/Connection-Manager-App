@@ -28,6 +28,10 @@ public class Snippet {
     @Ignore
     private boolean checked = false;
 
+    public Snippet(String titel) {
+        titel = this.titel;
+    }
+
     public long getSnippet_id() {
         return snippet_id;
     }

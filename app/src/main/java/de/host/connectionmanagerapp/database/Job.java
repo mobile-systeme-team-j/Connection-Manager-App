@@ -24,7 +24,6 @@ public class Job {
     @ColumnInfo(name = "job_time")
     private Date jobtime;
 
-
     @ColumnInfo(name = "job_date")
     private Date job_date;
 
