@@ -4,6 +4,7 @@ package de.host.connectionmanagerapp.database;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 
@@ -24,6 +25,8 @@ public class Snippet {
     private String Text;
 
 
+    @Ignore
+    private boolean checked = false;
 
     public long getSnippet_id() {
         return snippet_id;
@@ -49,5 +52,13 @@ public class Snippet {
 
     public void setText(@NonNull String text) {
         Text = text;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        checked = checked;
     }
 }

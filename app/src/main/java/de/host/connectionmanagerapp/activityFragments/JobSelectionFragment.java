@@ -12,10 +12,14 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import de.host.connectionmanagerapp.R;
+import de.host.connectionmanagerapp.adapter.MultiAdapterConnection;
 import de.host.connectionmanagerapp.database.Job;
 import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
 
@@ -28,50 +32,24 @@ public class JobSelectionFragment extends Fragment {
     List<Job> jobList;
     ListView jobListView;
     Button select;
+    RecyclerView recyclerView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_connection_selection, container, false);
+        recyclerView = view.findViewById(R.id.job_sel_recycler_view);
+/*
+        final JobAdapterSelection adapter = new JobAdapterSelection(getActivity());
 
-        jobList = view.findViewById(R.id.jobList);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
-        arguments = getArguments();
-        if(arguments != null){
-            id = arguments.getLong("id");
-            //jobList = connectionViewModel.getListJobs();
-        }
-
-        // android-coding.blogspot.com/2011/09/listview-with-multiple-choice.html
-        if( jobList != null) {
-            ArrayAdapter<Job> adapter = new ArrayAdapter<Job>(getContext(), android.R.layout.simple_list_item_single_choice, jobList);
-
-            jobListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-            jobListView.setAdapter(adapter);
-
-            select.setOnClickListener(v -> {
-                String selected = "";
-                int cntChoice = jobListView.getCount();
-
-                SparseBooleanArray sparseBooleanArray = jobListView.getCheckedItemPositions();
-
-                for (int i = 0; i < cntChoice; i++) {
-
-                    if (sparseBooleanArray.get(i)) {
-
-                        selected += jobListView.getItemAtPosition(i).toString() + "\n";
-                    }
-                }
-
-                Toast.makeText(getContext(), selected, Toast.LENGTH_LONG).show();
-
-            });
-        }else{
-            Toast.makeText(getContext(),"No Jobs found", Toast.LENGTH_SHORT);
-        }
-
+        connectionViewModel = ViewModelProviders.of(getActivity()).get(ConnectionViewModel.class);
+        connectionViewModel.getAllJobs().observe(this, jobs ->
+                adapter.setJobs(jobs));
+    */
         return view;
     }
 }

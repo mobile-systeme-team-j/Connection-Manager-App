@@ -47,14 +47,8 @@ public class IdentitySelectionFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         connectionViewModel= ViewModelProviders.of(getActivity()).get(ConnectionViewModel.class);
-        connectionViewModel.getAllIdenties().observe(this, new Observer<List<Identity>>()
-        {
-            @Override
-            public void onChanged(@Nullable final List<Identity> identities) {
-                adapter.setIdentities(identities);
-            }
-        });
-
+        connectionViewModel.getAllIdenties().observe(this, identities ->
+                adapter.setIdentities(identities));
 
         return view;
     }

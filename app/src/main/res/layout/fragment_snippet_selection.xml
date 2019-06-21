@@ -3,10 +3,12 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ListView
-        android:id="@+id/snippetList"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/sni_sel_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="471dp" />
+        android:layout_height="476dp"
+        android:layout_gravity="center"
+        android:scrollbars="vertical" />
 
     <Button
         android:id="@+id/select"
