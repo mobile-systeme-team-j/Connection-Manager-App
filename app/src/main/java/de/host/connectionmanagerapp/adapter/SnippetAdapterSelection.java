@@ -14,31 +14,31 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import de.host.connectionmanagerapp.R;
-import de.host.connectionmanagerapp.database.Connection;
-import de.host.connectionmanagerapp.helper.Connection_id_holder;
+import de.host.connectionmanagerapp.database.Snippet;
+import de.host.connectionmanagerapp.helper.Snippet_id_holder;
 
-public class ConnectionAdapterSelection extends RecyclerView.Adapter<ConnectionAdapterSelection.ConnectionViewHolder> {
+public class SnippetAdapterSelection extends RecyclerView.Adapter<SnippetAdapterSelection.SnippetViewHolder> {
 
-    private List<Connection> connections;
+    private List<Snippet> snippets;
     private Context application;
     private final LayoutInflater mInflater;
 
-    public ConnectionAdapterSelection(Context application){
+    public SnippetAdapterSelection(Context application){
 
         mInflater = LayoutInflater.from(application);
     }
 
     @NonNull
     @Override
-    public ConnectionAdapterSelection.ConnectionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SnippetAdapterSelection.SnippetViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate(R.layout.identity_view, parent, false);
-        return new ConnectionAdapterSelection.ConnectionViewHolder(itemView);
+        return new SnippetAdapterSelection.SnippetViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ConnectionAdapterSelection.ConnectionViewHolder holder, int position) {
-        if (connections != null) {
-            Connection current = connections.get(position);
+    public void onBindViewHolder(@NonNull SnippetAdapterSelection.SnippetViewHolder holder, int position) {
+        if (snippets != null) {
+            Snippet current = snippets.get(position);
             holder.textTitel.setText(current.getTitel());
         } else {
             // Covers the case of data not being ready yet.
@@ -48,34 +48,34 @@ public class ConnectionAdapterSelection extends RecyclerView.Adapter<ConnectionA
 
     @Override
     public int getItemCount() {
-        if (connections != null) {
-            return connections.size();
+        if (snippets != null) {
+            return snippets.size();
         }
         return 0;
     }
-    public void setConnections(List<Connection> connections){
-        this.connections = connections;
+    public void setSnippets(List<Snippet> snippets){
+        this.snippets = snippets;
         notifyDataSetChanged();
     }
 
-    public class ConnectionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class SnippetViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView textTitel;
 
-        public ConnectionViewHolder(View itemView) {
+        public SnippetViewHolder(View itemView) {
             super(itemView);
             textTitel = itemView.findViewById(R.id.identity_view_titel);
             itemView.setOnClickListener(this);
         }
         @Override
         public void onClick (View v){
-            Connection connection = connections.get(getAdapterPosition());
-            String titel = connection.getTitel();
+            Snippet snippet = snippets.get(getAdapterPosition());
+            String titel = snippet.getTitel();
 
-            Connection_id_holder holder = new Connection_id_holder();
-            holder.con_Titel = titel;
+            Snippet_id_holder holder = new Snippet_id_holder();
+            holder.snippet_Titel = titel;
 
-            Toast.makeText(itemView.getContext(),"Selected: " + connection.getTitel(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(itemView.getContext(),"Selected: " + snippet.getTitel(),Toast.LENGTH_SHORT).show();
 
             AppCompatActivity activity = (AppCompatActivity) v.getContext();
             activity.getSupportFragmentManager().popBackStack();
@@ -83,3 +83,4 @@ public class ConnectionAdapterSelection extends RecyclerView.Adapter<ConnectionA
         }
     }
 }
+

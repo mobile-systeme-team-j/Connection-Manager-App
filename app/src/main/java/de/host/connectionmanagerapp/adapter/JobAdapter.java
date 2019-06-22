@@ -1,18 +1,22 @@
 package de.host.connectionmanagerapp.adapter;
 
 import android.app.Application;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import de.host.connectionmanagerapp.R;
+import de.host.connectionmanagerapp.activityFragments.JobDetailFragment;
 import de.host.connectionmanagerapp.database.Job;
 
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder> {
@@ -67,6 +71,15 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder> {
         @Override
         public void onClick(View v) {
             Job job = jobs.get(getAdapterPosition());
+            long id = job.getJob_id();
+            Fragment fram = new JobDetailFragment();
+            Bundle bundle = new Bundle();
+            bundle.putLong("id", id);
+            fram.setArguments(bundle);
+
+
+            AppCompatActivity activity = (AppCompatActivity) v.getContext();
+            activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fram).addToBackStack(null).commit();
         }
     }
 

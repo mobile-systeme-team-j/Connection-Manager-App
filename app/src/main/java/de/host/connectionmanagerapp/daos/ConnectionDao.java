@@ -29,6 +29,9 @@ public interface ConnectionDao {
     @Query("Select*from connection Where connection_Id = :id")
     Flowable<Connection> connectionfromid(long id);
 
+    @Query("Select*from connection Where titel = :titel")
+    Flowable<Connection> connectionfromtitel(String titel);
+
     @Query("Select*from connection Order by timestamp DESC Limit 5")
     LiveData<List<Connection>> getRecentConnection();
 

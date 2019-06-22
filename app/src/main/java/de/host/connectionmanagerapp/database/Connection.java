@@ -15,7 +15,8 @@ import static androidx.room.ForeignKey.SET_DEFAULT;
 import static androidx.room.ForeignKey.SET_NULL;
 
 @Entity(tableName = "connection"
-        ,indices = {@Index(value={"identity_titel"})},
+        ,indices = {@Index(value={"identity_titel"}),
+        @Index(value={"titel"}, unique = true)},
         foreignKeys = @ForeignKey(entity = Identity.class,
                 parentColumns = "titel",
                 childColumns = "identity_titel",

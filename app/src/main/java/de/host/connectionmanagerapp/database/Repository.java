@@ -3,7 +3,6 @@
 package de.host.connectionmanagerapp.database;
 
 import android.app.Application;
-import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 
@@ -17,7 +16,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import de.host.connectionmanagerapp.daos.ConnectionDao;
-import de.host.connectionmanagerapp.daos.Connection_JobDao;
 import de.host.connectionmanagerapp.daos.IdentityDao;
 import de.host.connectionmanagerapp.daos.JobDao;
 import de.host.connectionmanagerapp.daos.SnippetDao;
@@ -30,7 +28,6 @@ public class Repository {
     private ConnectionDao connectionDao;
     private JobDao jobDao;
     private SnippetDao snippetDao;
-    private Connection_JobDao cjDao;
     private Snippet_JobDao sjDao;
     private Application application;
 
@@ -41,7 +38,6 @@ public class Repository {
         connectionDao = db.connectionDao();
         jobDao = db.jobDao();
         snippetDao= db.snippetDao();
-        cjDao = db.cjDao();
         sjDao = db.sjDao();
 
     }
@@ -101,30 +97,38 @@ public class Repository {
 
 
     //Fertige connection übergeben es erfolgt eine überprüfung mehr, auch die identity id muss gesetzt werden
-    public void connection_insert(Connection connection) {
-        Executor exe = Executors.newSingleThreadExecutor();
-        exe.execute(() -> {
-            connectionDao.insert(connection);
+    public void connection_insert(Connection connection)throws Exception {
+        ExecutorService exe = Executors.newSingleThreadExecutor();
+        Future future = exe.submit(new Callable<Void>() {
+            @Override
+            public Void call() throws Exception {
+                connectionDao.insert(connection);
+                return null;
+            }
+
         });
+        future.get();
     }
 
-    public void job_insert(Job job, long snippetId, long connectionId ){
+    public void job_insert(Job job){
         Executor exe = Executors.newSingleThreadExecutor();
         exe.execute(() -> {
          long id = jobDao.insert(job);
-        Connection_Job cj = new Connection_Job(id, connectionId);
-        cjDao.insert(cj);
-
-        Snippet_Job sj = new Snippet_Job(snippetId, id);
-        sjDao.insert(sj);
         });
     }
     //Fertiges snippet übergeben es erfolgt eine überprüfung mehr, auch die identity id muss gesetzt werden
-    public void snippet_insert(Snippet snippet) {
-        Executor exe = Executors.newSingleThreadExecutor();
-        exe.execute(() -> {
-            snippetDao.insert(snippet);
+    public void snippet_insert(Snippet snippet)throws Exception{
+
+        ExecutorService exe = Executors.newSingleThreadExecutor();
+        Future future = exe.submit(new Callable<Void>() {
+            @Override
+            public Void call() throws Exception {
+                snippetDao.insert(snippet);
+                return null;
+            }
+
         });
+        future.get();
     }
 
 
@@ -135,17 +139,28 @@ public class Repository {
         return  identity1;
 
     }
+
+
     public Identity getIdentityFromTitel(String titel){
         return identityDao.identityformtitel(titel).blockingFirst();
     }
+
     public Connection getConnection(long id){
 
         Flowable<Connection>connectionFlowable = connectionDao.connectionfromid(id);
         return connectionFlowable.blockingFirst();
     }
+    public Connection getConnectionFromTitel(String titel){
+        Flowable<Connection>connectionFlowable = connectionDao.connectionfromtitel(titel);
+        return connectionFlowable.blockingFirst();
+    }
     public Snippet getSnippet(long id){
 
         Flowable<Snippet> snippetFlowable = snippetDao.snippetfromid(id);
+        return snippetFlowable.blockingFirst();
+    }
+    public Snippet getSnippetfromTitel(String titel){
+        Flowable<Snippet> snippetFlowable = snippetDao.snippetfromtitel(titel);
         return snippetFlowable.blockingFirst();
     }
     public Job getJob(long id){

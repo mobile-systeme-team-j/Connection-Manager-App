@@ -18,9 +18,12 @@ import androidx.lifecycle.ViewModelProviders;
 import java.util.Calendar;
 import java.util.List;
 
+import de.host.connectionmanagerapp.helper.Connection_id_holder;
 import de.host.connectionmanagerapp.helper.DatePickerFragment;
 import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
+import de.host.connectionmanagerapp.helper.HideKeyboard;
+import de.host.connectionmanagerapp.helper.Snippet_id_holder;
 import de.host.connectionmanagerapp.helper.TimePickerFragment;
 import de.host.connectionmanagerapp.alarm.AlarmRepository;
 import de.host.connectionmanagerapp.database.Connection;
@@ -117,7 +120,7 @@ public class JobDetailFragment extends Fragment
             case R.id.fabSave:
                 if( arguments != null){
                     try{
-                        connectionViewModel.updateJob(Job());
+                        //connectionViewModel.updateJob(job());
                         // Create AlarmManager, was als Parameter ? Job selbst ? Dann Connection ziehen ?
                         createAlarm();
                     }catch (Exception e){
@@ -125,19 +128,29 @@ public class JobDetailFragment extends Fragment
                     }
                 }else{
                     try{
-                        job = new Job();
-                       // connectionViewModel.insertJob(Job());
-                       // Create AlarmManager
-                        createAlarm();
-                        Toast.makeText(getContext(),"Identity saved", Toast.LENGTH_SHORT).show();
+                        String snp = Snippet_id_holder.snippet_Titel;
+                        String con = Connection_id_holder.con_Titel;
+                        if(con != null && snp != null) {
+                            Snippet_id_holder.snippet_Titel = null;
+                            Connection_id_holder.con_Titel = null;
+
+                            job = new Job();
+                            connectionViewModel.insertJob(job(snp,con));
+                            Toast.makeText(getContext(),"Identity saved", Toast.LENGTH_SHORT).show();
+                            getActivity().getSupportFragmentManager().popBackStack();
+                            HideKeyboard.hideKeyboard(getContext());
+
+                        }
+                        //createAlarm();
+                        Toast.makeText(getContext(),"Job saved", Toast.LENGTH_SHORT).show();
                     }catch (Exception e){
-                        Toast.makeText(getContext(),"",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),"error",Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;
             case R.id.fabDelete:
                 if( arguments != null){
-                    connectionViewModel.updateJob(Job());
+                    //connectionViewModel.delet(Job());
                     Toast.makeText(getContext(),"Job deleted",Toast.LENGTH_SHORT).show();
 
                 }
@@ -145,8 +158,10 @@ public class JobDetailFragment extends Fragment
         }
     }
 
-    public Job Job(){
+    public Job job(String snp, String con){
         job.setTitel(editTextJobName.getText().toString());
+        job.setConnection_titel(con);
+        job.setSnippet_titel(snp);
         return job;
     }
 

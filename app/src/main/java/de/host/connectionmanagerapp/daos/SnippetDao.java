@@ -26,6 +26,9 @@ public interface SnippetDao {
     @Query("SELECT * from snippet where snippet_id=:id")
     Flowable<Snippet> snippetfromid(long id);
 
+    @Query("SELECT * from snippet where titel=:titel")
+    Flowable<Snippet> snippetfromtitel(String titel);
+
     @Query("Select * from snippet")
     LiveData<List<Snippet>> getAllSnippets();
 

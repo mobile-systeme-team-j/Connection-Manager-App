@@ -5,11 +5,13 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 
 
-@Entity(tableName = "snippet")
+@Entity(tableName = "snippet",
+        indices = {@Index(value = {"titel"}, unique = true)})
 public class Snippet {
 
     @PrimaryKey(autoGenerate = true)
@@ -25,11 +27,8 @@ public class Snippet {
     private String Text;
 
 
-    @Ignore
-    private boolean checked = false;
-
     public Snippet(String titel) {
-        titel = this.titel;
+        this.titel = titel;
     }
 
     public long getSnippet_id() {
@@ -56,13 +55,5 @@ public class Snippet {
 
     public void setText(@NonNull String text) {
         Text = text;
-    }
-
-    public boolean isChecked() {
-        return checked;
-    }
-
-    public void setChecked(boolean checked) {
-        checked = checked;
     }
 }

@@ -37,18 +37,20 @@ public class ConnectionViewModel extends AndroidViewModel {
         repo.identity_insert(identity);
     }
     public long insertIdentityid(Identity identity){return repo.identity_insertid(identity);}
-    public  void insertConnection(Connection connection){
+    public  void insertConnection(Connection connection)throws Exception{
         repo.connection_insert(connection);
     }
     public long insertConnectionId(Connection connection){ return repo.connection_insertId(connection); }
-    public void insertSnippet(Snippet snippet){
+    public void insertSnippet(Snippet snippet)throws Exception{
         repo.snippet_insert(snippet);
     }
+    public void insertJob(Job job){repo.job_insert(job);}
 
-    //getOnId
+    //getOnId/titel
     public Connection getConnection(long id){
         return(repo.getConnection(id));
     }
+    public Connection getConnectionFromTitel(String titel){ return(repo.getConnectionFromTitel(titel)); }
     public Identity getIdentity(long id){
         return(repo.getIdentity(id));
     }
@@ -56,8 +58,9 @@ public class ConnectionViewModel extends AndroidViewModel {
     public Job getJobs(long id){
         return(repo.getJob(id));
     }
-    public Snippet getSnippets(long id){
-        return(repo.getSnippet(id));
+    public Snippet getSnippets(long id){ return(repo.getSnippet(id)); }
+    public Snippet getSnippetsFromTitel(String titel){
+        return(repo.getSnippetfromTitel(titel));
     }
     //update
     public void updateIdentity(Identity identity){

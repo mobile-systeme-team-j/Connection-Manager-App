@@ -97,12 +97,17 @@ public class SnippetDetailFragment extends Fragment implements View.OnClickListe
 
 
                     snippet = new Snippet(String.valueOf(editTextSnippetContent.getText()));
-                    connectionViewModel.insertSnippet(setSnippet());
+                    try {
+                        connectionViewModel.insertSnippet(setSnippet());
 
-                    Toast.makeText(getContext(),"Snippet saved", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Snippet saved", Toast.LENGTH_SHORT).show();
                         //Toast.makeText(getContext(),e.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
-                    getActivity().getSupportFragmentManager().popBackStack();
-                    HideKeyboard.hideKeyboard(getContext());
+                        getActivity().getSupportFragmentManager().popBackStack();
+                        HideKeyboard.hideKeyboard(getContext());
+                    }
+                    catch (Exception e){
+                        Toast.makeText(getContext(),"titel need to be unique", Toast.LENGTH_SHORT).show();
+                    }
                 }
 
                 break;
