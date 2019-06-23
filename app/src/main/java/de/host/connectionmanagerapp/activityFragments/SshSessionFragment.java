@@ -61,11 +61,12 @@ public class SshSessionFragment extends Fragment {
     private ImageButton send;
     private ByteArrayOutputStream baos;
     private PrintStream ps;
-    private boolean firstConn, toBeDeleted;
+    private boolean firstConn, calledFromRemoteFragment;
     private Future future;
     private ConnectionViewModel connectionViewModel;
-    Connection connection;
-    private OnFragmentInteractionListener mListener;
+    private Connection connection;
+    private String host, user, password, keyPath, keyPassword;
+    private int port;
 
     public SshSessionFragment() {
         // Required empty public constructor
@@ -73,11 +74,26 @@ public class SshSessionFragment extends Fragment {
 
 
     // Konstruktor mit connection_ID Parameter für Verbindungsaufbau
-    public static SshSessionFragment newInstance(long connection_ID, boolean toBeDeleted) {
+    public static SshSessionFragment newInstance(long connection_ID, boolean calledFromRemoteFragment) {
         SshSessionFragment fragment = new SshSessionFragment();
         Bundle args = new Bundle();
         args.putLong("connection_ID", connection_ID);
-        args.putBoolean("toBeDeleted", toBeDeleted);
+        args.putBoolean("remote", calledFromRemoteFragment);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static SshSessionFragment newInstance(String host, String user, int port,
+                                                 String password, String keyPath, String keyPassword, boolean calledFromRemoteFragment) {
+        SshSessionFragment fragment = new SshSessionFragment();
+        Bundle args = new Bundle();
+        args.putString("host", host);
+        args.putString("user", user);
+        args.putInt("port", port);
+        args.putString("password", password);
+        args.putString("keyPath", keyPath);
+        args.putString("keyPassword", keyPassword);
+        args.putBoolean("remote", calledFromRemoteFragment);
         fragment.setArguments(args);
         return fragment;
     }
@@ -86,8 +102,18 @@ public class SshSessionFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            connection_ID = getArguments().getLong("connection_ID");
-            toBeDeleted = getArguments().getBoolean("toBeDeleted");
+            if (getArguments().size() < 3) {
+                connection_ID = getArguments().getLong("connection_ID");
+                calledFromRemoteFragment = getArguments().getBoolean("remote");
+            } else {
+                host = getArguments().getString("host");
+                user = getArguments().getString("user");
+                port = getArguments().getInt("port");
+                password = getArguments().getString("password");
+                keyPath = getArguments().getString("keyPath");
+                keyPassword = getArguments().getString("keyPassword");
+                calledFromRemoteFragment = getArguments().getBoolean("remote");
+            }
         }
 
         // Non-Ui Variablen initialisieren
@@ -118,7 +144,11 @@ public class SshSessionFragment extends Fragment {
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         // Baue Verbindung zu Server auf
-        future = connectToServer(connection_ID);
+        if (calledFromRemoteFragment) {
+            future = connectToServer();
+        }else{
+            future = connectToServer(connection_ID);
+        }
 
         send.setOnClickListener((v) -> {
             // Wenn ET nicht empty, schicke Befehl an AsyncTask
@@ -159,25 +189,6 @@ public class SshSessionFragment extends Fragment {
         return  view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-    /*
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }*/
-
-
     @Override
     public void onStop() {
         super.onStop();
@@ -196,18 +207,6 @@ public class SshSessionFragment extends Fragment {
 
         });
         thread.start();
-
-        // Wenn toBeDeleted gesetzt, dann Connection und Identity aus DB löschen
-        if (toBeDeleted) {
-            connectionViewModel.deleteConnection(connection_ID);
-            connectionViewModel.deleteIdentity(identityID);
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
     }
 
     /**
@@ -265,6 +264,53 @@ public class SshSessionFragment extends Fragment {
                 }
                 if (!TextUtils.isEmpty(keyPass)) {
                     config = config.useKeyPass(keyPass);
+                }
+                if (!TextUtils.isEmpty(password)) {
+                    config = config.usePassword(password);
+                }
+
+                config = config.useHostKey(false);
+
+                SshConn conn = new SshConn(config, new SSHClient());
+                try {
+                    conn.openConnection();
+                } catch (Exception e) {
+                    Log.e(TAG, e.getMessage());
+                    createToast(e.getMessage());
+                }
+                return conn;
+            }
+        });
+        return future;
+    }
+
+    private Future connectToServer() {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<SshConn> future = executorService.submit(new Callable<SshConn>() {
+            @Override
+            public SshConn call() {
+
+                // Setup Connection
+                SshConfig config;
+                if (port != 0) {
+                    config = new SshConfig(host, port, user);
+                } else {
+                    config = new SshConfig(host, user);
+                }
+
+                if (!TextUtils.isEmpty(keyPath)) {
+                    // Request READ_EXTERNAL_STORAGE Permission if not already set
+                    int permissionCheck = ActivityCompat.checkSelfPermission(getContext(),
+                            Manifest.permission.READ_EXTERNAL_STORAGE);
+                    if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+                        // Permission granted
+                    } else {
+                        requestPermissions(new String []{Manifest.permission.READ_EXTERNAL_STORAGE},99);
+                    }
+                    config = config.useKey(keyPath);
+                }
+                if (!TextUtils.isEmpty(keyPassword)) {
+                    config = config.useKeyPass(keyPassword);
                 }
                 if (!TextUtils.isEmpty(password)) {
                     config = config.usePassword(password);

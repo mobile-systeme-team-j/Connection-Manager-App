@@ -51,7 +51,7 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
 
         delete = view.findViewById(R.id.fabDelete);
         save = view.findViewById(R.id.fabSave);
-        connect = view.findViewById(R.id.fabConnectRemoteSSH);
+        connect = view.findViewById(R.id.fabConnect);
         delete.setOnClickListener(this);
         save.setOnClickListener(this);
         connect.setOnClickListener(this);
@@ -88,7 +88,7 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
                 }
 
                 break;
-            case R.id.fabConnectRemoteSSH:
+            case R.id.fabConnect:
                 // CallSShSessionFragment
                 if (id != 0) {
                     ((MainActivity)getActivity()).replaceFragment(SshSessionFragment.newInstance(id, false));

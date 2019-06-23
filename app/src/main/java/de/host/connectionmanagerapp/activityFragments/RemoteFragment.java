@@ -1,5 +1,6 @@
 package de.host.connectionmanagerapp.activityFragments;
 
+import android.app.AppComponentFactory;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -29,14 +31,11 @@ import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
 import static android.app.Activity.RESULT_OK;
 
 public class RemoteFragment extends Fragment implements View.OnClickListener{
-    private String ip, port,user,password,key, keyPassword, keyPath, keyFileName;
-    private long connID;
+    private String ip,user,password,key, keyPassword, keyPath, keyFileName;
+    private int port;
     private EditText tv_ip,tv_port,tv_user,tv_UserPassword, tv_keyPassword;
     private Button tv_key;
-    private ConnectionViewModel connectionViewModel;
-    private Connection connection;
-    private Identity identity;
-    private FloatingActionButton send;
+    FloatingActionButton send;
 
     @Nullable
     @Override
@@ -44,17 +43,14 @@ public class RemoteFragment extends Fragment implements View.OnClickListener{
                              @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_remote, container, false);
-        connectionViewModel= ViewModelProviders.of(getActivity()).get(ConnectionViewModel.class);
-        send = view.findViewById(R.id.fabConnectRemoteSSH);
-
+        send = view.findViewById(R.id.fabConnectRemote);
         tv_key = view.findViewById(R.id.wizard_KeyPath);
-        tv_key.setOnClickListener(this);
         tv_ip = view.findViewById(R.id.wizard_IP);
         tv_port = view.findViewById(R.id.wizard_Port);
         tv_user = view.findViewById(R.id.wizard_Username);
         tv_UserPassword = view.findViewById(R.id.wizard_UserPass);
         tv_keyPassword = view.findViewById(R.id.wizard_KeyPass);
-
+        tv_key.setOnClickListener(this);
         send.setOnClickListener(this);
 
         return view;
@@ -63,10 +59,12 @@ public class RemoteFragment extends Fragment implements View.OnClickListener{
 
     public void onClick(View view){
         switch(view.getId()){
-            case R.id.fabConnectRemoteSSH:
-                if (setConnection()){
-                    ((MainActivity)getActivity()).replaceFragment(SshSessionFragment.newInstance(connID, true));
-                    HideKeyboard.hideKeyboard(getContext());
+            case R.id.fabConnectRemote:
+                if (!areFieldsEmpty()){
+                    AppCompatActivity appCompatActivity = (AppCompatActivity) getContext();
+                    //appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, SshSessionFragment.newInstance(ip,user,port,password,keyPath,keyPassword, true)).addToBackStack(null).commit();
+                    ((MainActivity)getActivity()).replaceFragment(SshSessionFragment.newInstance(ip,user,port,password,keyPath,keyPassword, true));
+                    //HideKeyboard.hideKeyboard(getContext());
                 }
                 break;
             case R.id.wizard_KeyPath:
@@ -85,7 +83,7 @@ public class RemoteFragment extends Fragment implements View.OnClickListener{
                 !TextUtils.isEmpty(tv_port.getText().toString()) &&
                 !TextUtils.isEmpty(tv_user.getText().toString())) {
             ip = tv_ip.getText().toString();
-            port = tv_port.getText().toString();
+            port = Integer.parseInt(tv_port.getText().toString());
             user = tv_user.getText().toString();
             // Wenn KeyPass gesetzt, setze
             if (!TextUtils.isEmpty(tv_keyPassword.getText().toString())) {
@@ -122,33 +120,6 @@ public class RemoteFragment extends Fragment implements View.OnClickListener{
             keyFileName = UriHelper.getFileName(selectedFile, getContext());
             keyPath = FileUtils.getPath(getContext(), selectedFile);
             tv_key.setText(keyFileName);
-        }
-    }
-
-    private boolean setConnection() {
-        if (!areFieldsEmpty()) {
-            connection = new Connection();
-            identity = new Identity();
-            connection.setTitel("");
-            identity.setTitel("TEMP");
-            connection.setHostip(ip);
-            connection.setPort(Integer.parseInt(port));
-            identity.setPassword(password);
-            identity.setUsername(user);
-            identity.setKeypassword(keyPassword);
-            identity.setKeypath(keyPath);
-            // Wenn Identity schon inserted, muss diese geupdatet werden, einfach beides ausführen,
-            // weil insert dann schon fehlt schlägt ?
-            // Erst löschen, dann neu anlegen
-            long id = connectionViewModel.insertIdentityid(identity);
-            connectionViewModel.deleteIdentity(id);
-            connectionViewModel.insertIdentityid(identity);
-            connection.setIdentity_Id("TEMP");
-            connID = connectionViewModel.insertConnectionId(connection);
-
-            return true;
-        } else {
-            return false;
         }
     }
 }

@@ -31,7 +31,7 @@ public class WizardFragment extends Fragment implements View.OnClickListener {
 
         View view = inflater.inflate(R.layout. fragment_wizard, container, false);
 
-        FloatingActionButton send = view.findViewById(R.id.fabConnectRemoteSSH);
+        FloatingActionButton send = view.findViewById(R.id.fabConnectWizard);
         btnConnection = view.findViewById(R.id.btnConnection);
         btnSnippet = view.findViewById(R.id.btnSnippet);
 

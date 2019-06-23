@@ -51,7 +51,7 @@
         android:inputType="textPassword" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabConnectRemoteSSH"
+        android:id="@+id/fabConnectRemote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
