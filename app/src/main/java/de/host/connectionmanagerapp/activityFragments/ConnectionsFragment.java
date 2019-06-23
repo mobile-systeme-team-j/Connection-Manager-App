@@ -19,10 +19,6 @@ import de.host.connectionmanagerapp.adapter.ConnectionAdapter;
 import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
 
 
-/**
- * @author Manuel Trapp
- * @date 14.05.2019
- * */
 
 public class ConnectionsFragment extends Fragment implements View.OnClickListener{
 

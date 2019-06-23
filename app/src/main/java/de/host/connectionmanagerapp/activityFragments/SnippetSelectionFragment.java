@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -12,21 +11,14 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
-
 import de.host.connectionmanagerapp.R;
-import de.host.connectionmanagerapp.adapter.SnippetAdapter;
 import de.host.connectionmanagerapp.adapter.SnippetAdapterSelection;
-import de.host.connectionmanagerapp.database.Snippet;
-import de.host.connectionmanagerapp.helper.Snippet_id_holder;
 import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
 
 public class SnippetSelectionFragment extends Fragment{
 
-    long[] ids;
     ConnectionViewModel connectionViewModel;
     RecyclerView recyclerView;
-    Button select;
 
 
     @Nullable

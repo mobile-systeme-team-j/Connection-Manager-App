@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -17,25 +16,18 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import java.util.Calendar;
-import java.util.List;
 
-import de.host.connectionmanagerapp.helper.Connection_id_holder;
-import de.host.connectionmanagerapp.helper.DatePickerFragment;
 import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
+import de.host.connectionmanagerapp.alarm.AlarmRepository;
+import de.host.connectionmanagerapp.database.Job;
+import de.host.connectionmanagerapp.helper.Connection_id_holder;
+import de.host.connectionmanagerapp.helper.DatePickerFragment;
 import de.host.connectionmanagerapp.helper.HideKeyboard;
 import de.host.connectionmanagerapp.helper.Snippet_id_holder;
 import de.host.connectionmanagerapp.helper.TimePickerFragment;
-import de.host.connectionmanagerapp.alarm.AlarmRepository;
-import de.host.connectionmanagerapp.database.Connection;
-import de.host.connectionmanagerapp.database.Identity;
-import de.host.connectionmanagerapp.database.Job;
-import de.host.connectionmanagerapp.database.Snippet;
 import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
 
-/**
- * @author  Jürgen Manuel Trapp
- */
 
 public class JobDetailFragment extends Fragment
         implements View.OnClickListener,
@@ -54,10 +46,6 @@ public class JobDetailFragment extends Fragment
     private String selectedTime;
     long id;
     private ConnectionViewModel connectionViewModel;
-    Spinner spinnerConnection,spinnerIdentity, spinnerSnippet;
-    List<Connection> connectionList;
-    List<Identity> identityList;
-    List<Snippet> snippetList;
     Calendar timeCalender;
     Calendar dateCalendar;
 

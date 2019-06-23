@@ -13,22 +13,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 
 import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
 import de.host.connectionmanagerapp.adapter.ConnectionAdapter;
 import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
 
-/**
- * @author Manuel Trapp
- * @date 14.05.2019
- * */
 
 public class HomeFragment extends Fragment implements View.OnClickListener{
 
     ListView lastConnections;
     RecyclerView recyclerView;
     ConnectionViewModel connectionViewModel;
+    NavigationView navigationView;
 
     @Nullable
     @Override

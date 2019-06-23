@@ -1,6 +1,5 @@
 package de.host.connectionmanagerapp.activityFragments;
 
-import android.app.AppComponentFactory;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,20 +12,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
-import de.host.connectionmanagerapp.database.Connection;
-import de.host.connectionmanagerapp.database.Identity;
 import de.host.connectionmanagerapp.helper.FileUtils;
-import de.host.connectionmanagerapp.helper.HideKeyboard;
 import de.host.connectionmanagerapp.helper.UriHelper;
-import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -60,6 +53,7 @@ public class RemoteFragment extends Fragment implements View.OnClickListener{
     public void onClick(View view){
         switch(view.getId()){
             case R.id.fabConnectRemote:
+                // starts SSH-Session
                 if (!areFieldsEmpty()){
                     //AppCompatActivity appCompatActivity = (AppCompatActivity) getContext();
                     //appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, SshSessionFragment.newInstance(ip,user,port,password,keyPath,keyPassword, true)).addToBackStack(null).commit();
@@ -70,6 +64,7 @@ public class RemoteFragment extends Fragment implements View.OnClickListener{
                 }
                 break;
             case R.id.wizard_KeyPath:
+                // opens File Manager to select Key-File
                 Intent intent = new Intent()
                         .setType("*/*")
                         .setAction(Intent.ACTION_GET_CONTENT);
@@ -81,6 +76,7 @@ public class RemoteFragment extends Fragment implements View.OnClickListener{
     }
 
     private boolean areFieldsEmpty(){
+        // checks fields for Information
         if(!TextUtils.isEmpty(tv_ip.getText().toString()) &&
                 !TextUtils.isEmpty(tv_port.getText().toString()) &&
                 !TextUtils.isEmpty(tv_user.getText().toString())) {
