@@ -95,11 +95,16 @@ public class AlarmRepository {
         SharedPreferences mPrefs = context.getSharedPreferences("AlarmRepository",MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = mPrefs.edit();
         String json = mPrefs.getString("alarmJobs", "");
-        return gson.fromJson(json, HashMap.class);
+        HashMap map = gson.fromJson(json, HashMap.class);
+        if (map == null) {
+            return alarmJobs;
+        } else {
+            return gson.fromJson(json, HashMap.class);
+        }
     }
 
     public static long getCalendarTime(int broadcastID){
-        long calTime = -1;
+        long calTime = -1L;
         Iterator it = alarmJobs.entrySet().iterator();
         while (it.hasNext()) {
             HashMap.Entry pair = (HashMap.Entry) it.next();

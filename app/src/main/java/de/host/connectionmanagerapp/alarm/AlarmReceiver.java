@@ -14,7 +14,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         // Auszuführende Aktionen, wenn Alarm empfangen wird
         // Verbindung zu SSH-Server aufbauen und Befehl senden, also Service starten
-        if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
+        //if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
             // Restart the Alarm here after reboot
             // Get called PendingIntent-ID
             int id = intent.getIntExtra("REQUESTCODE",-1);
@@ -22,9 +22,9 @@ public class AlarmReceiver extends BroadcastReceiver {
             Intent serviceIntent = new Intent(context, SshService.class);
             serviceIntent.putExtra("REQUESTCODE", id);
             context.startService(serviceIntent);
-        }else {
-            Toast.makeText(context.getApplicationContext(), "Alarm Manager just ran", Toast.LENGTH_LONG).show();
-        }
+      //  }else {
+          //  Toast.makeText(context.getApplicationContext(), "Alarm Manager just ran", Toast.LENGTH_LONG).show();
+       // }
 
     }
 }

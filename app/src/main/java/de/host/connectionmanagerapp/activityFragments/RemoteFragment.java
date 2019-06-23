@@ -61,9 +61,11 @@ public class RemoteFragment extends Fragment implements View.OnClickListener{
         switch(view.getId()){
             case R.id.fabConnectRemote:
                 if (!areFieldsEmpty()){
-                    AppCompatActivity appCompatActivity = (AppCompatActivity) getContext();
+                    //AppCompatActivity appCompatActivity = (AppCompatActivity) getContext();
                     //appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, SshSessionFragment.newInstance(ip,user,port,password,keyPath,keyPassword, true)).addToBackStack(null).commit();
                     ((MainActivity)getActivity()).replaceFragment(SshSessionFragment.newInstance(ip,user,port,password,keyPath,keyPassword, true));
+
+
                     //HideKeyboard.hideKeyboard(getContext());
                 }
                 break;

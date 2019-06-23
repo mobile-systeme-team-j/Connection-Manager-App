@@ -3,6 +3,7 @@ package de.host.connectionmanagerapp.activityFragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,7 +105,6 @@ public class JobDetailFragment extends Fragment
 
     @Override
     public  void onClick(View view){
-
         switch(view.getId()){
             case R.id.btnConnection:
                 ((MainActivity)getActivity()).replaceFragment(new ConnectionSelectionFragment());
@@ -119,6 +119,12 @@ public class JobDetailFragment extends Fragment
                 TimePicker();
                 break;
             case R.id.fabSave:
+                if (TextUtils.isEmpty(editTextJobName.getText().toString())
+                        || TextUtils.isEmpty(editTextDate.getText().toString())
+                        || TextUtils.isEmpty(editTextTime.getText().toString())) {
+                    Toast.makeText(getContext(), "Please add Jobname, Date & Time", Toast.LENGTH_LONG).show();
+                    break;
+                }
                 if( arguments != null){
                     try{
                         String snp = Snippet_id_holder.snippet_Titel;
@@ -129,7 +135,8 @@ public class JobDetailFragment extends Fragment
                         else{
                             connectionViewModel.updateJob(job());
                         }
-                        // Create AlarmManager, was als Parameter ? Job selbst ? Dann Connection ziehen ?
+                        //
+                        // te AlarmManager, was als Parameter ? Job selbst ? Dann Connection ziehen ?
                         createAlarm();
                     }catch (Exception e){
                         Toast.makeText(getContext(),"",Toast.LENGTH_SHORT);
@@ -186,7 +193,7 @@ public class JobDetailFragment extends Fragment
         if (timeCalender != null && dateCalendar != null) {
             c.set(Calendar.MINUTE, timeCalender.get(Calendar.MINUTE));
             c.set(Calendar.HOUR_OF_DAY, timeCalender.get(Calendar.HOUR_OF_DAY));
-            c.set(Calendar.YEAR, dateCalendar.get(Calendar.HOUR_OF_DAY));
+            c.set(Calendar.YEAR, dateCalendar.get(Calendar.YEAR));
             c.set(Calendar.MONTH, dateCalendar.get(Calendar.MONTH));
             c.set(Calendar.DAY_OF_MONTH, dateCalendar.get(Calendar.DAY_OF_MONTH));
         }else {
