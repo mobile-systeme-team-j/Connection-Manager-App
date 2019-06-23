@@ -1,14 +1,9 @@
 package de.host.connectionmanagerapp.activityFragments;
 
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.provider.OpenableColumns;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,15 +13,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.documentfile.provider.DocumentFile;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import net.sqlcipher.database.SQLiteConstraintException;
-
-import java.io.File;
 
 import de.host.connectionmanagerapp.R;
 import de.host.connectionmanagerapp.database.Identity;
@@ -75,6 +65,7 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
 
         arguments = getArguments();
         if(arguments !=null){
+            // load existing Identity
             id = arguments.getLong("id");
             identity = connectionViewModel.getIdentity(id);
             getIdentity(identity);
@@ -103,6 +94,7 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
 
         switch (view.getId()){
             case R.id.key:
+                // opens File Manager to select Key-file
                 Intent intent = new Intent()
                         .setType("*/*")
                         .setAction(Intent.ACTION_GET_CONTENT);

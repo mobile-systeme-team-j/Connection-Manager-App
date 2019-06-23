@@ -64,11 +64,13 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
 
         arguments = getArguments();
         if(arguments != null){
+            // load existing Connection
             id = arguments.getLong("con_id");
             connection = connectionViewModel.getConnection(id);
             getConnection();
         }
         else{
+            // create new Connection
             connection = new Connection();
             delete.hide();
         }
@@ -80,6 +82,7 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.fabDelete:
+                // deletes Connection & returns to ConnectionsFragment
                 try {
                     connectionViewModel.deleteConnection(id);
                     Toast.makeText(getContext(),"Connection deleted",Toast.LENGTH_SHORT).show();
@@ -102,6 +105,7 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
 
             case R.id.fabSave:
                 if(arguments != null){
+                    // updates Connection on existing Connection
                     try{
                         Identity_id_holder holder = new Identity_id_holder();
                         if(holder.id !=null){
@@ -117,7 +121,7 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
                     }
                 }
                 else{
-
+                    // saves new Connection
                         Identity_id_holder holder = new Identity_id_holder();
                         Log.e("DEBUG", "" + holder.id);
                         if(holder.id != null){
