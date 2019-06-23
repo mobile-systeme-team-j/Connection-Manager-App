@@ -55,7 +55,6 @@ public class SshSessionFragment extends Fragment {
     public static final String TAG = SshSessionFragment.class.getSimpleName();
 
     private long connection_ID;
-    private long identityID;
     private TextView terminal;
     private EditText command;
     private ImageButton send;
@@ -209,28 +208,12 @@ public class SshSessionFragment extends Fragment {
         thread.start();
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
-
     private Future connectToServer(long connection_ID) {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         Future<SshConn> future = executorService.submit(new Callable<SshConn>() {
             @Override
             public SshConn call() {
                 Identity identity = connectionViewModel.getIdentityFromTitel(connection.getIdentity_Id());
-                identityID = identity.getIdentiy_id();
                 String host = connection.getHostip();
                 String password = identity.getPassword();
                 String username = identity.getUsername();

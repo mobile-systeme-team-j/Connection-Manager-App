@@ -61,22 +61,12 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder> {
 
     public class JobViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView txtTitel;
-        Button stop;
 
         public JobViewHolder(View itemView){
             super(itemView);
 
             txtTitel = itemView.findViewById(R.id.job_view_titel);
-            stop = itemView.findViewById(R.id.stopjob);
             itemView.setOnClickListener(this);
-
-            stop.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    Job job = jobs.get(getAdapterPosition());
-                    int id = job.getJob_id();
-                    AlarmRepository.deleteAlarm(id,itemView.getContext());
-                }
-            });
 
         }
 

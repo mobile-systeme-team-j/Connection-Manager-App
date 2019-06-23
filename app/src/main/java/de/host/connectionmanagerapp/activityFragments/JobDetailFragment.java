@@ -146,12 +146,14 @@ public class JobDetailFragment extends Fragment
                                 Connection_id_holder.con_Titel = null;
                                 job.setC(c);
                                 connectionViewModel.updateJob(job(snp, con));
+                                createAlarm();
                                 Toast.makeText(getContext(), "Job updated", Toast.LENGTH_LONG).show();
                                 getActivity().getSupportFragmentManager().popBackStack();
                                 HideKeyboard.hideKeyboard(getContext());
                             } else {
                                 job.setC(c);
                                 connectionViewModel.updateJob(job());
+                                createAlarm();
                                 Toast.makeText(getContext(), "Job updated", Toast.LENGTH_LONG).show();
                                 getActivity().getSupportFragmentManager().popBackStack();
                                 HideKeyboard.hideKeyboard(getContext());
@@ -161,9 +163,7 @@ public class JobDetailFragment extends Fragment
                         {
                             Toast.makeText(getContext(),"timepicker error",Toast.LENGTH_SHORT);
                         }
-                        //
-                        // te AlarmManager, was als Parameter ? Job selbst ? Dann Connection ziehen ?
-                        //createAlarm();
+
                     }catch (Exception e){
                         Toast.makeText(getContext(),"update error",Toast.LENGTH_SHORT);
                     }
@@ -179,7 +179,7 @@ public class JobDetailFragment extends Fragment
                                 job.setC(c);
                                 connectionViewModel.insertJob(job(snp, con));
                                 Toast.makeText(getContext(), "Job saved", Toast.LENGTH_SHORT).show();
-                                //createAlarm();
+                                createAlarm();
                                 getActivity().getSupportFragmentManager().popBackStack();
                                 HideKeyboard.hideKeyboard(getContext());
                             } else {
@@ -194,6 +194,7 @@ public class JobDetailFragment extends Fragment
             case R.id.fabDelete:
                 if( arguments != null){
                     connectionViewModel.deleteJob(id);
+                    //AlarmRepository.deleteAlarm(id, getContext());
                     Toast.makeText(getContext(),"Job deleted",Toast.LENGTH_SHORT).show();
 
                 }
@@ -258,10 +259,12 @@ public class JobDetailFragment extends Fragment
     }
 
     private void createAlarm() {
-        // Create Calendar from Time- und DateCalendar
-
         // Alarm hinzufügen
-        AlarmRepository.addAlarm(c, getContext());
+        Connection connection = connectionViewModel.getConnectionFromTitel(job.getConnection_titel());
+        Identity identity = connectionViewModel.getIdentityFromTitel(connection.getIdentity_Id());
+        Snippet snippet = connectionViewModel.getSnippetsFromTitel(job.getSnippet_titel());
+        String cmd = snippet.getText();
+        AlarmRepository.addAlarm(c, getContext(), id, job, connection, identity, cmd);
     }
 
     @Override

@@ -22,11 +22,6 @@
                 android:textColor="@android:color/black"
                 android:textSize="30sp" />
 
-            <Button
-                android:id="@+id/stopjob"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Stop" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </FrameLayout>

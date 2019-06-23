@@ -23,7 +23,7 @@ public abstract class Roombuilder extends RoomDatabase {
 
 
     private static Roombuilder INSTANCE;
-    static String pass = "test";
+    static String pass = "#j8U!nb4+M2$";
     private static SafeHelperFactory factory= new SafeHelperFactory(pass.toCharArray());
    public abstract ConnectionDao connectionDao();
    public abstract IdentityDao identityDao();
