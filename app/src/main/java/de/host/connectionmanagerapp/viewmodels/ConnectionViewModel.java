@@ -64,6 +64,9 @@ public class ConnectionViewModel extends AndroidViewModel {
         return(repo.getSnippetfromTitel(titel));
     }
 
+    public Job getJobFromConnectionTitel(String titel){return(repo.getJobfromConnection(titel));}
+    public Job getJobFromSnippetTitel(String titel){return(repo.getJobfromSnippet(titel));}
+
 
     //update
     public void updateIdentity(Identity identity) throws Exception{

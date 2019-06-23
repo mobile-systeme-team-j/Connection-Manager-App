@@ -11,10 +11,7 @@ import androidx.room.Update;
 import java.util.List;
 
 import de.host.connectionmanagerapp.database.Job;
-import io.reactivex.Completable;
 import io.reactivex.Flowable;
-import io.reactivex.Maybe;
-import io.reactivex.Single;
 
 @Dao
 public interface JobDao {
@@ -27,6 +24,12 @@ public interface JobDao {
 
     @Query("SELECT * from job where job_Id=:id")
     Flowable<Job> jobfromId(int id);
+
+    @Query("SELECT * from job where snippet_titel=:titel")
+    Job jobfromsnippetTitel(String titel);
+
+    @Query("SELECT * from job where connection_titel=:titel")
+    Job jobfromcoonectionTitel(String titel);
 
     @Query("Select * from job")
     LiveData<List<Job>> getAllJobs();

@@ -1,3 +1,4 @@
+//Author: Manuell Trapp & Mattis Uphoff
 package de.host.connectionmanagerapp.activityFragments;
 
 import android.os.Bundle;
@@ -17,7 +18,6 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import de.host.connectionmanagerapp.MainActivity;
@@ -112,6 +112,7 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
                             connection.setIdentity_Id(holder.id);
                             holder.id = null;
                         }
+                        setConnection();
                         connectionViewModel.updateConnection(connection);
                         Toast.makeText(getContext(),"Connection updated",Toast.LENGTH_SHORT).show();
                         getActivity().getSupportFragmentManager().popBackStack();
@@ -133,8 +134,9 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
                                 connectionViewModel.insertConnection(connection);
                                 Toast.makeText(getContext(),"Connection saved", Toast.LENGTH_SHORT).show();
                                 getActivity().getSupportFragmentManager().popBackStack();
+                                HideKeyboard.hideKeyboard(getContext());
                             }catch (Exception e){
-                                Toast.makeText(getContext(),"Error inserting connection",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(),"Pls fill all Line",Toast.LENGTH_SHORT).show();
                             }
                         }
                         else{

@@ -8,11 +8,11 @@ import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
+
 import java.util.Date;
 
-import static androidx.room.ForeignKey.NO_ACTION;
+import static androidx.room.ForeignKey.CASCADE;
 import static androidx.room.ForeignKey.SET_DEFAULT;
-import static androidx.room.ForeignKey.SET_NULL;
 
 @Entity(tableName = "connection"
         ,indices = {@Index(value={"identity_titel"}),
@@ -20,6 +20,7 @@ import static androidx.room.ForeignKey.SET_NULL;
         foreignKeys = @ForeignKey(entity = Identity.class,
                 parentColumns = "titel",
                 childColumns = "identity_titel",
+                onUpdate = CASCADE,
                 onDelete = SET_DEFAULT))
 public class Connection {
 

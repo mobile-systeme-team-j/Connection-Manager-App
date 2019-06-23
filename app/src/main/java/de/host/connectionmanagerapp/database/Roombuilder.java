@@ -1,8 +1,10 @@
-//Author Mattis Uphoff
-
+//Autor Mattis Uphoff
+// Verbindungen der Datenbank nach https://android.jlelse.eu/android-architecture-components-room-relationships-bf473510c14a
+//Aufbau  der Klassen Repostiory Viewadapter Daos Viewmodels nach https://codelabs.developers.google.com/codelabs/android-room-with-a-view
 package de.host.connectionmanagerapp.database;
 
 import android.content.Context;
+
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
@@ -15,7 +17,7 @@ import de.host.connectionmanagerapp.daos.JobDao;
 import de.host.connectionmanagerapp.daos.SnippetDao;
 
 
-@androidx.room.Database(entities = {Connection.class, Identity.class, Snippet.class, Job.class}, version = 14, exportSchema = false)
+@androidx.room.Database(entities = {Connection.class, Identity.class, Snippet.class, Job.class}, version = 16, exportSchema = false)
 @TypeConverters({DateTypeConverter.class, CalenderTypeConverter.class})
 public abstract class Roombuilder extends RoomDatabase {
 

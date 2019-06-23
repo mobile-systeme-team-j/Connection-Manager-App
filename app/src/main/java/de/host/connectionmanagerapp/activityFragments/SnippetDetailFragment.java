@@ -1,3 +1,4 @@
+//Mattis Uphoff && Manuel Trapp
 package de.host.connectionmanagerapp.activityFragments;
 
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import de.host.connectionmanagerapp.R;
+import de.host.connectionmanagerapp.database.Job;
 import de.host.connectionmanagerapp.database.Snippet;
 import de.host.connectionmanagerapp.helper.HideKeyboard;
 import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
@@ -84,13 +86,14 @@ public class SnippetDetailFragment extends Fragment implements View.OnClickListe
             case R.id.fabSave:
                 if(arguments !=null) {
                     try{
+                        Job job = connectionViewModel.getJobFromSnippetTitel(snippet.getTitel());
                         connectionViewModel.updateSnippets(setSnippet());
                         Toast.makeText(getContext(),"Snippet updated", Toast.LENGTH_SHORT).show();
                         getActivity().getSupportFragmentManager().popBackStack();
                         HideKeyboard.hideKeyboard(getContext());
                     }
                     catch (Exception e){
-                        Toast.makeText(getContext(),e.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),"titel must be unique",Toast.LENGTH_SHORT).show();
                     }
                 }
                 else{
@@ -106,7 +109,7 @@ public class SnippetDetailFragment extends Fragment implements View.OnClickListe
                         HideKeyboard.hideKeyboard(getContext());
                     }
                     catch (Exception e){
-                        Toast.makeText(getContext(),"titel need to be unique", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),"titel must be unique", Toast.LENGTH_SHORT).show();
                     }
                 }
 

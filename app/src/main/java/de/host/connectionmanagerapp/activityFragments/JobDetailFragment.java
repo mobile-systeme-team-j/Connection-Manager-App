@@ -1,3 +1,4 @@
+//Phillip Kuehling
 package de.host.connectionmanagerapp.activityFragments;
 
 import android.app.Activity;

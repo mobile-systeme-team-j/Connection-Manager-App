@@ -9,7 +9,6 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import static androidx.room.ForeignKey.CASCADE;
 import static androidx.room.ForeignKey.SET_DEFAULT;
@@ -21,10 +20,12 @@ import static androidx.room.ForeignKey.SET_DEFAULT;
         foreignKeys = {@ForeignKey(entity = Connection.class,
         parentColumns = "titel",
         childColumns = "connection_titel",
+        onUpdate = CASCADE,
         onDelete = CASCADE),
         @ForeignKey(entity = Snippet.class,
         parentColumns = "titel",
         childColumns = "snippet_titel",
+                onUpdate = CASCADE,
         onDelete = SET_DEFAULT)})
 public class Job {
 

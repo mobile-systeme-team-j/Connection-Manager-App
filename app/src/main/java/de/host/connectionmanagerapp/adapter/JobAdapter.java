@@ -1,3 +1,4 @@
+//Mattis Uphoff
 package de.host.connectionmanagerapp.adapter;
 
 import android.app.Application;
@@ -5,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,6 +19,7 @@ import java.util.List;
 
 import de.host.connectionmanagerapp.R;
 import de.host.connectionmanagerapp.activityFragments.JobDetailFragment;
+import de.host.connectionmanagerapp.alarm.AlarmRepository;
 import de.host.connectionmanagerapp.database.Job;
 
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder> {
@@ -58,13 +61,22 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder> {
 
     public class JobViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView txtTitel;
+        Button stop;
 
         public JobViewHolder(View itemView){
             super(itemView);
 
             txtTitel = itemView.findViewById(R.id.job_view_titel);
-
+            stop = itemView.findViewById(R.id.stopjob);
             itemView.setOnClickListener(this);
+
+            stop.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Job job = jobs.get(getAdapterPosition());
+                    int id = job.getJob_id();
+                    AlarmRepository.deleteAlarm(id,itemView.getContext());
+                }
+            });
 
         }
 

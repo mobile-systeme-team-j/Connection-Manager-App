@@ -6,7 +6,6 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
-
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -161,6 +160,44 @@ public class Repository {
     public Job getJob(int id){
         Flowable<Job> jobFlowable = jobDao.jobfromId(id);
         return jobFlowable.blockingFirst();
+    }
+    public Job getJobfromConnection(String titel){
+        ExecutorService exe = Executors.newSingleThreadExecutor();
+        Future<Job> future = exe.submit(new Callable<Job>() {
+            @Override
+            public Job call() throws Exception {
+                 Job job = jobDao.jobfromcoonectionTitel(titel);
+                return job;
+            }
+        });
+
+        try {
+            return future.get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public Job getJobfromSnippet(String titel){
+        ExecutorService exe = Executors.newSingleThreadExecutor();
+        Future<Job> future = exe.submit(new Callable<Job>() {
+            @Override
+            public Job call() throws Exception {
+                Job job = jobDao.jobfromsnippetTitel(titel);
+                return job;
+            }
+        });
+
+        try {
+            return future.get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 

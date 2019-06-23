@@ -1,3 +1,4 @@
+//Mattis Uphoff
 package de.host.connectionmanagerapp.adapter;
 
 
@@ -17,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import de.host.connectionmanagerapp.R;
-
 import de.host.connectionmanagerapp.activityFragments.IdentityDetailFragment;
 import de.host.connectionmanagerapp.database.Identity;
 

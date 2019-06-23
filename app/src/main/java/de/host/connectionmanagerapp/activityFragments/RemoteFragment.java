@@ -1,3 +1,4 @@
+//Phillip Kuehling
 package de.host.connectionmanagerapp.activityFragments;
 
 import android.content.Intent;
@@ -54,6 +55,8 @@ public class RemoteFragment extends Fragment implements View.OnClickListener{
         switch(view.getId()){
             case R.id.fabConnectRemote:
                 // starts SSH-Session
+
+
                 if (!areFieldsEmpty()){
                     //AppCompatActivity appCompatActivity = (AppCompatActivity) getContext();
                     //appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, SshSessionFragment.newInstance(ip,user,port,password,keyPath,keyPassword, true)).addToBackStack(null).commit();
