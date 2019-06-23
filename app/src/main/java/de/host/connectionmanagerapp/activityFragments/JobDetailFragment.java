@@ -93,9 +93,10 @@ public class JobDetailFragment extends Fragment
             job = connectionViewModel.getJobs(id);
 
             editTextJobName.setText(job.getTitel());
-            //editTextDate.(job.getJob_date());
-            //editTextTime.setText(job.getJobtime());
+            editTextDate.setText(job.getJob_date()+"");
+            editTextTime.setText(job.getJobtime()+"");
         }
+
 
         return view;
     }
@@ -120,7 +121,14 @@ public class JobDetailFragment extends Fragment
             case R.id.fabSave:
                 if( arguments != null){
                     try{
-                        //connectionViewModel.updateJob(job());
+                        String snp = Snippet_id_holder.snippet_Titel;
+                        String con = Connection_id_holder.con_Titel;
+                        if(con != null && snp != null) {
+                            connectionViewModel.updateJob(job(snp,con));
+                        }
+                        else{
+                            connectionViewModel.updateJob(job());
+                        }
                         // Create AlarmManager, was als Parameter ? Job selbst ? Dann Connection ziehen ?
                         createAlarm();
                     }catch (Exception e){
@@ -136,13 +144,16 @@ public class JobDetailFragment extends Fragment
 
                             job = new Job();
                             connectionViewModel.insertJob(job(snp,con));
-                            Toast.makeText(getContext(),"Identity saved", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(),"Job saved", Toast.LENGTH_SHORT).show();
+                            //createAlarm();
                             getActivity().getSupportFragmentManager().popBackStack();
                             HideKeyboard.hideKeyboard(getContext());
 
                         }
-                        //createAlarm();
-                        Toast.makeText(getContext(),"Job saved", Toast.LENGTH_SHORT).show();
+
+                        else {
+                            Toast.makeText(getContext(), "Please Select one Snippet and one Connection", Toast.LENGTH_LONG).show();
+                        }
                     }catch (Exception e){
                         Toast.makeText(getContext(),"error",Toast.LENGTH_SHORT).show();
                     }
@@ -150,7 +161,7 @@ public class JobDetailFragment extends Fragment
                 break;
             case R.id.fabDelete:
                 if( arguments != null){
-                    //connectionViewModel.delet(Job());
+                    connectionViewModel.deleteJob(id);
                     Toast.makeText(getContext(),"Job deleted",Toast.LENGTH_SHORT).show();
 
                 }
@@ -162,6 +173,10 @@ public class JobDetailFragment extends Fragment
         job.setTitel(editTextJobName.getText().toString());
         job.setConnection_titel(con);
         job.setSnippet_titel(snp);
+        return job;
+    }
+    public Job job(){
+        job.setTitel(editTextJobName.getText().toString());
         return job;
     }
 

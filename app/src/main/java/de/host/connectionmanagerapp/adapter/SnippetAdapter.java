@@ -1,9 +1,8 @@
 package de.host.connectionmanagerapp.adapter;
 
-import android.app.Application;
+
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import de.host.connectionmanagerapp.R;
-import de.host.connectionmanagerapp.activityFragments.IdentityDetailFragment;
 import de.host.connectionmanagerapp.activityFragments.SnippetDetailFragment;
-import de.host.connectionmanagerapp.database.Identity;
 import de.host.connectionmanagerapp.database.Snippet;
 
 public class SnippetAdapter extends RecyclerView.Adapter<SnippetAdapter.SnippetViewHolder>{

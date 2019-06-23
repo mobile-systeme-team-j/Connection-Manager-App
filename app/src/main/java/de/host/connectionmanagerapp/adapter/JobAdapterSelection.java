@@ -14,9 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import de.host.connectionmanagerapp.R;
-import de.host.connectionmanagerapp.database.Identity;
 import de.host.connectionmanagerapp.database.Job;
-import de.host.connectionmanagerapp.helper.Identity_id_holder;
 import de.host.connectionmanagerapp.helper.Job_id_holder;
 
 public class JobAdapterSelection extends RecyclerView.Adapter<JobAdapterSelection.JobViewHolder> {

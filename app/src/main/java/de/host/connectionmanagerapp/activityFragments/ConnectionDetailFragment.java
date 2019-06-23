@@ -63,25 +63,16 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
         if(arguments != null){
             id = arguments.getLong("con_id");
             connection = connectionViewModel.getConnection(id);
-
             getConnection();
         }
         else{
             connection = new Connection();
+            delete.hide();
         }
 
         return view;
     }
-    @Override
-    public void onResume() {
-        Identity_id_holder holder = new Identity_id_holder();
-        Log.e("DEBUG", "" + holder.id);
-        if(holder.id != null){
-            connection.setIdentity_Id(holder.id);
-            holder.id = null;
-        }
-            super.onResume();
-    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -107,6 +98,11 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
             case R.id.fabSave:
                 if(arguments != null){
                     try{
+                        Identity_id_holder holder = new Identity_id_holder();
+                        if(holder.id !=null){
+                            connection.setIdentity_Id(holder.id);
+                            holder.id = null;
+                        }
                         connectionViewModel.updateConnection(connection);
                         Toast.makeText(getContext(),"Connection updated",Toast.LENGTH_SHORT).show();
                         getActivity().getSupportFragmentManager().popBackStack();
@@ -116,14 +112,26 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
                     }
                 }
                 else{
-                    try{
-                        setConnection();
-                        connectionViewModel.insertConnection(connection);
-                        Toast.makeText(getContext(),"Connection saved", Toast.LENGTH_SHORT).show();
-                        getActivity().getSupportFragmentManager().popBackStack();
-                    }catch (Exception e){
-                        Toast.makeText(getContext(),"Error inserting connection",Toast.LENGTH_SHORT).show();
-                    }
+
+                        Identity_id_holder holder = new Identity_id_holder();
+                        Log.e("DEBUG", "" + holder.id);
+                        if(holder.id != null){
+                            try{
+                                connection.setIdentity_Id(holder.id);
+                                holder.id = null;
+
+                                setConnection();
+                                connectionViewModel.insertConnection(connection);
+                                Toast.makeText(getContext(),"Connection saved", Toast.LENGTH_SHORT).show();
+                                getActivity().getSupportFragmentManager().popBackStack();
+                            }catch (Exception e){
+                                Toast.makeText(getContext(),"Error inserting connection",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        else{
+                            Toast.makeText(getContext(),"Please choose one Identity", Toast.LENGTH_SHORT).show();
+                        }
+
                 }
                 break;
             case R.id.btnIdentity:

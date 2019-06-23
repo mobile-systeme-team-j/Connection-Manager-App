@@ -1,4 +1,4 @@
-//Autor Mattis Uphoff
+//Author Mattis Uphoff
 
 package de.host.connectionmanagerapp.database;
 

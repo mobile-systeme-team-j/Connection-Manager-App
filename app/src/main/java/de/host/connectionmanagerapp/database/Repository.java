@@ -42,6 +42,7 @@ public class Repository {
 
     }
 
+
     //Insert Methoden
     //Fertige identity muss übergeben werden , es erfolgt keine überpfüfung mehr
     public void identity_insert(Identity identity) throws Exception{
@@ -132,19 +133,16 @@ public class Repository {
     }
 
 
-    //getEntity
+    //getEntityFromId/FromTitel
     public Identity getIdentity(long id){
         Flowable<Identity> identity = identityDao.identityformid(id);
         Identity identity1 = identity.blockingFirst();
         return  identity1;
 
     }
-
-
     public Identity getIdentityFromTitel(String titel){
         return identityDao.identityformtitel(titel).blockingFirst();
     }
-
     public Connection getConnection(long id){
 
         Flowable<Connection>connectionFlowable = connectionDao.connectionfromid(id);
@@ -167,6 +165,9 @@ public class Repository {
         Flowable<Job> jobFlowable = jobDao.jobfromId(id);
         return jobFlowable.blockingFirst();
     }
+
+
+
     //LiveData
     public LiveData<List<Connection>> getConnectionsLive() {
         return connectionDao.getAllConnection();
@@ -188,30 +189,59 @@ public class Repository {
         return snippetDao.getAllSnippets();
     }
 
+
+
     // Updates
-    public void identity_update(Identity identity){
-        Executor exe = Executors.newSingleThreadExecutor();
-        exe.execute(() -> {
-            identityDao.update(identity);
+    public void identity_update(Identity identity)throws Exception {
+        ExecutorService exe = Executors.newSingleThreadExecutor();
+        Future future = exe.submit(new Callable<Void>() {
+            @Override
+            public Void call() throws Exception {
+                identityDao.update(identity);
+                return null;
+            }
+
         });
+        future.get();
+
     }
-    public void connection_update(Connection connection){
-        Executor exe = Executors.newSingleThreadExecutor();
-        exe.execute(() -> {
-        connectionDao.update(connection);
+    public void connection_update(Connection connection)throws Exception{
+        ExecutorService exe = Executors.newSingleThreadExecutor();
+        Future future = exe.submit(new Callable<Void>() {
+            @Override
+            public Void call() throws Exception {
+                connectionDao.update(connection);
+                return null;
+            }
         });
+        future.get();
     }
-    public void job_update(Job job){
-        Executor exe = Executors.newSingleThreadExecutor();
-        exe.execute(() -> {
-        jobDao.update(job);
+    public void job_update(Job job) throws Exception{
+        ExecutorService exe = Executors.newSingleThreadExecutor();
+        Future future = exe.submit(new Callable<Void>() {
+            @Override
+            public Void call() throws Exception {
+
+                jobDao.update(job);
+                return null;
+            }
         });
+        future.get();
     }
-    public void snippet_update(Snippet snippet){
-        Executor exe = Executors.newSingleThreadExecutor();
-        exe.execute(() -> {
-        snippetDao.update(snippet);});
+    public void snippet_update(Snippet snippet)throws Exception{
+        ExecutorService exe = Executors.newSingleThreadExecutor();
+        Future future = exe.submit(new Callable<Void>() {
+            @Override
+            public Void call() throws Exception {
+                snippetDao.update(snippet);
+                return null;
+            }
+        });
+        future.get();
     }
+
+
+
 
     //DeleteMethoden
     public void identity_delete(long id){
@@ -236,10 +266,13 @@ public class Repository {
             connectionDao.delete(conection);
         });
     }
-    public void job_delete(Job job){
-        long jobId = job.getJob_id();
-
+    public void job_delete(long id){
+        Executor exe = Executors.newSingleThreadExecutor();
+        exe.execute(() -> {
+        Job job = jobDao.jobfromId(id).blockingFirst();
         jobDao.delete(job);
+        });
+
     }
 
 

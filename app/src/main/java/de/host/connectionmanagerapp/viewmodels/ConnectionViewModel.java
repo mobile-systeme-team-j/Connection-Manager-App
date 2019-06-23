@@ -1,3 +1,4 @@
+//Author Mattis Uphoff
 package de.host.connectionmanagerapp.viewmodels;
 
 
@@ -46,7 +47,7 @@ public class ConnectionViewModel extends AndroidViewModel {
     }
     public void insertJob(Job job){repo.job_insert(job);}
 
-    //getOnId/titel
+    //getFromId/Fromtitel
     public Connection getConnection(long id){
         return(repo.getConnection(id));
     }
@@ -62,17 +63,19 @@ public class ConnectionViewModel extends AndroidViewModel {
     public Snippet getSnippetsFromTitel(String titel){
         return(repo.getSnippetfromTitel(titel));
     }
+
+
     //update
-    public void updateIdentity(Identity identity){
+    public void updateIdentity(Identity identity) throws Exception{
         repo.identity_update(identity);
     }
-    public void updateConnection(Connection connection){
+    public void updateConnection(Connection connection)throws Exception{
         repo.connection_update(connection);
     }
-    public void updateJob(Job job){
+    public void updateJob(Job job) throws Exception{
         repo.job_update(job);
     }
-    public void updateSnippets(Snippet snippet){
+    public void updateSnippets(Snippet snippet)throws Exception{
         repo.snippet_update(snippet);
     }
 
@@ -84,6 +87,7 @@ public class ConnectionViewModel extends AndroidViewModel {
         repo.connection_delete(id);
     }
     public void deleteSnippets(long id){repo.snippet_delete(id);}
+    public void deleteJob(long id){repo.job_delete(id);}
 
 
     public LiveData<List<Connection>> getAllConnections() { return allConnections; }

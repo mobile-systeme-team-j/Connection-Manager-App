@@ -1,9 +1,8 @@
 //Mattis Uphoff nach https://www.simplifiedcoding.net/android-room-database-example/
 package de.host.connectionmanagerapp.adapter;
 
-import android.app.Application;
+
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -19,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
 import de.host.connectionmanagerapp.activityFragments.ConnectionDetailFragment;
 import de.host.connectionmanagerapp.database.Connection;
