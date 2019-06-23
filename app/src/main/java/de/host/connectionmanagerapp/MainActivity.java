@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onBackPressed() {
 
-
+        // to close app backpress 2 times in 3 seconds in HomeFragment
         //https://stackoverflow.com/questions/2257963/how-to-show-a-dialog-to-confirm-that-the-user-wishes-to-exit-an-android-activity
         //Firefog, 26.12.2018
         int fragments = getSupportFragmentManager().getBackStackEntryCount();

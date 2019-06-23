@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.DatePicker;
+import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 
@@ -27,6 +28,8 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+
         // das aktuelle Datum als Voreinstellung nehmen
         final Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
@@ -40,18 +43,29 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     @Override
     // called when a date has been selected
     public void onDateSet(DatePicker view, int year, int month, int day) {
+        Calendar currentDate = Calendar.getInstance();
+        currentDate.set(Calendar.HOUR_OF_DAY, 0);
+        currentDate.set(Calendar.MINUTE,0);
+        currentDate.set(Calendar.SECOND,0);
+        currentDate.set(Calendar.MILLISECOND,0);
+
         c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, day);
-        String selectedDate = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN).format(c.getTime());
 
-        Log.d(TAG, "onDateSet: " + selectedDate);
-        // send date back to the target fragment
-        getTargetFragment().onActivityResult(
-                getTargetRequestCode(),
-                Activity.RESULT_OK,
-                new Intent().putExtra("selectedDate", selectedDate)
-        );
+        if(c.after(currentDate)){
+            String selectedDate = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN).format(c.getTime());
+
+            Log.d(TAG, "onDateSet: " + selectedDate);
+            // send date back to the target fragment
+            getTargetFragment().onActivityResult(
+                    getTargetRequestCode(),
+                    Activity.RESULT_OK,
+                    new Intent().putExtra("selectedDate", selectedDate)
+            );
+        }else {
+            Toast.makeText(getContext(),"Can't go back in time", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public Calendar getDateCalender (){
