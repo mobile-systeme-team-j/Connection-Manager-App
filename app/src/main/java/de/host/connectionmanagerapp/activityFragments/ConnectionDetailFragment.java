@@ -17,6 +17,9 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
 import de.host.connectionmanagerapp.database.Connection;
@@ -91,6 +94,8 @@ public class ConnectionDetailFragment extends Fragment implements View.OnClickLi
             case R.id.fabConnect:
                 // CallSShSessionFragment
                 if (id != 0) {
+
+                    connection.setTimestamp(new Date(System.currentTimeMillis()));
                     ((MainActivity)getActivity()).replaceFragment(SshSessionFragment.newInstance(id, false));
                 }
                 break;

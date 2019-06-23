@@ -19,7 +19,6 @@ import de.host.connectionmanagerapp.daos.ConnectionDao;
 import de.host.connectionmanagerapp.daos.IdentityDao;
 import de.host.connectionmanagerapp.daos.JobDao;
 import de.host.connectionmanagerapp.daos.SnippetDao;
-import de.host.connectionmanagerapp.daos.Snippet_JobDao;
 import io.reactivex.Flowable;
 
 public class Repository {
@@ -28,7 +27,6 @@ public class Repository {
     private ConnectionDao connectionDao;
     private JobDao jobDao;
     private SnippetDao snippetDao;
-    private Snippet_JobDao sjDao;
     private Application application;
 
     public Repository(Application application){
@@ -38,7 +36,6 @@ public class Repository {
         connectionDao = db.connectionDao();
         jobDao = db.jobDao();
         snippetDao= db.snippetDao();
-        sjDao = db.sjDao();
 
     }
 
@@ -161,7 +158,7 @@ public class Repository {
         Flowable<Snippet> snippetFlowable = snippetDao.snippetfromtitel(titel);
         return snippetFlowable.blockingFirst();
     }
-    public Job getJob(long id){
+    public Job getJob(int id){
         Flowable<Job> jobFlowable = jobDao.jobfromId(id);
         return jobFlowable.blockingFirst();
     }
@@ -266,7 +263,7 @@ public class Repository {
             connectionDao.delete(conection);
         });
     }
-    public void job_delete(long id){
+    public void job_delete(int id){
         Executor exe = Executors.newSingleThreadExecutor();
         exe.execute(() -> {
         Job job = jobDao.jobfromId(id).blockingFirst();
@@ -274,7 +271,4 @@ public class Repository {
         });
 
     }
-
-
-
 }

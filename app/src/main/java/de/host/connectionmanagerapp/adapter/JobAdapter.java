@@ -71,10 +71,10 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder> {
         @Override
         public void onClick(View v) {
             Job job = jobs.get(getAdapterPosition());
-            long id = job.getJob_id();
+            int id = job.getJob_id();
             Fragment fram = new JobDetailFragment();
             Bundle bundle = new Bundle();
-            bundle.putLong("id", id);
+            bundle.putInt("id", id);
             fram.setArguments(bundle);
 
 

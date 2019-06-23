@@ -8,6 +8,7 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import static androidx.room.ForeignKey.CASCADE;
@@ -29,18 +30,17 @@ public class Job {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "job_Id")
-    private long job_id;
+    private int job_id;
 
     @NonNull
     @ColumnInfo(name="titel")
     private String titel;
 
 
-    @ColumnInfo(name = "job_time")
-    private Date jobtime;
 
-    @ColumnInfo(name = "job_date")
-    private Date job_date;
+
+    @ColumnInfo(name = "job_calender")
+    private Calendar c;
 
 
     @ColumnInfo(name ="connection_titel")
@@ -49,11 +49,11 @@ public class Job {
     @ColumnInfo(name ="snippet_titel")
     private String snippet_titel;
 
-    public long getJob_id() {
+    public int getJob_id() {
         return job_id;
     }
 
-    public void setJob_id(long job_id) {
+    public void setJob_id(int job_id) {
         this.job_id = job_id;
     }
 
@@ -62,25 +62,8 @@ public class Job {
         return titel;
     }
 
-    public Date getJob_date() {
-        return job_date;
-    }
-
-
-    public Date getJobtime() {
-       return jobtime;
-    }
-
     public void setTitel(@NonNull String titel) {
         this.titel = titel;
-    }
-
-    public void setJobtime(Date jobtime) {
-        this.jobtime = jobtime;
-    }
-
-    public void setJob_date(Date job_date) {
-        this.job_date = job_date;
     }
 
     public String getConnection_titel() {
@@ -97,5 +80,13 @@ public class Job {
 
     public void setSnippet_titel(String snippet_titel) {
         this.snippet_titel = snippet_titel;
+    }
+
+    public Calendar getC() {
+        return c;
+    }
+
+    public void setC(Calendar c) {
+        this.c = c;
     }
 }

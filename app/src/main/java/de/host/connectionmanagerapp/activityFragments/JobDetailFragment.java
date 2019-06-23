@@ -15,9 +15,15 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.room.Dao;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import de.host.connectionmanagerapp.helper.Connection_id_holder;
 import de.host.connectionmanagerapp.helper.DatePickerFragment;
@@ -34,7 +40,7 @@ import de.host.connectionmanagerapp.database.Snippet;
 import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
 
 /**
- * @author  Jürgen Manuel Trapp
+ * @author  Philipp Kühling & Mattis Uphoff
  */
 
 public class JobDetailFragment extends Fragment
@@ -52,14 +58,12 @@ public class JobDetailFragment extends Fragment
     Bundle arguments;
     private String selectedDate;
     private String selectedTime;
-    long id;
+    int id;
     private ConnectionViewModel connectionViewModel;
-    Spinner spinnerConnection,spinnerIdentity, spinnerSnippet;
-    List<Connection> connectionList;
-    List<Identity> identityList;
-    List<Snippet> snippetList;
+    Calendar c = null;
     Calendar timeCalender;
     Calendar dateCalendar;
+    Calendar dataCalender;
 
     @Nullable
     @Override
@@ -90,12 +94,17 @@ public class JobDetailFragment extends Fragment
 
         arguments = getArguments();
         if(arguments !=null){
-            id = arguments.getLong("id");
+            id = arguments.getInt("id");
             job = connectionViewModel.getJobs(id);
+            dataCalender =job.getC();
+            String stringDate = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN).format(dataCalender.getTime());
+            String stringTime = new SimpleDateFormat("HH:mm", Locale.GERMAN).format(dataCalender.getTime());
 
+
+            editTextDate.setText(stringDate);
+            editTextTime.setText(stringTime);
             editTextJobName.setText(job.getTitel());
-            editTextDate.setText(job.getJob_date()+"");
-            editTextTime.setText(job.getJobtime()+"");
+
         }
 
 
@@ -129,37 +138,52 @@ public class JobDetailFragment extends Fragment
                     try{
                         String snp = Snippet_id_holder.snippet_Titel;
                         String con = Connection_id_holder.con_Titel;
-                        if(con != null && snp != null) {
-                            connectionViewModel.updateJob(job(snp,con));
+                        if(createCalender()) {
+                            if (con != null && snp != null) {
+
+                                Snippet_id_holder.snippet_Titel = null;
+                                Connection_id_holder.con_Titel = null;
+                                job.setC(c);
+                                connectionViewModel.updateJob(job(snp, con));
+                                Toast.makeText(getContext(), "Job updated", Toast.LENGTH_LONG).show();
+                                getActivity().getSupportFragmentManager().popBackStack();
+                                HideKeyboard.hideKeyboard(getContext());
+                            } else {
+                                job.setC(c);
+                                connectionViewModel.updateJob(job());
+                                Toast.makeText(getContext(), "Job updated", Toast.LENGTH_LONG).show();
+                                getActivity().getSupportFragmentManager().popBackStack();
+                                HideKeyboard.hideKeyboard(getContext());
+                            }
                         }
-                        else{
-                            connectionViewModel.updateJob(job());
+                        else
+                        {
+                            Toast.makeText(getContext(),"timepicker error",Toast.LENGTH_SHORT);
                         }
                         //
                         // te AlarmManager, was als Parameter ? Job selbst ? Dann Connection ziehen ?
-                        createAlarm();
+                        //createAlarm();
                     }catch (Exception e){
-                        Toast.makeText(getContext(),"",Toast.LENGTH_SHORT);
+                        Toast.makeText(getContext(),"update error",Toast.LENGTH_SHORT);
                     }
                 }else{
                     try{
                         String snp = Snippet_id_holder.snippet_Titel;
                         String con = Connection_id_holder.con_Titel;
-                        if(con != null && snp != null) {
-                            Snippet_id_holder.snippet_Titel = null;
-                            Connection_id_holder.con_Titel = null;
-
-                            job = new Job();
-                            connectionViewModel.insertJob(job(snp,con));
-                            Toast.makeText(getContext(),"Job saved", Toast.LENGTH_SHORT).show();
-                            //createAlarm();
-                            getActivity().getSupportFragmentManager().popBackStack();
-                            HideKeyboard.hideKeyboard(getContext());
-
-                        }
-
-                        else {
-                            Toast.makeText(getContext(), "Please Select one Snippet and one Connection", Toast.LENGTH_LONG).show();
+                        if(createCalender()) {
+                            if (con != null && snp != null) {
+                                Snippet_id_holder.snippet_Titel = null;
+                                Connection_id_holder.con_Titel = null;
+                                job = new Job();
+                                job.setC(c);
+                                connectionViewModel.insertJob(job(snp, con));
+                                Toast.makeText(getContext(), "Job saved", Toast.LENGTH_SHORT).show();
+                                //createAlarm();
+                                getActivity().getSupportFragmentManager().popBackStack();
+                                HideKeyboard.hideKeyboard(getContext());
+                            } else {
+                                Toast.makeText(getContext(), "Please Select one Snippet and one Connection", Toast.LENGTH_LONG).show();
+                            }
                         }
                     }catch (Exception e){
                         Toast.makeText(getContext(),"error",Toast.LENGTH_SHORT).show();
@@ -180,6 +204,8 @@ public class JobDetailFragment extends Fragment
         job.setTitel(editTextJobName.getText().toString());
         job.setConnection_titel(con);
         job.setSnippet_titel(snp);
+
+        //job.setJob_date(selectedDate);
         return job;
     }
     public Job job(){
@@ -187,23 +213,54 @@ public class JobDetailFragment extends Fragment
         return job;
     }
 
-    private void createAlarm() {
-        // Create Calendar from Time- und DateCalendar
-        Calendar c = Calendar.getInstance();
-        if (timeCalender != null && dateCalendar != null) {
+    public Boolean createCalender(){
+        c = Calendar.getInstance();
+        if (timeCalender != null && dateCalendar != null ) {
             c.set(Calendar.MINUTE, timeCalender.get(Calendar.MINUTE));
             c.set(Calendar.HOUR_OF_DAY, timeCalender.get(Calendar.HOUR_OF_DAY));
             c.set(Calendar.YEAR, dateCalendar.get(Calendar.YEAR));
             c.set(Calendar.MONTH, dateCalendar.get(Calendar.MONTH));
             c.set(Calendar.DAY_OF_MONTH, dateCalendar.get(Calendar.DAY_OF_MONTH));
-        }else {
+            return true;
+        }
+        else if(timeCalender == null && dateCalendar != null && arguments!= null){
+
+            c.set(Calendar.MINUTE, dataCalender.get(Calendar.MINUTE));
+            c.set(Calendar.HOUR_OF_DAY, dataCalender.get(Calendar.HOUR_OF_DAY));
+            c.set(Calendar.YEAR, dateCalendar.get(Calendar.YEAR));
+            c.set(Calendar.MONTH, dateCalendar.get(Calendar.MONTH));
+            c.set(Calendar.DAY_OF_MONTH, dateCalendar.get(Calendar.DAY_OF_MONTH));
+            return true;
+        }
+        else if(timeCalender == null && dateCalendar == null && arguments!= null){
+            c.set(Calendar.MINUTE, dataCalender.get(Calendar.MINUTE));
+            c.set(Calendar.HOUR_OF_DAY, dateCalendar.get(Calendar.HOUR_OF_DAY));
+            c.set(Calendar.YEAR, dataCalender.get(Calendar.YEAR));
+            c.set(Calendar.MONTH, dataCalender.get(Calendar.MONTH));
+            c.set(Calendar.DAY_OF_MONTH, dataCalender.get(Calendar.DAY_OF_MONTH));
+            return true;
+        }
+        else if(timeCalender != null && dateCalendar == null && arguments!=null) {
+            c.set(Calendar.MINUTE, timeCalender.get(Calendar.MINUTE));
+            c.set(Calendar.HOUR_OF_DAY, timeCalender.get(Calendar.HOUR_OF_DAY));
+            c.set(Calendar.YEAR, dataCalender.get(Calendar.YEAR));
+            c.set(Calendar.MONTH, dataCalender.get(Calendar.MONTH));
+            c.set(Calendar.DAY_OF_MONTH, dataCalender.get(Calendar.DAY_OF_MONTH));
+            return true;
+        }
+        else {
             // Kein Datum & Zeit gesetzt --> Abbruch
             Toast.makeText(getContext(), "Please set time and date!", Toast.LENGTH_LONG);
-            return;
+            return false;
         }
+
+    }
+
+    private void createAlarm() {
+        // Create Calendar from Time- und DateCalendar
+
         // Alarm hinzufügen
         AlarmRepository.addAlarm(c, getContext());
-
     }
 
     @Override

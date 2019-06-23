@@ -123,6 +123,7 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
             case R.id.fabSave:
                 if(arguments !=null) {
                     try{
+
                         connectionViewModel.updateIdentity(setIdentity());
                         Toast.makeText(getContext(),"Identity updated", Toast.LENGTH_SHORT).show();
                         getActivity().getSupportFragmentManager().popBackStack();
@@ -153,8 +154,10 @@ public class IdentityDetailFragment extends Fragment implements View.OnClickList
         identity.setTitel(editTextIdentityName.getText().toString());
         identity.setUsername(editTextUsername.getText().toString());
         identity.setPassword(editTextPassword.getText().toString());
-        identity.setKeypath(keyPath);
-        identity.setFilename(keyFilename);
+        if(keyPath != null && keyFilename !=null) {
+            identity.setKeypath(keyPath);
+            identity.setFilename(keyFilename);
+        }
         identity.setKeypassword(editTextKeyPassword.getText().toString());
         return identity;
     }

@@ -26,7 +26,7 @@ public interface JobDao {
     void update (Job... jobs);
 
     @Query("SELECT * from job where job_Id=:id")
-    Flowable<Job> jobfromId(long id);
+    Flowable<Job> jobfromId(int id);
 
     @Query("Select * from job")
     LiveData<List<Job>> getAllJobs();

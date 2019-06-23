@@ -2,25 +2,32 @@
 package de.host.connectionmanagerapp.adapter;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Date;
 import java.util.List;
 
+import de.host.connectionmanagerapp.MainActivity;
 import de.host.connectionmanagerapp.R;
 import de.host.connectionmanagerapp.activityFragments.ConnectionDetailFragment;
+import de.host.connectionmanagerapp.activityFragments.SshSessionFragment;
 import de.host.connectionmanagerapp.database.Connection;
+import de.host.connectionmanagerapp.viewmodels.ConnectionViewModel;
 
 public class ConnectionAdapter extends  RecyclerView.Adapter<ConnectionAdapter.ConnectionViewHolder> {
 
@@ -59,10 +66,21 @@ public class ConnectionAdapter extends  RecyclerView.Adapter<ConnectionAdapter.C
 
     class ConnectionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         TextView textTitel;
+        Button run;
 
         public ConnectionViewHolder(View itemView) {
             super(itemView);
             textTitel = itemView.findViewById(R.id.connection_view_titel);
+            run= itemView.findViewById(R.id.connect_view);
+
+            run.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Connection connection = connections.get(getAdapterPosition());
+                    long id = connection.getConnection_id();
+                    AppCompatActivity activity = (AppCompatActivity) itemView.getContext();
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, SshSessionFragment.newInstance(id, false)).addToBackStack(null).commit();
+                }
+            });
 
             itemView.setOnClickListener(this);
             //itemView.setOnLongClickListener(this);

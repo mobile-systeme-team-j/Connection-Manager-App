@@ -13,11 +13,10 @@ import de.host.connectionmanagerapp.daos.ConnectionDao;
 import de.host.connectionmanagerapp.daos.IdentityDao;
 import de.host.connectionmanagerapp.daos.JobDao;
 import de.host.connectionmanagerapp.daos.SnippetDao;
-import de.host.connectionmanagerapp.daos.Snippet_JobDao;
 
 
-@androidx.room.Database(entities = {Connection.class, Identity.class, Snippet.class, Job.class, Snippet_Job.class}, version = 10, exportSchema = false)
-@TypeConverters({DateTypeConverter.class})
+@androidx.room.Database(entities = {Connection.class, Identity.class, Snippet.class, Job.class}, version = 14, exportSchema = false)
+@TypeConverters({DateTypeConverter.class, CalenderTypeConverter.class})
 public abstract class Roombuilder extends RoomDatabase {
 
 
@@ -28,7 +27,6 @@ public abstract class Roombuilder extends RoomDatabase {
    public abstract IdentityDao identityDao();
    public abstract JobDao jobDao();
    public abstract SnippetDao snippetDao();
-   public abstract Snippet_JobDao sjDao();
 
     static Roombuilder getDatabase(final Context context) {
         if (INSTANCE == null) {

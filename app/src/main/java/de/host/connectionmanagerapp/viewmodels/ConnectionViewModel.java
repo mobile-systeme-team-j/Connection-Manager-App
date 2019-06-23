@@ -56,7 +56,7 @@ public class ConnectionViewModel extends AndroidViewModel {
         return(repo.getIdentity(id));
     }
     public  Identity getIdentityFromTitel(String titel){return(repo.getIdentityFromTitel(titel));}
-    public Job getJobs(long id){
+    public Job getJobs(int id){
         return(repo.getJob(id));
     }
     public Snippet getSnippets(long id){ return(repo.getSnippet(id)); }
@@ -87,7 +87,7 @@ public class ConnectionViewModel extends AndroidViewModel {
         repo.connection_delete(id);
     }
     public void deleteSnippets(long id){repo.snippet_delete(id);}
-    public void deleteJob(long id){repo.job_delete(id);}
+    public void deleteJob(int id){repo.job_delete(id);}
 
 
     public LiveData<List<Connection>> getAllConnections() { return allConnections; }
